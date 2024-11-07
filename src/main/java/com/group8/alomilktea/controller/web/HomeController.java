@@ -11,6 +11,6 @@ public class HomeController{
 
     @GetMapping()
     public String trangchu(Model model){
-        return "billy/billy/index";
+        return "web/billy/index";
     }
 }
