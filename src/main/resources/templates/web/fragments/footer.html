@@ -3,63 +3,109 @@
 
 <body>
 	<div th:fragment="footer">
-		<div>
-			
-		</div>
-		<!-- Section: Links  -->
-		<section class="footer">
-			<div class="container text-center text-md-start pt-4 pb-4">
-				<!-- Grid row -->
-				<div class="row mt-3">
-					<!-- Grid column -->
-					<div class="col-12 col-lg-3 col-sm-12 mb-2">
-						<!-- Content -->
-						<h4 class="text-black fw-bold">
-							ORI COSMETICS
-						</h4>
-						<p class="mt-2 text-dark fs-6">
-							Ori Cosmetics là nhà phân phối mỹ phẩm và làm đẹp đảm bảo về chất lượng, đa dạng về sản phẩm. Tự tin mang đến cho khách hàng những sản phẩm làm đẹp được nhập khẩu với chất lượng tốt nhất. Thường xuyên cập nhật mẫu mã cho khách hàng thỏa sức lựa chọn.
-						</p>
-						<p>
-							<strong class="fs-6 text-dark fw-bold">SĐT:</strong> <span class="text-dark fs-6"> 0987654321</span>
-							<br />
-							<strong class="fs-6 text-dark fw-bold">Địa chỉ:</strong> <span class="text-dark fs-6"> Số 1 VN, Thủ Đức, Việt Nam</span>
-						</p>
-					</div>
-					<!-- Grid column -->
-
-
-					<div class="col-12 col-lg-3 col-sm-12 mb-2" style="margin-left: 80px;">
-						<!-- Content -->
-						<h4 class="text-black fw-medium">
-							Chính sách
-						</h4>
-						<div class="mt-4 mb-4">
-							<a class="fs-6">Chính sách vận chuyển</a>
+		<div class="footer-area black-bg-2 pt-70">
+			<div class="footer-top-area pb-18">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-4 col-md-6 col-sm-6">
+							<div class="footer-about mb-40">
+								<div class="footer-logo">
+									<a href="index.html">
+										<img th:src="@{/assets/img/logo/footer-logo.png}" alt="">
+									</a>
+								</div>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidi ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+								<div class="payment-img">
+									<a href="#">
+										<img th:src="@{/assets/img/icon-img/payment.png}" alt="">
+									</a>
+								</div>
+							</div>
 						</div>
-						<div class="mb-4">
-							<a class="fs-6">Chính sách thanh toán</a>
+						<div class="col-lg-2 col-md-6 col-sm-6">
+							<div class="footer-widget mb-40">
+								<div class="footer-title mb-22">
+									<h4>Information</h4>
+								</div>
+								<div class="footer-content">
+									<ul>
+										<li><a href="about-us.html">About Us</a></li>
+										<li><a href="#">Delivery Information</a></li>
+										<li><a href="#">Privacy Policy</a></li>
+										<li><a href="#">Terms & Conditions</a></li>
+										<li><a href="#">Customer Service</a></li>
+										<li><a href="#">Return Policy</a></li>
+									</ul>
+								</div>
+							</div>
 						</div>
-						<div class="mb-4">
-							<a class="fs-6">Chính sách bảo mật</a>
+						<div class="col-lg-2 col-md-6 col-sm-6">
+							<div class="footer-widget mb-40">
+								<div class="footer-title mb-22">
+									<h4>My Account</h4>
+								</div>
+								<div class="footer-content">
+									<ul>
+										<li><a href="my-account.html">My Account</a></li>
+										<li><a href="#">Order History</a></li>
+										<li><a href="wishlist.html">Wish List</a></li>
+										<li><a href="#">Newsletter</a></li>
+										<li><a href="#">Order History</a></li>
+										<li><a href="#">International Orders</a></li>
+									</ul>
+								</div>
+							</div>
 						</div>
-						<div class="mb-4">
-							<a class="fs-6">Chính sách bảo hành</a>
-						</div>	
-					</div>
-
-					<div class="col-12 col-md-5 col-sm-12 mb-2">
-						<div class="w-100" style="height: auto;">
-							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4853986110666!2d106.7693381737367!3d10.850637657823157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752763f23816ab%3A0x282f711441b6916f!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBTxrAgcGjhuqFtIEvhu7kgdGh14bqtdCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmg!5e0!3m2!1svi!2s!4v1702411779927!5m2!1svi!2s" width="500" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+						<div class="col-lg-4 col-md-6 col-sm-6">
+							<div class="footer-widget mb-40">
+								<div class="footer-title mb-22">
+									<h4>Get in touch</h4>
+								</div>
+								<div class="footer-contact">
+									<ul>
+										<li>Address: 123 Main Your address goes here.</li>
+										<li>Telephone Enquiry: (012) 800 456 789-987 </li>
+										<li>Email: <a href="#">Info@example.com</a></li>
+									</ul>
+								</div>
+								<div class="mt-35 footer-title mb-22">
+									<h4>Get in touch</h4>
+								</div>
+								<div class="footer-time">
+									<ul>
+										<li>Open:  <span>8:00 AM</span> - Close: <span>18:00 PM</span></li>
+										<li>Saturday - Sunday: <span>Close</span></li>
+									</ul>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<!-- Grid row -->
 			</div>
-			<div class="text-center py-4" style="color: #FBA1B7; background-color: #FFF0F5;">
-				Copyright 2023 © Ori Cosmetics
+			<div class="footer-bottom-area border-top-4">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-7">
+							<div class="copyright">
+								<p>&copy; 2022 <strong> Billy </strong> Made with <i class="fa fa-heart text-danger"></i> by <a href="https://hasthemes.com/" target="_blank"><strong>HasThemes</strong></a></p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-5">
+							<div class="footer-social">
+								<ul>
+									<li><a href="#"><i class="ion-social-facebook"></i></a></li>
+									<li><a href="#"><i class="ion-social-twitter"></i></a></li>
+									<li><a href="#"><i class="ion-social-instagram-outline"></i></a></li>
+									<li><a href="#"><i class="ion-social-googleplus-outline"></i></a></li>
+									<li><a href="#"><i class="ion-social-rss"></i></a></li>
+									<li><a href="#"><i class="ion-social-dribbble-outline"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		</section>
+		</div>
 	</div>
 </body>
 
