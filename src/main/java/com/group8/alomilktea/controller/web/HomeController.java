@@ -4,7 +4,6 @@ import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,7 +23,6 @@ public class HomeController{
         } else {
             System.out.println("Hello anhh em" + list);
         }
-
         return "web/billy/index";
     }
 }
