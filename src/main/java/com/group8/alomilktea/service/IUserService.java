@@ -30,6 +30,6 @@ public interface IUserService {
 	Page<User> getAll(Integer pageNo);
 
 	Optional<User> getByUserNameOrEmail(String username);
-	
+
 	User getUserLogged();
 }
