@@ -56,7 +56,7 @@ public class AuthController {
             model.addAttribute("errorMessage", "Tài khoản hoặc mật khẩu không đúng");
         }
         request.getSession().removeAttribute("loginStatus");
-        return "web/auth/login";
+        return "web/auth/login-register";
     }
     @RequestMapping(path = "/auth/login1", method = RequestMethod.GET)
     public String user(Model model) {
@@ -79,7 +79,7 @@ public class AuthController {
             model.addAttribute("errorMessage", "Đăng kí thất bại");
         }
         request.getSession().removeAttribute("errorMessage");
-        return "web/auth/signUp";
+        return "web/auth/login-register";
     }
 
 
