@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user ") // Changed to "users" to avoid conflicts with SQL reserved keyword
+@Table(name = "[user]") // Changed to "users" to avoid conflicts with SQL reserved keyword
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

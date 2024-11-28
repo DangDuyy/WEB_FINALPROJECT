@@ -26,7 +26,7 @@ public class Email {
         boolean test = false;
         String toEmail = user.getEmail();
         String fromEmail = "duyprovn987@gmail.com";
-        String password = "gkju mout cpsx fiei";
+        String password = "wdir ctcg ozay wgoc";
         try {
 
             Properties pr = configEmail(new Properties());

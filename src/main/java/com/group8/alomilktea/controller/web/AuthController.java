@@ -45,7 +45,7 @@ public class AuthController {
     @Autowired
     private Email email;
 
-    @RequestMapping(path = "/auth/login",  method = RequestMethod.GET)
+    @RequestMapping(path = "/auth/login", method = RequestMethod.GET)
     public String login(Model model, Principal principal, @RequestParam(name = "message", required = false) String message, HttpServletRequest request) {
         if (principal != null) {
             return "redirect:/";
@@ -56,8 +56,9 @@ public class AuthController {
             model.addAttribute("errorMessage", "Tài khoản hoặc mật khẩu không đúng");
         }
         request.getSession().removeAttribute("loginStatus");
-        return "web/auth/login-register";
+        return "web/auth/login";
     }
+
     @RequestMapping(path = "/auth/login1", method = RequestMethod.GET)
     public String user(Model model) {
 
@@ -65,8 +66,7 @@ public class AuthController {
     }
 
 
-
-    @RequestMapping(path = "/auth/sign-up", method = RequestMethod.GET)
+    @RequestMapping(path = "/auth/register", method = RequestMethod.GET)
     public String signUpForm(Model model, Principal principal, HttpServletRequest request) {
         if (principal != null) {
             return "redirect:/";
@@ -79,20 +79,20 @@ public class AuthController {
             model.addAttribute("errorMessage", "Đăng kí thất bại");
         }
         request.getSession().removeAttribute("errorMessage");
-        return "web/auth/login-register";
+        return "web/auth/register";
     }
 
 
     @GetMapping(path = "/auth/verify-code")
     public String showVerifyCodePage(Model model) {
-        model.addAttribute("OTPCodeModel", new OTPCodeModel());
+        model.addAttribute("verifyCodeRequest", new OTPCodeModel());
         return "web/auth/verify-code";
     }
 
     @PostMapping(path = "/auth/verify-code")
-    public String verifyCode(@ModelAttribute("OTPCodeModel") OTPCodeModel OTPCodeModel, BindingResult result, Model model) {
+    public String verifyCode(@ModelAttribute("verifyCodeRequest") OTPCodeModel verifyCodeRequest, BindingResult result, Model model) {
         // Find the user by email
-        User user = userService.findByEmail(OTPCodeModel.getEmail()).orElse(null);
+        User user = userService.findByEmail(verifyCodeRequest.getEmail()).orElse(null);
 
         if (user == null) {
             result.rejectValue("email", null, "Invalid email");
@@ -100,7 +100,7 @@ public class AuthController {
         }
 
         // Check if the entered code matches the generated code
-        if (OTPCodeModel.getCode().equals(user.getCode())) {
+        if (verifyCodeRequest.getCode().equals(user.getCode())) {
             // Update user's isEnabled status
             user.setIsEnabled(true);
             userService.save(user);
@@ -112,10 +112,7 @@ public class AuthController {
     }
 
 
-
-
-
-    @PostMapping(path = "/auth/sign-up/save")
+    @PostMapping(path = "/auth/register/save")
     public String signUpPostForm(@ModelAttribute("user") @Valid SignUpModel userReq, BindingResult result,
                                  Model model, HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -123,28 +120,26 @@ public class AuthController {
         if (result.hasErrors()) {
             model.addAttribute("user", userReq);
             request.getSession().setAttribute("errorMessage", "error");
-            return "redirect:/auth/sign-up";
+            return "redirect:/auth/register";
         }
 
         User user = userService.findByEmail(userReq.getEmail()).orElse(null);
-        if(user != null) {
+        if (user != null) {
             result.rejectValue("email", null, "There is already an account registered with that email");
-            return "redirect:/auth/sign-up";
+            return "redirect:/auth/register";
         }
         Set<Roles> role = new HashSet<>();
         Roles roleuser = roleRepository.findById(1).orElse(null);
-        if(roleuser != null){
+        if (roleuser != null) {
             role.add(roleuser);
         }
 
         user = User.builder()
                 .isEnabled(false)
-                .username(".")
                 .address(userReq.getAddress())
                 .phone(userReq.getPhone())
                 .email(userReq.getEmail())
                 .fullName(userReq.getFullName())
-                .username(userReq.getUsername())
                 .roles(role)
                 .build();
 
@@ -154,13 +149,14 @@ public class AuthController {
         email.sendEmail(user);
 
         userService.save(user);
-        OTPCodeModel OTPCodeModel = new OTPCodeModel();
-        OTPCodeModel.setEmail(userReq.getEmail());
+        OTPCodeModel verifyCodeRequest = new OTPCodeModel();
+        verifyCodeRequest.setEmail(userReq.getEmail());
 
-        model.addAttribute("OTPCodeModel", OTPCodeModel);
+        model.addAttribute("verifyCodeRequest", verifyCodeRequest);
         return "redirect:/auth/verify-code?="
                 ;
     }
+
     @GetMapping("/auth/reset-password")
     public String showResetPasswordForm(Model model) {
         model.addAttribute("resetPasswordRequest", new ResetPasswordRequest());
@@ -182,14 +178,13 @@ public class AuthController {
         userService.save(user);
 
 
-
         request.getSession().setAttribute("resetPasswordRequest", resetPasswordRequest);
 
         return "redirect:/auth/enter-verification-code";
     }
 
     @GetMapping("/auth/enter-verification-code")
-    public String showEnterVerificationCodeForm(Model model, HttpServletRequest request,HttpServletResponse response) {
+    public String showEnterVerificationCodeForm(Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("resetPasswordRequest", request.getSession().getAttribute("resetPasswordRequest"));
         return "web/auth/enter-verification-code";
     }
@@ -212,7 +207,7 @@ public class AuthController {
     }
 
     @GetMapping("/auth/enter-new-password")
-    public String showEnterNewPasswordForm(Model model ,HttpServletRequest request) {
+    public String showEnterNewPasswordForm(Model model, HttpServletRequest request) {
 
         model.addAttribute("resetPasswordRequest", request.getSession().getAttribute("resetPasswordRequest"));
 
@@ -235,12 +230,10 @@ public class AuthController {
     }
 
 
-
-
     @GetMapping("/auth/logout")
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/auth/login";
