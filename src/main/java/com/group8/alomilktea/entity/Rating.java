@@ -19,8 +19,10 @@ public class Rating {
     @Column(name = "ratingId")
     private Integer ratingId;
 
-    @Column(name = "nickname", length = 255)
-    private String nickname;
+    @Id
+    @ManyToOne
+    @JoinColumn(name="userId", nullable = false)
+    private User user;
 
     @Column(name = "content", length = 2000)
     private String content;
@@ -31,8 +33,6 @@ public class Rating {
     @Column(name = "rate")
     private Integer rate;
 
-    @Column(name = "display", nullable = false)
-    private Integer display;
 
     @Column(name = "date", length = 255)
     private String date;

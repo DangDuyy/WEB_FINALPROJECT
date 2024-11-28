@@ -10,15 +10,15 @@
 	<meta content="Minimal Admin & Dashboard Template" name="description">
 	<meta content="Themesdesign" name="author">
 	<!-- App favicon -->
-	<link rel="shortcut icon" href="assets/images/favicon.ico">
+	<link rel="shortcut icon" th:href="@{/assets/images/favicon.ico}">
 	<!-- Layout config Js -->
-	<script src="assets/js/layout.js"></script>
+	<script th:src="@{/assets/js/layout.js}"></script>
 	<!-- Icons CSS -->
 
 	<!-- Tailwind CSS -->
 
 
-	<link rel="stylesheet" href="assets/css/tailwind2.css">
+	<link rel="stylesheet" th:href="@{/assets/css/tailwind2.css}">
 </head>
 
 <body class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
@@ -47,7 +47,7 @@
 				<div class="flex flex-col gap-4">
 					<div class="flex gap-2 product">
 						<div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
-							<img src="assets/images/img-012.png" alt="" class="h-8">
+							<img th:src="@{/assets/images/img-012.png}" alt="" class="h-8">
 						</div>
 						<div class="overflow-hidden grow">
 							<div class="ltr:float-right rtl:float-left">
@@ -72,7 +72,7 @@
 					</div>
 					<div class="flex gap-2 product">
 						<div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
-							<img src="assets/images/img-03.png" alt="" class="h-8">
+							<img th:src="@{/assets/images/img-03.png}" alt="" class="h-8">
 						</div>
 						<div class="overflow-hidden grow">
 							<div class="ltr:float-right rtl:float-left">
@@ -97,7 +97,7 @@
 					</div>
 					<div class="flex gap-2 product">
 						<div class="flex items-center justify-center w-12 h-12 rounded-md bg-slate-100 shrink-0 dark:bg-zink-500">
-							<img src="assets/images/img-09.png" alt="" class="h-8">
+							<img th:src="@{/assets/images/img-09.png}" alt="" class="h-8">
 						</div>
 						<div class="overflow-hidden grow">
 							<div class="ltr:float-right rtl:float-left">
@@ -364,21 +364,21 @@
 		<a href="#!" class="w-full text-white transition-all duration-200 ease-linear bg-red-500 border-red-500 btn hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100">Buy Now</a>
 	</div>
 </div>
-<script src='assets/libs/choices.js/public/assets/scripts/choices.min.js'></script>
-<script src="assets/libs/%40popperjs/core/umd/popper.min.js"></script>
-<script src="assets/libs/tippy.js/tippy-bundle.umd.min.js"></script>
-<script src="assets/libs/simplebar/simplebar.min.js"></script>
-<script src="assets/libs/prismjs/prism.js"></script>
-<script src="assets/libs/lucide/umd/lucide.js"></script>
-<script src="assets/js/tailwick.bundle.js"></script>
+<script th:src="@{/assets/libs/choices.js/public/assets/scripts/choices.min.js}"></script>
+<script th:src="@{/assets/libs/%40popperjs/core/umd/popper.min.js}"></script>
+<script th:src="@{/assets/libs/tippy.js/tippy-bundle.umd.min.js}"></script>
+<script th:src="@{/assets/libs/simplebar/simplebar.min.js}"></script>
+<script th:src="@{/assets/libs/prismjs/prism.js}"></script>
+<script th:src="@{/assets/libs/lucide/umd/lucide.js}"></script>
+<script th:src="@{/assets/js/tailwick.bundle.js}"></script>
 <!--apexchart js-->
-<script src="assets/libs/apexcharts/apexcharts.min.js"></script>
+<script th:src="@{/assets/libs/apexcharts/apexcharts.min.js}"></script>
 
 <!--dashboard ecommerce init js-->
-<script src="assets/js/pages/dashboards-ecommerce.init.js"></script>
+<script th:src="@{/assets/js/pages/dashboards-ecommerce.init.js}"></script>
 
 <!-- App js -->
-<script src="assets/js/app.js"></script>
+<script th:src="@{/assets/js/app.js}"></script>
 
 </body>
 </html>

@@ -1,8 +1,16 @@
 package com.group8.alomilktea.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "category")
 public class Category {
 
@@ -14,40 +22,12 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "logo")
+    @Column(name = "logo", columnDefinition = "TEXT")
     private String logo;
 
-    // Default constructor
-    public Category() {}
+    @Column(name ="description", columnDefinition = "TEXT")
+    private String description;
 
-    // Constructor with parameters
-    public Category(String name, String logo) {
-        this.name = name;
-        this.logo = logo;
-    }
-
-    // Getters and setters
-    public int getCateId() {
-        return cateId;
-    }
-
-    public void setCateId(int cateId) {
-        this.cateId = cateId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Product> products;
 }

@@ -5,9 +5,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin")
 public class DashboardController {
-    @RequestMapping("")
+    @RequestMapping("/admin")
     public String dashboard(ModelMap modelMap){
         return "admin/index";
     }
