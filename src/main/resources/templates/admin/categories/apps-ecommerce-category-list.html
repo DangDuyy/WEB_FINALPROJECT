@@ -3,7 +3,59 @@
       data-skin="default" data-navbar="sticky" data-content="fluid" dir="ltr"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{admin/layout-admin.html}">
+<head>
+    <style>
+        /* Giới hạn chiều dài nội dung Description */
+        .description-column {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
+        /* Cố định kích thước ảnh logo */
+        .img-thumbnail {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+        /* Tooltip xuất hiện khi hover */
+        .description-column:hover::after {
+            content: attr(title); /* Lấy nội dung từ thuộc tính title */
+            position: absolute;
+            background-color: #000;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            white-space: normal; /* Hiển thị nhiều dòng nếu cần */
+            top: 100%; /* Hiển thị phía dưới nội dung */
+            left: 0;
+            transform: translateY(5px);
+            z-index: 1000;
+            width: max-content; /* Đặt chiều rộng tùy nội dung */
+            max-width: 300px; /* Giới hạn chiều rộng tooltip */
+            font-size: 0.9em;
+            line-height: 1.2;
+        }
+
+        /* Tooltip xuất hiện mượt */
+        .description-column:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease;
+        }
+
+        .description-column::after {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Điều chỉnh chiều rộng cho Actions */
+        .action {
+            width: 150px;
+        }
+    </style>
+</head>
 
 <body class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
 <section layout:fragment="content">
@@ -38,7 +90,7 @@
                             </div>
                         </div><!--end col-->
                         <div class="lg:col-span-2 ltr:lg:text-right rtl:lg:text-left xl:col-span-2 xl:col-start-11">
-                            <a href="apps-ecommerce-product-create.html" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Add Product</span></a>
+                            <a th:href="@{/admin/category/add}" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Add Product</span></a>
                         </div>
                     </div><!--end grid-->
                 </div>
@@ -47,16 +99,40 @@
                         <table class="w-full whitespace-nowrap" id="productTable">
                             <thead class="ltr:text-left rtl:text-right bg-slate-100 dark:bg-zink-600">
                             <tr>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" data-sort="category_code">Category Code</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" data-sort="category_name">Category Name</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" data-sort="logo">Logo</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" data-sort="description">Description</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_code" data-sort="product_code">Category Code</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Category Name</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Logo</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort description-column" data-sort="category">Description</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Actions</th>
                             </tr>
                             </thead>
                             <tbody class="list">
-                            <tr>
-
+                            <tr th:each="category : ${categories}">
+                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${category.cateId}">C001</td>
+                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${category.name}">Beverages</td>
+                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort">
+                                    <img th:src="@{${category.logo}}" alt="Logo" class="img-thumbnail">
+                                </td>
+                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort description-column"
+                                    th:text="${category.description}"
+                                    th:attr="title=${category.description}">
+                                </td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 action">
+                                    <div class="relative dropdown">
+                                        <button class="flex items-center justify-center size-[30px] dropdown-toggle p-0 text-slate-500 btn bg-slate-100 hover:text-white hover:bg-slate-600 focus:text-white focus:bg-slate-600 focus:ring focus:ring-slate-100 active:text-white active:bg-slate-600 active:ring active:ring-slate-100 dark:bg-slate-500/20 dark:text-slate-400 dark:hover:bg-slate-500 dark:hover:text-white dark:focus:bg-slate-500 dark:focus:text-white dark:active:bg-slate-500 dark:active:text-white dark:ring-slate-400/20" id="productAction1" data-bs-toggle="dropdown"><i data-lucide="more-horizontal" class="size-3"></i></button>
+                                        <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="productAction1">
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" th:href="@{/admin/category/overview}"><i data-lucide="eye" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Overview</span></a>
+                                            </li>
+                                            <li>
+                                                <a class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" th:href="@{apps-ecommerce-product-create.html}"><i data-lucide="file-edit" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Edit</span></a>
+                                            </li>
+                                            <li>
+                                                <a data-modal-target="deleteModal" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200" href="#!"><i data-lucide="trash-2" class="inline-block size-3 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Delete</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -87,12 +163,9 @@
                             </div>
                         </div>
                     </div>
-
+                    </div>
                 </div>
-            </div><!--end card-->
-
-        </div>
-        <!-- container-fluid -->
+            </div>        <!-- container-fluid -->
     </div>
 </section>
 </body>
