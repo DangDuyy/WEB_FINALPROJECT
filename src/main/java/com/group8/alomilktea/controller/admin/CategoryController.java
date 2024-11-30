@@ -6,8 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 
 @Controller
@@ -30,9 +37,44 @@ public class CategoryController {
         return "admin/categories/apps-ecommerce-category-list";
     }
 
-    @RequestMapping("/add")
+    @GetMapping("/add")
     public String addCategory(ModelMap model){
         return "admin/categories/apps-ecommerce-category-create";
     }
+
+    @PostMapping("/add/save")
+    public String saveCategory(
+            @RequestParam("name") String name,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            @RequestParam(value = "imageUrl", required = false) String imageUrl,
+            @RequestParam(value = "description", required = false) String description,
+            ModelMap model) {
+
+        Category category = new Category();
+        category.setName(name);
+        category.setDescription(description);
+
+        // Option 1: Nếu người dùng tải file
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+                category.setLogo("/uploads/" + fileName); // Lưu đường dẫn
+                imageFile.transferTo(new File("uploads/" + fileName)); // Lưu file vào thư mục
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        // Option 2: Nếu người dùng nhập URL
+        else if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+            category.setLogo(imageUrl);
+        }
+
+        categoryService.save(category);
+        model.addAttribute("message", "Category created successfully!");
+        return "redirect:/admin/category/list";
+    }
+
+
+
 
 }

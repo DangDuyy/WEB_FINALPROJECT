@@ -15,7 +15,7 @@
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="#!" class="text-slate-400 dark:text-zink-200">Products</a>
+                        <a href="#!" class="text-slate-400 dark:text-zink-200">Categorys</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
                         Add New
@@ -26,44 +26,61 @@
                 <div class="xl:col-span-9">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Create Product</h6>
-
-                            <form action="#!">
+                            <h6 class="mb-4 text-15">Create Category</h6>
+                            <form th:action="@{/admin/category/add/save}" th:method="post" enctype="multipart/form-data">
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
+                                    <!-- Category Title -->
                                     <div class="xl:col-span-6">
-                                        <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Product Title</label>
-                                        <input type="text" id="productNameInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product title" required>
-                                        <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the product name.</p>
-                                    </div><!--end col-->
-                                    <div class="xl:col-span-6">
-                                        <label for="productCodeInput" class="inline-block mb-2 text-base font-medium">Product Code</label>
-                                        <input type="text" id="productCodeInput" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Product Code" value="TWT145015" disabled required>
-                                        <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Code will be generated automatically</p>
-                                    </div><!--end col-->
-                                    <div class="lg:col-span-2 xl:col-span-12">
-                                        <label for="genderSelect" class="inline-block mb-2 text-base font-medium">Product Images</label>
-                                        <div class="flex items-center justify-center bg-white border border-dashed rounded-md cursor-pointer dropzone border-slate-300 dark:bg-zink-700 dark:border-zink-500 dropzone2">
-                                            <div class="w-full py-5 text-lg text-center dz-message needsclick">
-                                                <div class="mb-3">
-                                                    <i data-lucide="upload-cloud" class="block mx-auto size-12 text-slate-500 fill-slate-200 dark:text-zink-200 dark:fill-zink-500"></i>
-                                                </div>
+                                        <label for="categoryNameInput" class="inline-block mb-2 text-base font-medium">Category Title</label>
+                                        <input type="text" id="categoryNameInput" name="name"
+                                               class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                               placeholder="Category title" required maxlength="20">
+                                        <p class="mt-1 text-sm text-slate-400 dark:text-zink-200">Do not exceed 20 characters when entering the category name.</p>
+                                    </div>
 
-                                                <h5 class="mb-0 font-normal text-slate-500 dark:text-zink-200 text-15">Drag and drop your product images or <a href="#!">browse</a> your product images</h5>
-                                            </div>
+                                    <!-- Image Upload Options -->
+                                    <div class="lg:col-span-2 xl:col-span-12">
+                                        <label class="inline-block mb-2 text-base font-medium">Category Image</label>
+                                        <div>
+                                            <!-- Option 1: Upload File -->
+                                            <label class="inline-block mb-2 text-sm font-medium">Upload from Computer</label>
+                                            <input type="file" name="imageFile"
+                                                   class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500"
+                                                   accept="image/*">
+                                            <p class="mt-2 text-sm text-slate-400 dark:text-zink-200">Supported formats: JPG, PNG. Max size: 2MB</p>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <!-- Option 2: Enter Image URL -->
+                                            <label class="inline-block mb-2 text-sm font-medium">Or Enter Image URL</label>
+                                            <input type="url" name="imageUrl"
+                                                   class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                   placeholder="https://example.com/image.jpg">
+                                            <p class="mt-2 text-sm text-slate-400 dark:text-zink-200">Enter a valid URL to the image</p>
                                         </div>
                                     </div>
 
+                                    <!-- Description -->
                                     <div class="lg:col-span-2 xl:col-span-12">
                                         <div>
-                                            <label for="productDescription" class="inline-block mb-2 text-base font-medium">Description</label>
-                                            <textarea class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" id="productDescription" placeholder="Enter Description" rows="5"></textarea>
+                                            <label for="categoryDescription" class="inline-block mb-2 text-base font-medium">Description</label>
+                                            <textarea name="description"
+                                                      class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                                      id="categoryDescription" placeholder="Enter Description" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </div><!--end grid-->
+
+                                <!-- Buttons -->
                                 <div class="flex justify-end gap-2 mt-4">
-                                    <button type="reset" class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10 dark:focus:bg-red-500/10 dark:active:bg-red-500/10">Reset</button>
-                                    <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20">Create Product</button>
-                                    <button type="button" class="text-white bg-green-500 border-green-500 btn hover:text-white hover:bg-green-600 hover:border-green-600 focus:text-white focus:bg-green-600 focus:border-green-600 focus:ring focus:ring-green-100 active:text-white active:bg-green-600 active:border-green-600 active:ring active:ring-green-100 dark:ring-green-400/10">Draft & Preview</button>
+                                    <button type="reset"
+                                            class="text-red-500 bg-white btn hover:text-red-500 hover:bg-red-100 focus:text-red-500 focus:bg-red-100 active:text-red-500 active:bg-red-100 dark:bg-zink-700 dark:hover:bg-red-500/10">
+                                        Reset
+                                    </button>
+                                    <button type="submit"
+                                            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600">
+                                        Create Category
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -72,7 +89,7 @@
                 <div class="xl:col-span-3">
                     <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Product Card Preview</h6>
+                            <h6 class="mb-4 text-15">Category Card Preview</h6>
 
                             <div class="px-5 py-8 rounded-md bg-sky-50 dark:bg-zink-600">
                                 <img th:src="@{assets/images/img-03.png}" alt="" class="block mx-auto h-44">
@@ -123,7 +140,7 @@
                                 </div>
                             </div>
                             <div class="flex gap-2 mt-4">
-                                <button type="button" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">Create Products</button>
+                                <button type="button" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">Create Categorys</button>
                                 <button type="button" class="w-full text-white bg-purple-500 border-purple-500 btn hover:text-white hover:bg-purple-600 hover:border-purple-600 focus:text-white focus:bg-purple-600 focus:border-purple-600 focus:ring focus:ring-purple-100 active:text-white active:bg-purple-600 active:border-purple-600 active:ring active:ring-purple-100 dark:ring-purple-400/10">Draft</button>
                             </div>
                         </div>
