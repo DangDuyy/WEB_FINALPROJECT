@@ -24,6 +24,10 @@ public class Rating {
     @JoinColumn(name="userId", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name="productId", nullable = false, foreignKey = @ForeignKey(name = "FK_Rating_Product"))
+    private Product product;
+
     @Column(name = "content", length = 2000)
     private String content;
 
