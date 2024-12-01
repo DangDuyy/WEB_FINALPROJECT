@@ -2,6 +2,9 @@ package com.group8.alomilktea.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "promotion")
 public class Promotion {
@@ -24,7 +27,8 @@ public class Promotion {
     private Integer isActive;
 
     // Constructors, getters, and setters
-
+    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Product> products = new ArrayList<>();
     public Promotion() {
     }
 

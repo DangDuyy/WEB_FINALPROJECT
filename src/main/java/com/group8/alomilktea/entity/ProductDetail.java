@@ -2,36 +2,29 @@ package com.group8.alomilktea.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "product_detail") // Đảm bảo bảng trong DB có tên là "product"
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class ProductDetail {
-
+@NoArgsConstructor
+@Builder
+public class  ProductDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int product_detail_Id;
+    @Column(name = "proDId")
+    private Integer proDId;
 
-    @Column(name="name")
-    private String name;
+    @Column(name = "size")
+    private Integer size;
 
-    @Column(name="logo")
-    private String logo;
+    @Column(name = "price")
+    private Double price;
 
-    @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
-
-    @Column(name = "sale", nullable = false, columnDefinition = "int default 0")
-    private Integer sale = 0;
-
-    @Column(name = "price", nullable = false)
-    private Float price;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "proId", referencedColumnName = "proId")
+    @ManyToOne
+    @JoinColumn(name = "proId", referencedColumnName = "proId", foreignKey = @ForeignKey(name = "FK_Product_ProducDelail"))
     private Product product;
-
 }
