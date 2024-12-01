@@ -1,24 +1,30 @@
 package com.group8.alomilktea.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
+
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "order_detail")
+@Data
 
 public class OrderDetail {
 
     @Id
-    @Column(name = "order_id")
-    private int orderId;
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "order_id", foreignKey = @ForeignKey(name = "FK_OrderDetail_Order"))
+    private Order order; // Liên kết với Order
 
     @Id
-    @Column(name = "pro_id")
-    private int productId;
+    @ManyToOne
+    @JoinColumn(name = "pro_id", referencedColumnName = "proId", foreignKey = @ForeignKey(name = "FK_OrderDetail_Product"))
+    private Product product; // Liên kết với Product
 
-    @Column(name = "discount", nullable = false)
-    private float discount;
+//    @Column(name = "discount", nullable = false)
+//    private float discount;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
@@ -28,36 +34,28 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
-    public OrderDetail(int orderId, int productId, float discount, int quantity) {
-        this.orderId = orderId;
-        this.productId = productId;
-        this.discount = discount;
+    public OrderDetail(Order order, Product product, int quantity) {
+        this.order = order;
+        this.product = product;
         this.quantity = quantity;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public int getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(float discount) {
-        this.discount = discount;
-    }
 
     public int getQuantity() {
         return quantity;
