@@ -38,7 +38,7 @@ public class Order {
     private Double total;
 
     @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userId", foreignKey = @ForeignKey(name = "FKdxew8n76x1bnoxjas0qxrlbq6"))
+    @JoinColumn(name = "userid", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "FKdxew8n76x1bnoxjas0qxrlbq6"))
     private User user;
 
 

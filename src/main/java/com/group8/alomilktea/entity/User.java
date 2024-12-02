@@ -23,13 +23,13 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Integer userId;
 
     @Column(name = "password", length = 255)
     private String password;
 
-    @Column(name = "fullName", length = 255)
+    @Column(name = "full_name", length = 255)
     private String fullName;
 
     @Column(name = "email", length = 255, unique = true, nullable = true)
