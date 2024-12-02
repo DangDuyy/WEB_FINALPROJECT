@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping(value = {"/user"})
 @Controller
@@ -28,11 +27,11 @@ public class UserController {
     }
 
     @GetMapping("/product/{id}")
-    public String product(@PathVariable("id") long id, Model model) {
-        Optional<Product> product = productService.findById(id);
+    public String product(@PathVariable("id") Integer id, Model model) {
+        Product product = productService.findById(id);
         if (product.isPresent()) {
-            model.addAttribute("product", product.get());
-            System.out.println("Product found: " + product.get());
+            model.addAttribute("product", product.getCategory());
+            System.out.println("Product found: " + product.getCategory());
         } else {
             System.out.println("Product not found with ID: " + id);
             return "web/billy/error-page";

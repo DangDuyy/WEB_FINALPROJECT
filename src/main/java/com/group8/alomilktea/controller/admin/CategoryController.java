@@ -25,7 +25,7 @@ public class CategoryController {
     @RequestMapping("/list")
     public String showCategoryList(ModelMap model,
                                    @RequestParam(name = "page", defaultValue = "0") int page,
-                                   @RequestParam(name = "size", defaultValue = "2") int size) {
+                                   @RequestParam(name = "size", defaultValue = "10") int size) {
 
         Page<Category> categoryPage = categoryService.getAll(PageRequest.of(page, size));
 
