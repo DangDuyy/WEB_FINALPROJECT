@@ -1,6 +1,7 @@
 package com.group8.alomilktea.controller.web;
 
 import com.group8.alomilktea.entity.Product;
+import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ public class HomeController{
     IProductService productService;
     @GetMapping()
     public String trangchu(Model model){
-        List<Product> list = productService.findAll();
+        List<ProductDetailDTO> list = productService.findProductInfoBySize();
         model.addAttribute("products", list);
         if (list.isEmpty()) {
             System.out.println("No products found");
