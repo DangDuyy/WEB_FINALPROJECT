@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,60 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public void deleteById(Integer id) {
         orderRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Order> findOder(Integer userId) {
+        return orderRepository.findOrderByUserId(userId);
+    }
+
+    @Override
+    public long count() {
+        return orderRepository.count();
+    }
+
+    @Override
+    public List<Order> findAll() {
+        return orderRepository.findAll();
+    }
+
+    @Override
+    public Page<Order> findAll(Pageable pageable) {
+        return orderRepository.findAll(pageable);
+    }
+
+    @Override
+    public <S extends Order> S save(S entity) {
+        return orderRepository.save(entity);
+    }
+
+    @Override
+    public int reOnCurrentMonth() {
+        return orderRepository.revenueOnCurrentMonth();
+    }
+
+    @Override
+    public int reOnCurrentYear() {
+        return orderRepository.revenueOnCurrentYear();
+    }
+
+    @Override
+    public int reOnCurrentQuarter() {
+        return orderRepository.revenueOnCurrentQuarter();
+    }
+
+    @Override
+    public float rateCom() {
+        return orderRepository.rateCompleted();
+    }
+
+    @Override
+    public List<Integer> getMonthlyTotal() {
+        return orderRepository.getMonthlyTotal();
+    }
+
+    @Override
+    public List<Integer> getQuarterTotal() {
+        return orderRepository.getQuarterTotal();
     }
 }
