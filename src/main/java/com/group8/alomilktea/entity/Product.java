@@ -33,6 +33,9 @@ public class Product {
     @Column(name = "logo", length = 1000)
     private String logo;
 
+    @Column(name = "image_link", length = 1000)
+    private String imageLink;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cateId", referencedColumnName = "cateId")
     @ToString.Exclude // Bỏ trường này khi gọi toString()

@@ -2,6 +2,7 @@ package com.group8.alomilktea.service.impl;
 
 import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.entity.ProductDetail;
+import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.repository.ProductRepository;
 import com.group8.alomilktea.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,16 @@ public class ProductService implements IProductService {
     @Override
     public List<ProductDetail> findProductDetailsByProductId(Integer productId) {
         return repo.findProductDetailsByProductId(productId);
+    }
+
+    @Override
+    public List<ProductDetailDTO> findProductInfoByID(Integer productId) {
+        return repo.findProductInfoByID(productId);
+    }
+
+    @Override
+    public List<ProductDetailDTO> findProductInfoBySize() {
+        return repo.findProductInfoBySize();
     }
 
     @Override

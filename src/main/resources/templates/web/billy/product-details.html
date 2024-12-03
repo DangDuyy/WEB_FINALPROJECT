@@ -1,9 +1,18 @@
-
 <!doctype html>
 <html class="no-js" lang="zxx">
 
 <!-- Mirrored from htmldemo.net/billy/billy/product-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 06 Nov 2024 15:24:31 GMT -->
 <head>
+    <style>
+        .size-options {
+            display: flex;
+            gap: 10px;
+        }
+        .size-options label {
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Billy - Food & Drink eCommerce Bootstrap5 Template</title>
@@ -11,22 +20,22 @@
     <meta name="robots" content="noindex, follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" th:href="@{assets/img/favicon.png}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.png}">
 
     <!-- all css here -->
-    <link rel="stylesheet" th:href="@{assets/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{assets/css/animate.css}">
-    <link rel="stylesheet" th:href="@{assets/css/owl.carousel.min.css}">
-    <link rel="stylesheet" th:href="@{assets/css/slick.css}">
-    <link rel="stylesheet" th:href="@{assets/css/chosen.min.css}">
-    <link rel="stylesheet" th:href="@{assets/css/ionicons.min.css}">
-    <link rel="stylesheet" th:href="@{assets/css/font-awesome.min.css}">
-    <link rel="stylesheet" th:href="@{assets/css/simple-line-icons.css}">
-    <link rel="stylesheet" th:href="@{assets/css/jquery-ui.css}">
-    <link rel="stylesheet" th:href="@{assets/css/meanmenu.min.css}">
-    <link rel="stylesheet" th:href="@{assets/css/style.css}">
-    <link rel="stylesheet" th:href="@{assets/css/responsive.css}">
-    <script th:src="@{assets/js/vendor/modernizr-2.8.3.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/animate.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/slick.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/chosen.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/simple-line-icons.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/jquery-ui.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/meanmenu.min.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/responsive.css}">
+    <script th:src="@{/assets/js/vendor/modernizr-2.8.3.min.js}"></script>
 </head>
 <body>
 <!-- header start -->
@@ -78,7 +87,7 @@
                 <div class="col-lg-3 col-md-4 col-12 col-sm-4">
                     <div class="logo">
                         <a href="index.html">
-                            <img alt="" th:src="@{assets/img/logo/logo.png}">
+                            <img alt="" th:src="@{/assets/img/logo/logo.png}">
                         </a>
                     </div>
                 </div>
@@ -119,7 +128,7 @@
                                 <ul>
                                     <li class="single-shopping-cart">
                                         <div class="shopping-cart-img">
-                                            <a href="#"><img alt="" th:src="@{assets/img/cart/cart-1.jpg}"></a>
+                                            <a href="#"><img alt="" th:src="@{/assets/img/cart/cart-1.jpg}"></a>
                                         </div>
                                         <div class="shopping-cart-title">
                                             <h4><a href="#">Phantom Remote </a></h4>
@@ -132,7 +141,7 @@
                                     </li>
                                     <li class="single-shopping-cart">
                                         <div class="shopping-cart-img">
-                                            <a href="#"><img alt="" th:src="@{assets/img/cart/cart-2.jpg}"></a>
+                                            <a href="#"><img alt="" th:src="@{/assets/img/cart/cart-2.jpg}"></a>
                                         </div>
                                         <div class="shopping-cart-title">
                                             <h4><a href="#">Phantom Remote</a></h4>
@@ -364,67 +373,65 @@
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="product-details-img">
-                    <img class="zoompro" th:src="@{assets/img/product-details/product-detalis-l1.jpg}" data-zoom-image="assets/img/product-details/product-detalis-bl1.jpg" alt="zoom"/>
-                    <div id="gallery" class="mt-20 product-dec-slider owl-carousel">
-                        <a data-image="assets/img/product-details/product-detalis-l1.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl1.jpg">
-                            <img th:src="@{assets/img/product-details/product-detalis-s1.jpg}" alt="">
-                        </a>
-                        <a data-image="assets/img/product-details/product-detalis-l2.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl2.jpg">
-                            <img th:src="@{assets/img/product-details/product-detalis-s2.jpg}" alt="">
-                        </a>
-                        <a data-image="assets/img/product-details/product-detalis-l3.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl3.jpg">
-                            <img th:src="@{assets/img/product-details/product-detalis-s3.jpg}" alt="">
-                        </a>
-                        <a data-image="assets/img/product-details/product-detalis-l4.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl4.jpg">
-                            <img th:src="@{assets/img/product-details/product-detalis-s4.jpg}" alt="">
-                        </a>
-                        <a data-image="assets/img/product-details/product-detalis-l5.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl5.jpg">
-                            <img th:src="@{assets/img/product-details/product-detalis-s5.jpg}" alt="">
-                        </a>
-                        <a data-image="assets/img/product-details/product-detalis-l2.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl2.jpg">
-                            <img th:src="@{assets/img/product-details/product-detalis-s2.jpg}" alt="">
-                        </a>
-                    </div>
-                    <span>-29%</span>
+                    <!-- Thay src bằng biến sản phẩm -->
+                    <img class="zoompro" th:src="@{${prd[0].imageLink}}" data-zoom-image="${prd[0].imageLink}" alt="zoom"/>
+                    <!--                    <span th:text="'-' + ${prd[0].discount} + '%'">-22%</span> &lt;!&ndash; Nếu có giảm giá &ndash;&gt;-->
                 </div>
             </div>
             <div class="col-lg-6 col-md-12">
                 <div class="product-details-content">
-                    <h4>Glory of the Snow</h4>
+                    <!-- Tên sản phẩm -->
+                    <h4 th:text="${prd[0].name}">Glory of the Snow</h4>
                     <div class="rating-review">
                         <div class="pro-dec-rating">
-                            <i class="ion-android-star-outline theme-star"></i>
-                            <i class="ion-android-star-outline theme-star"></i>
-                            <i class="ion-android-star-outline theme-star"></i>
-                            <i class="ion-android-star-outline theme-star"></i>
-                            <i class="ion-android-star-outline"></i>
+                            <!-- Hiển thị xếp hạng -->
                         </div>
                         <div class="pro-dec-review">
                             <ul>
-                                <li>32 Reviews </li>
-                                <li> Add Your Reviews</li>
+                                <!-- Số lượng đánh giá -->
                             </ul>
                         </div>
                     </div>
-                    <span>$260.00</span>
+                    <!-- Giá sản phẩm -->
+                    <span th:text="${prd[0].price}"> $260.00</span>
                     <div class="in-stock">
-                        <p>Available: <span>In stock</span></p>
+                        <!-- Kiểm tra tình trạng sản phẩm -->
                     </div>
-                    <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. </p>
+                    <p th:text="${prd[0].description}">
+                        Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
+                    </p>
+
+                    <!-- Chọn kích thước ly nước -->
+                    <div class="pro-dec-size">
+                        <p>Select Size:</p>
+                        <div class="size-options">
+                            <label>
+                                <input type="radio" name="drinkSize" value="X" checked>
+                                Size X
+                            </label>
+                            <label>
+                                <input type="radio" name="drinkSize" value="M">
+                                Size M
+                            </label>
+                            <label>
+                                <input type="radio" name="drinkSize" value="XL">
+                                Size XL
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Các đặc điểm của sản phẩm -->
                     <div class="pro-dec-feature">
-                        <ul>
-                            <li><input type="checkbox"> Chicken Popeyes: <span>  $4.99</span></li>
-                            <li><input type="checkbox"> Organic Smoothie : <span> $9.99</span></li>
-                            <li><input type="checkbox"> Beef Burger With Extra Cheese: <span> Red  $16.99</span></li>
-                            <li><input type="checkbox"> Fries McDonald's: <span>$14.99</span></li>
-                        </ul>
+                        <!-- Danh sách đặc điểm -->
                     </div>
+
+                    <!-- Thêm vào giỏ hàng -->
                     <div class="pro-details-cart-wrap">
                         <div class="shop-list-cart-wishlist">
-                            <a title="Add To Cart" href="#">
+                            <a title="Add To Cart" href="#" th:href="@{'/cart/add/' + ${prd[0].proId}}">
                                 <i class="ion-android-cart"></i>
                             </a>
-                            <a title="Wishlist" href="#">
+                            <a title="Wishlist" href="#" th:href="@{'/wishlist/add/' + ${prd[0].proId}}">
                                 <i class="ion-ios-heart-outline"></i>
                             </a>
                         </div>
@@ -434,26 +441,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Danh mục sản phẩm -->
                     <div class="pro-dec-categories">
                         <ul>
-                            <li class="categories-title">Categories:</li>
-                            <li><a href="#">Fast Foods,</a></li>
-                            <li><a href="#"> Rich Foods, </a></li>
-                            <li><a href="#">Custom Orders,</a></li>
-                            <li><a href="#">Home Decor,</a></li>
-                            <li><a href="#">Weddings, </a></li>
+                            <!-- Danh sách danh mục -->
                         </ul>
                     </div>
+
+                    <!-- Tag sản phẩm -->
                     <div class="pro-dec-categories">
                         <ul>
-                            <li class="categories-title">Tags: </li>
-                            <li><a href="#"> Cheesy,</a></li>
-                            <li><a href="#"> Fast Food, </a></li>
-                            <li><a href="#"> French Fries,</a></li>
-                            <li><a href="#"> Hamburger,</a></li>
-                            <li><a href="#"> Pizza </a></li>
+                            <!-- Danh sách tag -->
                         </ul>
                     </div>
+
+                    <!-- Chia sẻ mạng xã hội -->
                     <div class="pro-dec-social">
                         <ul>
                             <li><a class="tweet" href="#"><i class="ion-social-twitter"></i> Tweet</a></li>
@@ -463,8 +466,10 @@
                         </ul>
                     </div>
                 </div>
+
             </div>
         </div>
+
     </div>
 </div>
 <div class="description-review-area pb-100">
@@ -591,7 +596,7 @@
             <div class="product-wrapper">
                 <div class="product-img">
                     <a href="product-details.html">
-                        <img th:src="@{assets/img/product/product-1.jpg}" alt="">
+                        <img th:src="@{/assets/img/product/product-1.jpg}" alt="">
                     </a>
                     <div class="product-action">
                         <div class="pro-action-left">
@@ -616,7 +621,7 @@
             <div class="product-wrapper">
                 <div class="product-img">
                     <a href="product-details.html">
-                        <img th:src="@{assets/img/product/product-2.jpg}" alt="">
+                        <img th:src="@{/assets/img/product/product-2.jpg}" alt="">
                     </a>
                     <div class="product-action">
                         <div class="pro-action-left">
@@ -640,7 +645,7 @@
             <div class="product-wrapper">
                 <div class="product-img">
                     <a href="product-details.html">
-                        <img th:src="@{assets/img/product/product-3.jpg}" alt="">
+                        <img th:src="@{/assets/img/product/product-3.jpg}" alt="">
                     </a>
                     <div class="product-action">
                         <div class="pro-action-left">
@@ -665,7 +670,7 @@
             <div class="product-wrapper">
                 <div class="product-img">
                     <a href="product-details.html">
-                        <img th:src="@{assets/img/product/product-4.jpg}" alt="">
+                        <img th:src="@{/assets/img/product/product-4.jpg}" alt="">
                     </a>
                     <div class="product-action">
                         <div class="pro-action-left">
@@ -689,7 +694,7 @@
             <div class="product-wrapper">
                 <div class="product-img">
                     <a href="product-details.html">
-                        <img th:src="@{assets/img/product/product-7.jpg}" alt="">
+                        <img th:src="@{/assets/img/product/product-7.jpg}" alt="">
                     </a>
                     <div class="product-action">
                         <div class="pro-action-left">
@@ -722,13 +727,13 @@
                     <div class="footer-about mb-40">
                         <div class="footer-logo">
                             <a href="index.html">
-                                <img th:src="@{assets/img/logo/footer-logo.png}" alt="">
+                                <img th:src="@{/assets/img/logo/footer-logo.png}" alt="">
                             </a>
                         </div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incidi ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
                         <div class="payment-img">
                             <a href="#">
-                                <img th:src="@{assets/img/icon-img/payment.png}" alt="">
+                                <img th:src="@{/assets/img/icon-img/payment.png}" alt="">
                             </a>
                         </div>
                     </div>
@@ -830,16 +835,16 @@
                         <!-- Thumbnail Large Image start -->
                         <div class="tab-content">
                             <div id="pro-1" class="tab-pane fade show active">
-                                <img th:src="@{assets/img/product-details/product-detalis-l1.jpg}" alt="">
+                                <img th:src="@{/assets/img/product-details/product-detalis-l1.jpg}" alt="">
                             </div>
                             <div id="pro-2" class="tab-pane fade">
-                                <img th:src="@{assets/img/product-details/product-detalis-l2.jpg}" alt="">
+                                <img th:src="@{/assets/img/product-details/product-detalis-l2.jpg}" alt="">
                             </div>
                             <div id="pro-3" class="tab-pane fade">
-                                <img th:src="@{assets/img/product-details/product-detalis-l3.jpg}" alt="">
+                                <img th:src="@{/assets/img/product-details/product-detalis-l3.jpg}" alt="">
                             </div>
                             <div id="pro-4" class="tab-pane fade">
-                                <img th:src="@{assets/img/product-details/product-detalis-l4.jpg}" alt="">
+                                <img th:src="@{/assets/img/product-details/product-detalis-l4.jpg}" alt="">
                             </div>
                         </div>
                         <!-- Thumbnail Large Image End -->
@@ -848,19 +853,19 @@
                             <div class="thumb-menu owl-carousel nav nav-style" role="tablist">
                                 <button class="active" id="pro-1-tab" data-bs-toggle="tab" data-bs-target="#pro-1" type="button" role="tab"
                                         aria-controls="pro-1" aria-selected="true">
-                                    <img th:src="@{assets/img/product-details/product-detalis-s1.jpg}" alt="product-thumbnail">
+                                    <img th:src="@{/assets/img/product-details/product-detalis-s1.jpg}" alt="product-thumbnail">
                                 </button>
                                 <button id="pro-2-tab" data-bs-toggle="tab" data-bs-target="#pro-2" type="button" role="tab"
                                         aria-controls="pro-2" aria-selected="true">
-                                    <img th:src="@{assets/img/product-details/product-detalis-s2.jpg}" alt="product-thumbnail">
+                                    <img th:src="@{/assets/img/product-details/product-detalis-s2.jpg}" alt="product-thumbnail">
                                 </button>
                                 <button id="pro-3-tab" data-bs-toggle="tab" data-bs-target="#pro-3" type="button" role="tab"
                                         aria-controls="pro-3" aria-selected="true">
-                                    <img th:src="@{assets/img/product-details/product-detalis-s3.jpg}" alt="product-thumbnail">
+                                    <img th:src="@{/assets/img/product-details/product-detalis-s3.jpg}" alt="product-thumbnail">
                                 </button>
                                 <button id="pro-4-tab" data-bs-toggle="tab" data-bs-target="#pro-4" type="button" role="tab"
                                         aria-controls="pro-4" aria-selected="true">
-                                    <img th:src="@{assets/img/product-details/product-detalis-s4.jpg}" alt="product-thumbnail">
+                                    <img th:src="@{/assets/img/product-details/product-detalis-s4.jpg}" alt="product-thumbnail">
                                 </button>
                             </div>
                         </div>
