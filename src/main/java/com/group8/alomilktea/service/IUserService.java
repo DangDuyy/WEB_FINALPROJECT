@@ -13,13 +13,15 @@ public interface IUserService {
 
 	long count();
 
-	Optional<User> findById(Integer id);
+	// Lưu user
+	void save(User user);
+
+	// Xóa user theo ID
+	User findById(Integer id);
 
 	List<User> findAll();
 
 	Page<User> findAll(Pageable pageable);
-
-	<S extends User> S save(S entity);
 
 	User updateUser(User model);
 
