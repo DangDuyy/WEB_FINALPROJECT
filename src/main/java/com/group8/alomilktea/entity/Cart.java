@@ -1,8 +1,18 @@
 package com.group8.alomilktea.entity;
 
-import jakarta.persistence.*;
+import java.io.Serializable;
+
+import com.group8.alomilktea.entity.CartKey;
+import com.group8.alomilktea.entity.Product;
+import com.group8.alomilktea.entity.User;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,46 +21,45 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Cart {
-
-    @Id
+public class Cart implements Serializable{
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    private CartKey id;
+    @Column(name="quantity")
+    private int quantity;
+    @OneToOne
+    @JoinColumn(name = "userid",referencedColumnName = "userid",insertable=false, updatable=false)
+    private User user;
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId",foreignKey = @ForeignKey(name = "FK_Cart_User"))
-    private User user;  // Khóa ngoại tham chiếu đến bảng User
+    @JoinColumn(name = "proid",insertable = false, updatable = false)
+    private Product product;
+    public Cart(CartKey id, int quantity) {
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "proId", referencedColumnName = "proId",foreignKey = @ForeignKey(name = "FK_Cart_product"))
-    private Product product;  // Khóa ngoại tham chiếu đến bảng Product
-
-    @Column(name = "quantity")
-    private Integer quantity;
-
-    // Constructors, getters, and setters
-
-
+        this.id = id;
+        this.quantity = quantity;
+    }
+    public CartKey getId() {
+        return id;
+    }
+    public void setId(CartKey id) {
+        this.id = id;
+    }
+    public int getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
-
     public Product getProduct() {
         return product;
     }
-
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
     }
 }

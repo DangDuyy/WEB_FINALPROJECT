@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IPromotionServiceImpl implements IPromotionService {
+public class PromotionServiceImpl implements IPromotionService {
     @Autowired
     private PromotionRepository repo;
     @Override

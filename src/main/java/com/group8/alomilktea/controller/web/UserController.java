@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping(value = {"/user"})  // Cố định id = 1
+@RequestMapping(value = {"web/product"})  // Cố định id = 1
 @Controller
 public class UserController {
 
@@ -32,7 +32,7 @@ public class UserController {
         return "web/billy/index";
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("detail/{id}")
     public String product(@PathVariable("id") Integer id, Model model) {
         String currentUserName = "1";  // Giả lập người dùng có id = 1
         List<ProductDetailDTO> product = productService.findProductInfoByID(id);
