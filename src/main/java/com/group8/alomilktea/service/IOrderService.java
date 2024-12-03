@@ -9,7 +9,7 @@ import java.util.List;
 public interface IOrderService {
     Page<Order> getAll(Integer pageNo);
 
-    void updateOrderState(Integer orderId, int newState);
+    void updateOrderState(Integer orderId, String newState);
     void deleteById(Integer id);
     List<Order> findOder(Integer userId);
     long count();

@@ -35,7 +35,7 @@ public class OderController {
 
 
     @GetMapping("updateState/{orderId}/{newState}")
-    public String updateOrderState(@PathVariable("orderId") Integer orderId, @PathVariable("newState") int newState) {
+    public String updateOrderState(@PathVariable("orderId") Integer orderId, @PathVariable("newState") String newState) {
         orderSer.updateOrderState(orderId, newState);
         return "redirect:/admin/orders";
     }

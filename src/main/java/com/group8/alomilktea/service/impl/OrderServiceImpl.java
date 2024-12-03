@@ -26,7 +26,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public void updateOrderState(Integer orderId, int newState) {
+    public void updateOrderState(Integer orderId, String newState) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
 
         if (optionalOrder.isPresent()) {
@@ -35,6 +35,8 @@ public class OrderServiceImpl implements IOrderService {
             orderRepository.save(order);
         } else {}
     }
+
+
 
     @Override
     public void deleteById(Integer id) {

@@ -32,7 +32,7 @@ public class Order {
     private String shippingMethod;
 
     @Column(name = "status")
-    private Integer status;
+    private String status;
 
     @Column(name = "total")
     private Double total;
@@ -43,7 +43,7 @@ public class Order {
 
 
     // Constructor with fields
-    public Order(String currency, String date, String paymentMethod, String shippingMethod, Integer status, Double total, User user) {
+    public Order(String currency, String date, String paymentMethod, String shippingMethod, String status, Double total, User user) {
         this.currency = currency;
         this.date = date;
         this.paymentMethod = paymentMethod;

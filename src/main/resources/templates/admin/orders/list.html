@@ -3,14 +3,13 @@
       layout:decorate="~{admin/layout-admin.html}">
 <body>
 
-<!--Thêm dòng này vào-->
 <section layout:fragment="content">
 
-    <!--Viết nội dung từ đây-->
+    <!-- Nội dung từ đây -->
     <div class="row">
         <div class="col mt-4">
             <div class="container-fluid">
-                <!-- Page Title -->
+                <!-- Tiêu đề trang -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">Order</h1>
                 </div>
@@ -27,14 +26,14 @@
                             <th style="width: 5%;">OrderId</th>
                             <th style="width: 5%;">UserId</th>
                             <th style="width: 10%;">Name</th>
-                            <th style="width: 10%;">Phone</th>
-                            <th style="width: 15%;">Address</th>
+                            <th style="width: 8%;">Phone</th>
+                            <th style="width: 12%;">Address</th>
                             <th style="width: 10%;">Order date</th>
                             <th style="width: 10%;">Payment method</th>
                             <th style="width: 10%;">Shipping method</th>
                             <th style="width: 10%;">Order status</th>
                             <th style="width: 10%;">Order total</th>
-                            <th style="width: 5%;">Currency</th>
+                            <th style="width: 10%;">Currency</th>
                             <th style="width: 10%;">Action</th>
                         </tr>
                         </thead>
@@ -48,24 +47,38 @@
                             <td th:text="${item.date}"></td>
                             <td th:text="${item.paymentMethod}"></td>
                             <td th:text="${item.shippingMethod}"></td>
-                            <td th:text="${item.status == 1 ? 'Done' : 'Pending'}"
-                                th:style="${item.status == 1 ? 'color: green;' : 'color: orange;'}">
-                            </td>
+                            <td th:text="${item.status}"></td>
                             <td th:text="${item.total}"></td>
                             <td th:text="${item.currency}"></td>
                             <td>
-                                <a th:href="@{'/admin/orders/delete/' + ${item.orderId}}" class="btn btn-danger btn-sm">Delete</a>
-                                <form th:if="${item.status == 0}" th:action="@{'/admin/orders/updateState/' + ${item.orderId} + '/1'}" method="get" style="display: inline-block;">
-                                    <button type="submit" class="btn btn-success btn-sm">Accept</button>
-                                </form>
-                                <form th:if="${item.status == 1}" th:action="@{'/admin/orders/updateState/' + ${item.orderId} + '/0'}" method="get" style="display: inline-block;">
-                                    <button type="submit" class="btn btn-warning btn-sm">Cancel</button>
-                                </form>
+                                <!-- Dấu ba chấm nằm ngang -->
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        ...
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li>
+                                            <a class="dropdown-item" th:href="@{'/admin/orders/delete/' + ${item.orderId}}">Delete</a>
+                                        </li>
+                                        <li>
+                                            <form th:if="${item.status != 'Done'}" th:action="@{'/admin/orders/updateState/' + ${item.orderId} + '/Done'}" method="get">
+                                                <button type="submit" class="dropdown-item">Mark as Done</button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form th:if="${item.status != 'Cancel'}" th:action="@{'/admin/orders/updateState/' + ${item.orderId} + '/Cancel'}" method="get">
+                                                <button type="submit" class="dropdown-item">Cancel Order</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </td>
+
+
+
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
 
                 <nav aria-label="Page navigation example">
@@ -82,11 +95,8 @@
                     </ul>
                 </nav>
 
-
-
             </div>
         </div>
-
     </div>
 
 </section>
