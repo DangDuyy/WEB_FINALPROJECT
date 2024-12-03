@@ -58,7 +58,15 @@ public class AuthController {
         request.getSession().removeAttribute("loginStatus");
         return "web/auth/login";
     }
-
+    @RequestMapping(path = "/auth/login", method = RequestMethod.POST)
+    public String loginPost(Model model, Principal principal, HttpServletRequest request) {
+        if (principal != null) {
+            // Lưu tên người dùng vào session
+            request.getSession().setAttribute("username", principal.getName());
+            return "redirect:/";  // Chuyển hướng sau khi đăng nhập
+        }
+        return "web/auth/login";
+    }
     @RequestMapping(path = "/auth/login1", method = RequestMethod.GET)
     public String user(Model model) {
 

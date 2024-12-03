@@ -2,6 +2,7 @@ package com.group8.alomilktea.repository;
 
 import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.entity.ProductDetail;
+import com.group8.alomilktea.model.ProductDetailDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,4 +18,18 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT pd FROM ProductDetail pd WHERE pd.product.proId = :productId")
     List<ProductDetail> findProductDetailsByProductId(@Param("productId") Integer productId);
+    @Query("SELECT new com.group8.alomilktea.model.ProductDetailDTO( " +
+            "p.proId, p.name, p.description, p.imageLink, p.category.cateId, " +
+            "pd.proDId, pd.size, pd.price) " +
+            "FROM Product p " +
+            "LEFT JOIN p.productDetails pd " +
+            "WHERE pd.size = 'M'")
+    List<ProductDetailDTO> findProductInfoBySize();
+    @Query("SELECT new com.group8.alomilktea.model.ProductDetailDTO( " +
+            "p.proId, p.name, p.description, p.imageLink, p.category.cateId, " +
+            "pd.proDId, pd.size, pd.price) " +
+            "FROM Product p " +
+            "LEFT JOIN p.productDetails pd " +
+            "WHERE pd.size = 'M' AND p.proId = :productId")
+    List<ProductDetailDTO> findProductInfoByID(@Param("productId") Integer productId);
 }
