@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
 @Data
@@ -28,26 +29,32 @@ public class Order {
     @Column(name = "payment_method", columnDefinition = "varchar(255) default 'standard'")
     private String paymentMethod;
 
-    @Column(name = "shipping_method")
-    private String shippingMethod;
+//    @Column(name = "shipping_method")
+//    private String shippingMethod;
 
     @Column(name = "status")
-    private String status;
+    private Integer status;
 
     @Column(name = "total")
     private Double total;
 
     @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "FKdxew8n76x1bnoxjas0qxrlbq6"))
+    @JoinColumn(name = "userid", referencedColumnName = "userId", foreignKey = @ForeignKey(name = "FKdxew8n76x1bnoxjas0qxrlbq6"))
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "shipCid", referencedColumnName = "shipCid", foreignKey = @ForeignKey(name = "FK_Ship_Oder"))
+    private ShipmentCompany shipmentCompany;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 
     // Constructor with fields
-    public Order(String currency, String date, String paymentMethod, String shippingMethod, String status, Double total, User user) {
+    public Order(String currency, String date, String paymentMethod, ShipmentCompany shipmentCompany, Integer status, Double total, User user) {
         this.currency = currency;
         this.date = date;
         this.paymentMethod = paymentMethod;
-        this.shippingMethod = shippingMethod;
+        this.shipmentCompany = shipmentCompany;
         this.status = status;
         this.total = total;
         this.user = user;
@@ -73,7 +80,7 @@ public class Order {
                 ", currency='" + currency + '\'' +
                 ", date='" + date + '\'' +
                 ", paymentMethod='" + paymentMethod + '\'' +
-                ", shippingMethod='" + shippingMethod + '\'' +
+                ", shippingMethod='" + shipmentCompany + '\'' +
                 ", status=" + status +
                 ", total=" + total +
                 ", user=" + user +

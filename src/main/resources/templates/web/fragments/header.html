@@ -60,15 +60,36 @@
 					<div class="col-lg-9 col-md-8 col-12 col-sm-8">
 						<div class="header-middle-right f-right">
 							<div class="header-login">
-								<a th:href="@{/auth/login}">
-									<div class="header-icon-style">
-										<i class="icon-user icons"></i>
-									</div>
-									<div class="login-text-content">
-										<p>Register <br> or <span>Sign in</span></p>
-									</div>
-								</a>
+								<!-- Kiểm tra xem người dùng chưa đăng nhập -->
+								<div sec:authorize="isAnonymous()">
+									<a th:href="@{/auth/login}" class="nav-link">
+										<div class="header-icon-style">
+											<i class="icon-user icons"></i>
+										</div>
+										<div class="login-text-content">
+											<p>Register <br> or <span>Sign in</span></p>
+										</div>
+									</a>
+								</div>
+								<!-- Hiển thị khi người dùng đã đăng nhập -->
+								<div sec:authorize="isAuthenticated()" class="nav-item dropdown-center" style="margin-right: 20px;">
+									<a th:href="@{/account/my-account}" class="nav-link">
+										<div class="header-icon-style">
+											<i class="icon-user icons"></i>
+										</div>
+										<div class="login-text-content">
+											<p>Hello, <span th:text="${#authentication.name}"></span> <br>
+												<span>My Account</span>
+											</p>
+										</div>
+									</a>
+									<a th:href="@{/auth/logout}" class="logout-link" style="margin-left: 10px;">
+										<span>Logout</span>
+									</a>
+								</div>
 							</div>
+
+
 							<div class="header-wishlist">
 								<a th:href="@{wishlist.html}">
 									<div class="header-icon-style">
@@ -134,6 +155,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="header-bottom transparent-bar black-bg">
 			<div class="container">
 				<div class="row">
