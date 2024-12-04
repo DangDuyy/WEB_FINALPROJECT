@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "user") // Đảm bảo tên bảng là "users"
+@Table(name = "user") // �?m b?o t�n b?ng l� "users"
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +22,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id") // Đảm bảo cột trong bảng là "user_id"
+    @Column(name = "user_id")
     private Integer userId;
 
     @Column(name = "password", length = 255)
@@ -73,7 +73,7 @@ public class User implements Serializable {
     private List<Rating> ratings;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Order> orders;  // Mối quan hệ với bảng Order
+    private List<Order> orders;  // M?i quan h? v?i b?ng Order
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private ShipmentCompany shipmentCompany;
