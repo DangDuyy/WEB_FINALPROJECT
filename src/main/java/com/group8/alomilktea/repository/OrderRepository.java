@@ -19,7 +19,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 		""")
     List<Order> findOrderByUserId(@Param("userId") Integer userId);
     @Query(value = "SELECT IFNULL(SUM(CASE " +
-            "WHEN currency = 'VND' THEN total " +
+            "WHEN currency = 'VNĐ' THEN total " +
             "WHEN currency = 'USD' THEN total * 24390.243902 " +
             "END), 0) AS total_month " +
             "FROM orders " +
@@ -29,7 +29,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     int revenueOnCurrentMonth();
 
     @Query(value = "SELECT IFNULL(SUM(CASE " +
-            "WHEN currency = 'VND' THEN total " +
+            "WHEN currency = 'VNĐ' THEN total " +
             "WHEN currency = 'USD' THEN total * 24390.243902 " +
             "END), 0) AS total_year " +
             "FROM orders " +
@@ -44,7 +44,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     int rateCompleted();
 
     @Query(value = "SELECT IFNULL(SUM(CASE " +
-            "WHEN currency = 'VND' THEN total " +
+            "WHEN currency = 'VNĐ' THEN total " +
             "WHEN currency = 'USD' THEN total * 24390.243902 " +
             "END), 0) AS total_quarter " +
             "FROM orders " +
@@ -59,7 +59,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
                     + "  UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 \r\n"
                     + "  UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12\r\n"
                     + ")\r\n"
-                    + "SELECT  IFNULL(SUM(CASE WHEN o.currency = \"VND\" THEN o.total\r\n"
+                    + "SELECT  IFNULL(SUM(CASE WHEN o.currency = \"VNĐ\" THEN o.total\r\n"
                     + "                                        WHEN o.currency = \"USD\" THEN o.total * 23000\r\n"
                     + "                                   END), 0) AS total_sum, m.month_number\r\n"
                     + "FROM AllMonths m\r\n"
@@ -74,7 +74,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "WITH AllQuarters AS (\r\n"
                     + "  SELECT 1 AS quarter_number UNION SELECT 2 UNION SELECT 3 UNION SELECT 4\r\n"
                     + ")\r\n"
-                    + "SELECT  IFNULL(SUM(CASE WHEN o.currency = \"VND\" THEN o.total\r\n"
+                    + "SELECT  IFNULL(SUM(CASE WHEN o.currency = \"VNĐ\" THEN o.total\r\n"
                     + "                                      WHEN o.currency = \"USD\" THEN o.total * 24390.243902\r\n"
                     + "                                 END), 0) AS total_sum\r\n"
                     + "FROM AllQuarters q\r\n"
