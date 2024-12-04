@@ -34,4 +34,7 @@ public interface IUserService {
 	Optional<User> getByUserNameOrEmail(String username);
 
 	User getUserLogged();
+
+	List<User> findAllShippers();
+
 }

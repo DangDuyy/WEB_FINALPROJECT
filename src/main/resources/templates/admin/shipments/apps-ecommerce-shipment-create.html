@@ -33,13 +33,13 @@
                                     <!-- Shipment Title -->
                                     <div class="xl:col-span-6">
                                         <label for="shipmentNameInput" class="inline-block mb-2 text-base font-medium">Shipment Title</label>
-                                        <input type="text" id="shipmentNameInput" name="name"
+                                        <input type="text" id="shipmentNameInput" name="methodname"
                                                th:value="${shipments.shipCname}"
                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                               placeholder="Shipmentname" required maxlength="20">
+                                               placeholder="Shipment name" required maxlength="20">
                                     </div><div class="xl:col-span-6">
-                                        <label for="shipmentNameInput" class="inline-block mb-2 text-base font-medium">Password</label>
-                                        <input type="text" name="password"
+                                        <label for="shipmentNameInput" class="inline-block mb-2 text-base font-medium">Price</label>
+                                        <input type="text" name="price"
                                                th:value="${shipments.price}"
                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                placeholder="Password" required maxlength="20">
@@ -63,11 +63,11 @@
 <!--                                        </div>-->
 <!--                                    </div>-->
                                     <div class="xl:col-span-6">
-                                        <label for="roleIds">Shipper:</label>
-                                        <select id="roleIds" name="roleIds" multiple required>
-                                            <option value="">Select Role</option>
-                                            <th:block th:each="role : ${roles}">
-                                                <option th:value="${role.id}" th:text="${role.role}"></option>
+                                        <label for="shipper">Shipper:</label>
+                                        <select id="shipper" name="shipperId" required>
+                                            <option value="">Select Shipper</option>
+                                            <th:block th:each="shipper : ${shippers}">
+                                                <option th:value="${shipper.fullName}" th:text="${shipper.fullName}"></option>
                                             </th:block>
                                         </select>
                                     </div>

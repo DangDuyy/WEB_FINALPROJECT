@@ -2,6 +2,7 @@ package com.group8.alomilktea.controller.admin;
 
 import com.group8.alomilktea.entity.ShipmentCompany;
 import com.group8.alomilktea.service.IShipmentService;
+import com.group8.alomilktea.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/admin/shipment")
 public class ShipmentController {
+
+    @Autowired
+    private IUserService userService;
 
     @Autowired
     private IShipmentService shipmentCompanyService;
@@ -39,6 +43,8 @@ public class ShipmentController {
     public String addShipmentCompany(ModelMap model) {
         model.addAttribute("shipments", new ShipmentCompany());
         model.addAttribute("isEdit", false);
+        model.addAttribute("shippers", userService.findAllShippers()); // Lấy danh sách shipper
+
         return "admin/shipments/apps-ecommerce-shipment-create";
     }
 
@@ -69,6 +75,7 @@ public class ShipmentController {
         }
         model.addAttribute("shipments", shipmentCompany);
         model.addAttribute("isEdit", true);
+        model.addAttribute("shippers", userService.findAllShippers()); // Lấy danh sách shipper
         return "admin/shipments/apps-ecommerce-shipment-create";
     }
 
