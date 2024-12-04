@@ -68,6 +68,32 @@ public class OderController {
 
         return "admin/orders/list"; // Tên file Thymeleaf hiển thị kết quả
     }
+    @GetMapping("/thongke")
+    public String showStatistics(Model model) {
+        long totalOrders = orderSer.count();
+        long doneOrders = orderSer.countDoneOrders();
+        long pendingOrders = orderSer.countPendingOrders();
+        long cancelOrders = orderSer.countCancelOrders();
+        long shippingOrders = orderSer.countShippingOrders();
 
+        int revenueCurrentMonth = orderSer.reOnCurrentMonth();
+        int revenueCurrentYear = orderSer.reOnCurrentYear();
+        int revenueCurrentQuarter = orderSer.reOnCurrentQuarter();
+        int completedOrderRate = orderSer.getCompletedOrderRate();
+
+        // Thêm các giá trị thống kê vào model
+        model.addAttribute("totalOrders", totalOrders);
+        model.addAttribute("doneOrders", doneOrders);
+        model.addAttribute("pendingOrders", pendingOrders);
+        model.addAttribute("cancelOrders", cancelOrders);
+        model.addAttribute("shippingOrders", shippingOrders);
+        model.addAttribute("revenueCurrentMonth", revenueCurrentMonth);
+        model.addAttribute("revenueCurrentYear", revenueCurrentYear);
+        model.addAttribute("revenueCurrentQuarter", revenueCurrentQuarter);
+        model.addAttribute("completedOrderRate", completedOrderRate);
+
+        // Trả về view thống kê
+        return "admin/orders/thongke"; // Đảm bảo rằng bạn có file thongke.html trong thư mục admin/orders
+    }
 
 }
