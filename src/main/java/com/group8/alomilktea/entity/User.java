@@ -62,13 +62,14 @@ public class User implements Serializable {
     @Column(name = "is_enabled", columnDefinition = "BIT(1) DEFAULT 1")
     private Boolean isEnabled; // Use BIT(1) for boolean-like values in MySQL
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "users_roles", // "users_roles" is the join table to associate users with roles
+            name = "users_roles", // "users_roles" là bảng liên kết giữa người dùng và vai trò
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Roles> roles = new HashSet<>();
+
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Rating> ratings;

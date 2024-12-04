@@ -15,7 +15,7 @@
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="#!" class="text-slate-400 dark:text-zink-200">User</a>
+                        <a href="#!" class="text-slate-400 dark:text-zink-200">Shipment</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
                         Add New
@@ -26,27 +26,27 @@
                 <div class="xl:col-span-9">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Create User</h6>
-                            <form th:action="${isEdit ? '/admin/user/edit/save' : '/admin/user/add/save'}" method="post">
+                            <h6 class="mb-4 text-15">Create Shipment</h6>
+                            <form th:action="${isEdit ? '/admin/shipment/edit/save' : '/admin/shipment/add/save'}" method="post">
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
-                                    <input type="hidden" th:if="${isEdit}" th:name="id" th:value="${user.userId}" />
-                                    <!-- User Title -->
+                                    <input type="hidden" th:if="${isEdit}" th:name="id" th:value="${shipments.shipCid}" />
+                                    <!-- Shipment Title -->
                                     <div class="xl:col-span-6">
-                                        <label for="userNameInput" class="inline-block mb-2 text-base font-medium">User Title</label>
-                                        <input type="text" id="userNameInput" name="name"
-                                               th:value="${user.fullName}"
+                                        <label for="shipmentNameInput" class="inline-block mb-2 text-base font-medium">Shipment Title</label>
+                                        <input type="text" id="shipmentNameInput" name="name"
+                                               th:value="${shipments.shipCname}"
                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                               placeholder="Username" required maxlength="20">
+                                               placeholder="Shipmentname" required maxlength="20">
                                     </div><div class="xl:col-span-6">
-                                        <label for="userNameInput" class="inline-block mb-2 text-base font-medium">Password</label>
+                                        <label for="shipmentNameInput" class="inline-block mb-2 text-base font-medium">Password</label>
                                         <input type="text" name="password"
-                                               th:value="${user.password}"
+                                               th:value="${shipments.price}"
                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                placeholder="Password" required maxlength="20">
                                     </div>
                                     <!-- Image Upload Options -->
 <!--                                    <div class="lg:col-span-2 xl:col-span-12">-->
-<!--                                        <label class="inline-block mb-2 text-base font-medium">User Image</label>-->
+<!--                                        <label class="inline-block mb-2 text-base font-medium">Shipment Image</label>-->
 <!--                                        <div>-->
 <!--                                            <label class="inline-block mb-2 text-sm font-medium">Upload from Computer</label>-->
 <!--                                            <input type="file" name="imageFile"-->
@@ -57,36 +57,14 @@
 <!--                                        <div class="mt-4">-->
 <!--                                            <label class="inline-block mb-2 text-sm font-medium">Or Enter Image URL</label>-->
 <!--                                            <input type="url" name="imageUrl"-->
-<!--                                                   th:value="${user.logo}"-->
+<!--                                                   th:value="${shipment.logo}"-->
 <!--                                                   class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"-->
 <!--                                                   placeholder="https://example.com/image.jpg">-->
 <!--                                        </div>-->
 <!--                                    </div>-->
-                                    <!-- Description -->
-                                    <div class="lg:col-span-2 xl:col-span-12">
-                                        <label for="userEmail" class="inline-block mb-2 text-base font-medium">Email</label>
-                                        <input type="email" name="email"
-                                               th:value="${user.email}"
-                                               class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                               id="userEmail" placeholder="Enter Email" required>
-                                    </div>
-                                    <div class="lg:col-span-2 xl:col-span-12">
-                                        <label for="userPhone" class="inline-block mb-2 text-base font-medium">Phone</label>
-                                        <input type="phone" name="phone"
-                                               th:value="${user.phone}"
-                                               class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                               id="userPhone" placeholder="Enter Phone" required>
-                                    </div>
-                                    <div class="lg:col-span-2 xl:col-span-12">
-                                        <label for="userAddress" class="inline-block mb-2 text-base font-medium">Address</label>
-                                        <input type="address" name="address"
-                                               th:value="${user.address}"
-                                               class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                               id="userAddress" placeholder="Enter Address" required>
-                                    </div>
                                     <div class="xl:col-span-6">
-                                        <label for="roleIds">Role:</label>
-                                        <select id="roleIds" name="roleIds" required>
+                                        <label for="roleIds">Shipper:</label>
+                                        <select id="roleIds" name="roleIds" multiple required>
                                             <option value="">Select Role</option>
                                             <th:block th:each="role : ${roles}">
                                                 <option th:value="${role.id}" th:text="${role.role}"></option>
@@ -103,7 +81,7 @@
                                     </button>
                                     <button type="submit"
                                             class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600">
-                                        <span th:text="${isEdit} ? 'Update User' : 'Create User'">Create User</span>
+                                        <span th:text="${isEdit} ? 'Update Shipment' : 'Create Shipment'">Create Shipment</span>
                                     </button>
                                 </div>
                             </form>
@@ -113,7 +91,7 @@
                 <div class="xl:col-span-3">
                     <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">User Card Preview</h6>
+                            <h6 class="mb-4 text-15">Shipment Card Preview</h6>
 
                             <div class="px-5 py-8 rounded-md bg-sky-50 dark:bg-zink-600">
                                 <img th:src="@{assets/images/img-03.png}" alt="" class="block mx-auto h-44">
@@ -164,7 +142,7 @@
                                 </div>
                             </div>
                             <div class="flex gap-2 mt-4">
-                                <button type="button" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">Create Users</button>
+                                <button type="button" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">Create Shipments</button>
                                 <button type="button" class="w-full text-white bg-purple-500 border-purple-500 btn hover:text-white hover:bg-purple-600 hover:border-purple-600 focus:text-white focus:bg-purple-600 focus:border-purple-600 focus:ring focus:ring-purple-100 active:text-white active:bg-purple-600 active:border-purple-600 active:ring active:ring-purple-100 dark:ring-purple-400/10">Draft</button>
                             </div>
                         </div>

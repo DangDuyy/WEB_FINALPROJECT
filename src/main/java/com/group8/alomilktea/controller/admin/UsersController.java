@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin/user")
-public class UserController {
+public class UsersController {
 
     @Autowired
     private IUserService userService;
@@ -65,17 +65,30 @@ public class UserController {
 
     @PostMapping("/add/save")
     public String saveUser(
-            @ModelAttribute User user,
-            @RequestParam("roleIds") List<Integer> roleIds, // Get selected role IDs
+            @RequestParam("name") String name,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam("roleIds") List<Integer> roleIds, // Danh sách ID của vai trò
             ModelMap model) {
 
-        Set<Roles> roles = roleService.findByIds(roleIds); // Fetch roles by IDs
+        // Tạo một đối tượng User mới
+        User user = new User();
+        user.setFullName(name);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        // Lấy danh sách Roles từ danh sách ID
+        Set<Roles> roles = roleService.findByIds(roleIds);
         user.setRoles(roles);
 
+        // Lưu User vào cơ sở dữ liệu
         userService.save(user);
+
+        // Gửi thông báo thành công
         model.addAttribute("message", "User created successfully!");
         return "redirect:/admin/user/list";
     }
+
 
     @GetMapping("/edit/{userId}")
     public String editUser(@PathVariable Integer userId, ModelMap model) {
