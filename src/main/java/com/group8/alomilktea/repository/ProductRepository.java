@@ -37,7 +37,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "p.proId, p.name, p.description, p.imageLink, p.category.cateId, " +
             "pd.proDId, pd.size, pd.price) " +
             "FROM Product p " +
-            "LEFT JOIN p.productDetails pd " +
+            "LEFT JOIN ProductDetail pd " +
             "WHERE p.proId = :productId AND pd.size = :size")
     ProductDetailDTO findProductInfoByIDAndSize(@Param("productId") Long productId, @Param("size") String size);
 
