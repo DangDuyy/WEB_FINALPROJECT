@@ -36,7 +36,7 @@ public class Order {
     private String paymentMethod;
 
     @Column(name = "status")
-    private Integer status;
+    private String status;
 
     @Column(name = "total")
     private Double total;
@@ -49,7 +49,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
-    public Order(String currency, String date, String paymentMethod, ShipmentCompany shipmentCompany, Integer status, Double total, User user) {
+    public Order(String currency, String date, String paymentMethod, ShipmentCompany shipmentCompany,String status, Double total, User user) {
         this.currency = currency;
         this.date = date;
         this.paymentMethod = paymentMethod;
