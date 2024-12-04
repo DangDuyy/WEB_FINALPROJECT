@@ -1,5 +1,6 @@
 package com.group8.alomilktea.service.impl;
 
+import com.group8.alomilktea.common.enums.ProductAttribute;
 import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.entity.ProductDetail;
 import com.group8.alomilktea.model.ProductDetailDTO;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService {
@@ -26,6 +28,11 @@ public class ProductService implements IProductService {
     @Override
     public Product findById(Integer id) {
         return repo.findById(id).orElse(null);
+    }
+
+    @Override
+    public Optional<Product> findById0p(Integer id) {
+        return repo.findById(id);
     }
 
     @Override
@@ -56,6 +63,11 @@ public class ProductService implements IProductService {
     @Override
     public List<ProductDetailDTO> findProductInfoBySize() {
         return repo.findProductInfoBySize();
+    }
+
+    @Override
+    public ProductDetailDTO findProductInfoByIDAndSize(Long productId, String size) {
+        return repo.findProductInfoByIDAndSize(productId, size);
     }
 
     @Override

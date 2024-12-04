@@ -1,5 +1,6 @@
 package com.group8.alomilktea.repository;
 
+import com.group8.alomilktea.common.enums.ProductAttribute;
 import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.entity.ProductDetail;
 import com.group8.alomilktea.model.ProductDetailDTO;
@@ -32,4 +33,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "LEFT JOIN p.productDetails pd " +
             "WHERE pd.size = 'M' AND p.proId = :productId")
     List<ProductDetailDTO> findProductInfoByID(@Param("productId") Integer productId);
+    @Query("SELECT new com.group8.alomilktea.model.ProductDetailDTO( " +
+            "p.proId, p.name, p.description, p.imageLink, p.category.cateId, " +
+            "pd.proDId, pd.size, pd.price) " +
+            "FROM Product p " +
+            "LEFT JOIN p.productDetails pd " +
+            "WHERE p.proId = :productId AND pd.size = :size")
+    ProductDetailDTO findProductInfoByIDAndSize(@Param("productId") Long productId, @Param("size") String size);
+
+
+
 }

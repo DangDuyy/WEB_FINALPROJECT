@@ -12,13 +12,19 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "orders")
+@Table(name = "orders")  // Đảm bảo tên bảng là "orders"
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Integer orderId;
+
+    // Các thuộc tính khác...
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "FK_user_order"))
+    private User user;  // Mối quan hệ với bảng User
 
     @Column(name = "currency")
     private String currency;
@@ -29,27 +35,20 @@ public class Order {
     @Column(name = "payment_method", columnDefinition = "varchar(255) default 'standard'")
     private String paymentMethod;
 
-//    @Column(name = "shipping_method")
-//    private String shippingMethod;
-
     @Column(name = "status")
     private Integer status;
 
     @Column(name = "total")
     private Double total;
 
-    @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userId", foreignKey = @ForeignKey(name = "FKdxew8n76x1bnoxjas0qxrlbq6"))
-    private User user;
 
     @ManyToOne
-    @JoinColumn(name = "shipCid", referencedColumnName = "shipCid", foreignKey = @ForeignKey(name = "FK_Ship_Oder"))
+    @JoinColumn(name = "ship_cid", referencedColumnName = "ship_cid", foreignKey = @ForeignKey(name = "FK_Ship_Oder"))
     private ShipmentCompany shipmentCompany;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
-    // Constructor with fields
     public Order(String currency, String date, String paymentMethod, ShipmentCompany shipmentCompany, Integer status, Double total, User user) {
         this.currency = currency;
         this.date = date;

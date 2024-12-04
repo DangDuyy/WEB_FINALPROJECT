@@ -34,8 +34,10 @@ public class HomeController{
         }
         return "web/billy/index";
     }
-    @GetMapping("/cart")
-    public String cart(Model model){
-        return "web/billy/cart-page";
+    @GetMapping("/check-out")
+    public String checkout(Model model){
+        return "web/billy/checkout";
     }
+
+
 }

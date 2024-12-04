@@ -1,5 +1,6 @@
 package com.group8.alomilktea.service;
 
+import com.group8.alomilktea.common.enums.ProductAttribute;
 import com.group8.alomilktea.entity.Cart;
 import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.entity.ProductDetail;
@@ -9,13 +10,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IProductService {
 
     Product save(Product product);
 
     Product findById(Integer id);
-
+    Optional<Product> findById0p(Integer id);
     void deleteById(Integer id);
 
     Page<Product> getAll(Pageable pageable);
@@ -26,8 +28,10 @@ public interface IProductService {
     String getPromotionNameByProductId(Integer productId);
 
     List<ProductDetail> findProductDetailsByProductId(Integer productId);
+
     List<ProductDetailDTO> findProductInfoByID(Integer productId);
+
     List<ProductDetailDTO> findProductInfoBySize();
 
-
+    ProductDetailDTO findProductInfoByIDAndSize(Long productId, String size);
 }

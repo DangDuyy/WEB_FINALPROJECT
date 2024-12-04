@@ -20,7 +20,7 @@ public class OrderDetail {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "pro_id", referencedColumnName = "proId", foreignKey = @ForeignKey(name = "FK_OrderDetail_Product"))
+    @JoinColumn(name = "pro_id", referencedColumnName = "pro_id", foreignKey = @ForeignKey(name = "FK_OrderDetail_Product"))
     private Product product; // Liên kết với Product
 
 //    @Column(name = "discount", nullable = false)

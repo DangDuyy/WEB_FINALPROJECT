@@ -13,7 +13,7 @@ import lombok.*;
 public class  ProductDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "proDId")
+    @Column(name = "prod_id")
     private Integer proDId;
 
     @Column(name = "size")
@@ -24,7 +24,7 @@ public class  ProductDetail {
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "proId", referencedColumnName = "proId", foreignKey = @ForeignKey(name = "FK_Product_ProducDelail"))
+    @JoinColumn(name = "pro_id", referencedColumnName = "pro_id", foreignKey = @ForeignKey(name = "FK_Product_ProducDelail"))
     @ToString.Exclude // Bỏ trường này khi gọi toString()
     private Product product;
 }

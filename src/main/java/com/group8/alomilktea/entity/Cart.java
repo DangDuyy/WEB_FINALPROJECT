@@ -2,9 +2,6 @@ package com.group8.alomilktea.entity;
 
 import java.io.Serializable;
 
-import com.group8.alomilktea.entity.CartKey;
-import com.group8.alomilktea.entity.Product;
-import com.group8.alomilktea.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -21,45 +18,70 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cart implements Serializable{
+public class Cart implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    private CartKey id;
-    @Column(name="quantity")
-    private int quantity;
-    @OneToOne
-    @JoinColumn(name = "userid",referencedColumnName = "userid",insertable=false, updatable=false)
-    private User user;
-    @ManyToOne
-    @JoinColumn(name = "proid",insertable = false, updatable = false)
-    private Product product;
-    public Cart(CartKey id, int quantity) {
 
+    @EmbeddedId
+    private CartKey id;  // Ánh xạ CartKey vào cơ sở dữ liệu, không cần trường `size` riêng biệt.
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "price")
+    private Double price;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "pro_id", insertable = false, updatable = false)
+    private Product product;
+
+    public Cart(CartKey id, int quantity) {
         this.id = id;
         this.quantity = quantity;
     }
+
+// Getters and Setters
+
     public CartKey getId() {
         return id;
     }
+
     public void setId(CartKey id) {
         this.id = id;
     }
-    public int getQuantity() {
-        return quantity;
+
+    public Double getPrice() {
+        return price;
     }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
+
     public Product getProduct() {
         return product;
     }
+
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
