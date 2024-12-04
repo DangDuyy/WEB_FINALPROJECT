@@ -54,7 +54,7 @@
                         <div class="custom-col-5" th:each="product : ${products}">
                             <div class="product-wrapper mb-25">
                                 <div class="product-img">
-                                    <a th:href="@{/user/product/{id}(id=${product.proId})}">
+                                    <a th:href="@{/web/product/detail/{id}(id=${product.proId})}">
                                         <img th:src="@{${product.imageLink}}" alt="Product Image">
                                     </a>
                                     <div class="product-action">

@@ -1,8 +1,15 @@
 package com.group8.alomilktea.entity;
 
-import jakarta.persistence.*;
+import java.io.Serializable;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,31 +18,47 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Cart {
+public class Cart implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId",foreignKey = @ForeignKey(name = "FK_Cart_User"))
-    private User user;  // Khóa ngoại tham chiếu đến bảng User
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "proId", referencedColumnName = "proId",foreignKey = @ForeignKey(name = "FK_Cart_product"))
-    private Product product;  // Khóa ngoại tham chiếu đến bảng Product
+    @EmbeddedId
+    private CartKey id;  // Ánh xạ CartKey vào cơ sở dữ liệu, không cần trường `size` riêng biệt.
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
-    // Constructors, getters, and setters
+    @Column(name = "price")
+    private Double price;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    private User user;
 
-    public User getUser() {
-        return user;
+    @ManyToOne
+    @JoinColumn(name = "pro_id", insertable = false, updatable = false)
+    private Product product;
+
+    public Cart(CartKey id, int quantity) {
+        this.id = id;
+        this.quantity = quantity;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+// Getters and Setters
+
+    public CartKey getId() {
+        return id;
+    }
+
+    public void setId(CartKey id) {
+        this.id = id;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Product getProduct() {
@@ -46,11 +69,19 @@ public class Cart {
         this.product = product;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

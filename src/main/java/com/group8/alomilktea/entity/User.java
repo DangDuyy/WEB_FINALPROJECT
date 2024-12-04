@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "[user]") // Changed to "users" to avoid conflicts with SQL reserved keyword
+@Table(name = "user") // �?m b?o t�n b?ng l� "users"
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,16 +20,15 @@ import java.util.Set;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Integer userId;
 
     @Column(name = "password", length = 255)
     private String password;
 
-    @Column(name = "fullName", length = 255)
+    @Column(name = "full_name", length = 255)
     private String fullName;
 
     @Column(name = "email", length = 255, unique = true, nullable = true)
@@ -42,7 +41,7 @@ public class User implements Serializable {
     private String address;
 
     @Column(name = "is_admin", columnDefinition = "TINYINT(1) DEFAULT 0")
-    private Boolean isAdmin; // Use Boolean if you need null support, or boolean for non-null values
+    private Boolean isAdmin;
 
     @Column(name = "active", columnDefinition = "BIT(1) DEFAULT 0")
     private Boolean active;
@@ -60,21 +59,22 @@ public class User implements Serializable {
     private String code;
 
     @Column(name = "is_enabled", columnDefinition = "BIT(1) DEFAULT 1")
-    private Boolean isEnabled; // Use BIT(1) for boolean-like values in MySQL
+    private Boolean isEnabled;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "users_roles", // "users_roles" là bảng liên kết giữa người dùng và vai trò
+            name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Roles> roles = new HashSet<>();
 
-
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Rating> ratings;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Order> orders;  // M?i quan h? v?i b?ng Order
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private ShipmentCompany shipmentCompany;
-
 }

@@ -21,4 +21,20 @@ public class Roles {
     @Column(name="role_name")
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 }

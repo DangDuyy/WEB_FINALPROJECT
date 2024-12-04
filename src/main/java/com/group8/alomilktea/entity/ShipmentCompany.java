@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "[ShipmentCompany]") // Changed to "users" to avoid conflicts with SQL reserved keyword
+@Table(name = "[shipment_company]") // Changed to "users" to avoid conflicts with SQL reserved keyword
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,10 +19,10 @@ public class ShipmentCompany {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "shipCid")
+    @Column(name = "ship_cid")
     private Integer shipCid;
 
-    @Column(name ="Methodname")
+    @Column(name ="methodname")
     private String shipCname;
 
     @Column(name = "price")
@@ -32,7 +32,7 @@ public class ShipmentCompany {
     private List<Order> orders = new ArrayList<>();
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId", foreignKey = @ForeignKey(name = "FK_ShipmentCompany_User"))
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "FK_ShipmentCompany_User"))
     private User user;
 
 

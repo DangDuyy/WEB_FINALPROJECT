@@ -16,16 +16,16 @@ public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ratingId")
+    @Column(name = "rating_id")
     private Integer ratingId;
 
     @Id
     @ManyToOne
-    @JoinColumn(name="userId", nullable = false)
+    @JoinColumn(name="user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="productId", nullable = false, foreignKey = @ForeignKey(name = "FK_Rating_Product"))
+    @JoinColumn(name="product_id", nullable = false, foreignKey = @ForeignKey(name = "FK_Rating_Product"))
     private Product product;
 
     @Column(name = "content", length = 2000)
