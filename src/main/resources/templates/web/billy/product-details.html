@@ -1,0 +1,193 @@
+<!doctype html>
+<html class="no-js" lang="zxx" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{web/layout-web.html}">
+
+<body>
+<div layout:fragment="content">
+    <div class="breadcrumb-area gray-bg">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Product Details</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="product-details pt-100 pb-90">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="product-details-img">
+                        <img class="zoompro" th:src="@{${prd[0].imageLink}}" data-zoom-image="${prd[0].imageLink}"
+                             alt="zoom"/>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                    <div class="product-details-content">
+                        <h4 th:text="${prd[0].name}">Glory of the Snow</h4>
+                        <div class="rating-review">
+                            <div class="pro-dec-rating"></div>
+                            <div class="pro-dec-review"></div>
+                        </div>
+                        <span th:text="${prd[0].price}"> $260.00</span>
+                        <div class="in-stock"></div>
+                        <p th:text="${prd[0].description}">
+                            Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod
+                            mazim placerat facer possim assum.
+                        </p>
+                        <div class="pro-dec-size">
+                            <p>Select Size:</p>
+                            <div class="size-options">
+                                <label>
+                                    <input type="radio" name="drinkSize" value="S" checked onchange="updatePrice()">
+                                    Size S
+                                </label>
+                                <label>
+                                    <input type="radio" name="drinkSize" value="M" onchange="updatePrice()">
+                                    Size M
+                                </label>
+                                <label>
+                                    <input type="radio" name="drinkSize" value="L" onchange="updatePrice()">
+                                    Size L
+                                </label>
+                            </div>
+                        </div>
+
+                            <!-- Giá sản phẩm -->
+                            <span id="productPrice" th:text="${prd[0].price}"> $260.00</span>
+
+                        <script th:inline="javascript">
+                            /*<![CDATA[*/
+                            function updatePrice() {
+                                // Lấy giá trị kích thước đã chọn
+                                var size = document.querySelector('input[name="drinkSize"]:checked').value;
+
+                                // Lấy productId từ Thymeleaf (cần kiểm tra xem productId có hợp lệ không)
+                                var productId = /*[[${prd[0].proId}]]*/;
+                                if (!productId) {
+                                    console.error("Product ID is not available");
+                                    return;
+                                }
+
+                                // Gửi yêu cầu AJAX để lấy giá mới từ server
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("GET", "/web/product/getPrice?productId=" + productId + "&size=" + size, true);
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                        var response = JSON.parse(xhr.responseText);
+                                        if (response.success) {
+                                            // Cập nhật giá sản phẩm trên trang
+                                            document.getElementById('productPrice').innerText = response.price.toFixed(2);
+                                        } else {
+                                            alert("Lỗi khi lấy giá: " + response.message);
+                                        }
+                                    }
+                                };
+                                xhr.send();
+                            }
+
+                            // Đảm bảo updatePrice được gọi khi trang tải và khi người dùng chọn kích thước
+                            document.addEventListener('DOMContentLoaded', function() {
+                                updatePrice(); // Cập nhật giá khi trang tải
+                            });
+                            /*]]>*/
+                        </script>
+
+
+
+
+                        <div class="pro-details-cart-wrap">
+                            <div class="shop-list-cart-wishlist">
+                                <a title="Add To Cart" href="javascript:void(0)" onclick="addToCart()">
+                                    <i class="ion-android-cart"></i>
+                                </a>
+                                <a title="Wishlist" href="#" th:href="@{'/wishlist/add/' + ${prd[0].proId}}">
+                                    <i class="ion-ios-heart-outline"></i>
+                                </a>
+                            </div>
+                            <div class="product-quantity">
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
+                                </div>
+                            </div>
+                        </div>
+
+                        <script th:inline="javascript">
+                            /*<![CDATA[*/
+                            function addToCart() {
+                                // Get product details from Thymeleaf - now as properly defined JS variables
+                                var productId = /*[[${prd[0].proId}]]*/;
+                                var price = /*[[${prd[0].price}]]*/;
+                                var productName = /*[[${prd[0].name}]]*/;
+
+                                // Get selected size value
+                                var size = document.querySelector('input[name="drinkSize"]:checked').value;
+
+                                // Get quantity value from the input box
+                                var qty = parseInt(document.querySelector(".cart-plus-minus-box").value);
+
+                                // Basic validation for quantity
+                                if (isNaN(qty) || qty < 1) {
+                                    alert("Please enter a valid quantity (greater than 0).");
+                                    return;
+                                }
+
+                                // Construct the URL correctly using ? and & for parameters
+                                var redirectUrl = '/web/product/addToCart?productId=' + productId +
+                                    '&qty=' + qty +
+                                    '&size=' + size +
+                                    '&price=' + price;
+
+                                // Log data to the console (for debugging)
+                                console.log("Adding to cart: Product ID: " + productId + ", Name: " + productName + ", Qty: " + qty + ", Size: " + size + ", Price: " + price);
+
+                                // Redirect the user to the backend URL
+                                window.location.href = redirectUrl;
+                            }
+
+                            /*]]>*/
+                        </script>
+                        <div class="pro-dec-categories">
+                            <ul>
+                                <!-- Danh sách danh mục -->
+                            </ul>
+                        </div>
+
+                        <div class="pro-dec-categories">
+                            <ul>
+                                <!-- Danh sách tag -->
+                            </ul>
+                        </div>
+
+                        <div class="pro-dec-social">
+                            <ul>
+                                <li><a class="tweet" href="#"><i class="ion-social-twitter"></i> Tweet</a></li>
+                                <li><a class="share" href="#"><i class="ion-social-facebook"></i> Share</a></li>
+                                <li><a class="google" href="#"><i class="ion-social-googleplus-outline"></i> Google+</a>
+                                </li>
+                                <li><a class="pinterest" href="#"><i class="ion-social-pinterest"></i> Pinterest</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <!-- Additional product info, description, and related products would go here -->
+
+    <script th:src="@{/assets/js/vendor/jquery-1.12.4.min.js}"></script>
+    <script th:src="@{/assets/js/popper.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+    <script th:src="@{/assets/js/imagesloaded.pkgd.min.js}"></script>
+    <script th:src="@{/assets/js/isotope.pkgd.min.js}"></script>
+    <script th:src="@{/assets/js/ajax-mail.js}"></script>
+    <script th:src="@{/assets/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/assets/js/plugins.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+
+</body>
+</html>

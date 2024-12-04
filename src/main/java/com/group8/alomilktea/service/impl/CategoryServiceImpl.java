@@ -6,10 +6,10 @@ import com.group8.alomilktea.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
@@ -22,9 +22,8 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public Page<Category> getAll(Integer pageNo) {
-        int pageSize = 10;
-        return repo.findAll(PageRequest.of(pageNo, pageSize));
+    public Page<Category> getAll(Pageable pageable) {
+        return repo.findAll(pageable);
     }
 
     @Override
@@ -38,9 +37,10 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public Optional<Category> findById(Integer id) {
-        return Optional.empty();
+    public Category findById(Integer id) {
+        return repo.findById(id).orElse(null);
     }
+
 
     @Override
     public List<Category> findAllById(Iterable<Integer> id) {

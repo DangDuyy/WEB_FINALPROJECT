@@ -1,10 +1,8 @@
 package com.group8.alomilktea.entity;
 
+import com.group8.alomilktea.common.enums.ProductAttribute;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "product_detail") // Đảm bảo bảng trong DB có tên là "product"
@@ -15,16 +13,18 @@ import lombok.NoArgsConstructor;
 public class  ProductDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "proDId")
+    @Column(name = "prod_id")
     private Integer proDId;
 
     @Column(name = "size")
-    private Integer size;
+    @Enumerated(EnumType.STRING)
+    private ProductAttribute size;
 
     @Column(name = "price")
     private Double price;
 
     @ManyToOne
-    @JoinColumn(name = "proId", referencedColumnName = "proId", foreignKey = @ForeignKey(name = "FK_Product_ProducDelail"))
+    @JoinColumn(name = "pro_id", referencedColumnName = "pro_id", foreignKey = @ForeignKey(name = "FK_Product_ProducDelail"))
+    @ToString.Exclude // Bỏ trường này khi gọi toString()
     private Product product;
 }
