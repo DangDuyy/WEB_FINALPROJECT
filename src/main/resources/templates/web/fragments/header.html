@@ -91,7 +91,7 @@
 
 
 							<div class="header-wishlist">
-								<a th:href="@{wishlist.html}">
+								<a th:href="@{/user-cart}">
 									<div class="header-icon-style">
 										<i class="icon-heart icons"></i>
 									</div>
@@ -101,7 +101,7 @@
 								</a>
 							</div>
 							<div class="header-cart">
-								<a th:href="@{#}">
+								<a th:href="@{/user-cart}">
 									<div class="header-icon-style">
 										<i class="icon-handbag icons"></i>
 										<span class="count-style">02</span>
@@ -111,32 +111,32 @@
 										<span class="cart-digit-bold">$209.00</span>
 									</div>
 								</a>
-								<div class="shopping-cart-content">
+								<!--<div class="shopping-cart-content">
 									<ul>
 										<li class="single-shopping-cart">
 											<div class="shopping-cart-img">
-												<a th:href="@{#}"><img alt="" th:src="@{/assets/img/cart/cart-1.jpg}"></a>
+												<a th:href="@{/cart}"><img alt="" th:src="@{/assets/img/cart/cart-1.jpg}"></a>
 											</div>
 											<div class="shopping-cart-title">
-												<h4><a th:href="@{#}">Phantom Remote </a></h4>
+												<h4><a th:href="@{/product-details}">Phantom Remote</a></h4>
 												<h6>Qty: 02</h6>
 												<span>$260.00</span>
 											</div>
 											<div class="shopping-cart-delete">
-												<a th:href="@{#}"><i class="ion ion-close"></i></a>
+												<a th:href="@{/remove-from-cart}"><i class="ion ion-close"></i></a>
 											</div>
 										</li>
 										<li class="single-shopping-cart">
 											<div class="shopping-cart-img">
-												<a th:href="@{#}"><img alt="" th:src="@{/assets/img/cart/cart-2.jpg}"></a>
+												<a th:href="@{/cart}"><img alt="" th:src="@{/assets/img/cart/cart-2.jpg}"></a>
 											</div>
 											<div class="shopping-cart-title">
-												<h4><a th:href="@{#}">Phantom Remote</a></h4>
+												<h4><a th:href="@{/product-details}">Phantom Remote</a></h4>
 												<h6>Qty: 02</h6>
 												<span>$260.00</span>
 											</div>
 											<div class="shopping-cart-delete">
-												<a th:href="@{#}"><i class="ion ion-close"></i></a>
+												<a th:href="@{/remove-from-cart}"><i class="ion ion-close"></i></a>
 											</div>
 										</li>
 									</ul>
@@ -146,11 +146,11 @@
 									</div>
 									<div class="shopping-cart-btn">
 										<a th:href="@{/cart}">View Cart</a>
-
-										<a th:href="@{checkout.html}">checkout</a>
+										<a th:href="@{/checkout}">Checkout</a>
 									</div>
-								</div>
+								</div>-->
 							</div>
+
 						</div>
 					</div>
 				</div>

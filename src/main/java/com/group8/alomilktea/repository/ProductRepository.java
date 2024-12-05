@@ -41,6 +41,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "WHERE p.proId = :productId AND pd.size = :size")
     ProductDetailDTO findProductInfoByIDAndSize(@Param("productId") Long productId, @Param("size") String size);
 
-
+    @Query("SELECT pd FROM ProductDetail pd WHERE pd.product.proId = :productId AND pd.size = :size")
+    ProductDetail findPriceByProductIdAndSize(@Param("productId") Integer productId, @Param("size") ProductAttribute size);
 
 }

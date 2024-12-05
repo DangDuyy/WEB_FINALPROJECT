@@ -31,7 +31,8 @@ public class Order {
 
     @Column(name = "date")
     private String date;
-
+    @Column(name = "delivery_address")
+    private String deliAddress;
     @Column(name = "payment_method", columnDefinition = "varchar(255) default 'standard'")
     private String paymentMethod;
 

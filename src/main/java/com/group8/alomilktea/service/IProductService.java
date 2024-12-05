@@ -34,4 +34,6 @@ public interface IProductService {
     List<ProductDetailDTO> findProductInfoBySize();
 
     ProductDetailDTO findProductInfoByIDAndSize(Long productId, String size);
+
+    ProductDetail findPriceByProductIdAndSize( Integer productId, ProductAttribute size);
 }

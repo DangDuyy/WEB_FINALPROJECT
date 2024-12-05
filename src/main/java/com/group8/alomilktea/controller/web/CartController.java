@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.*;
 
-@RequestMapping("/tatduy")
+@RequestMapping("/cart")
 @Controller
 public class CartController {
     @Autowired(required=true)
@@ -29,34 +29,7 @@ public class CartController {
     IProductService productService;
     @Autowired(required = true)
     IProductService proService;
-    @GetMapping()
-    public String viewCart(Model model) {
-        try {
-            User userLogged = userService.getUserLogged(); // Lấy thông tin người dùng đã đăng nhập
 
-            if (userLogged == null) {
-                return "redirect:/login"; // Nếu người dùng chưa đăng nhập, chuyển hướng tới trang đăng nhập
-            }
-
-            // Lấy danh sách sản phẩm trong giỏ hàng của người dùng
-            List<Cart> cartItems = cartService.findByUserId(userLogged.getUserId());
-
-            // Tính tổng giá trị của giỏ hàng
-            double totalAmount = cartItems.stream()
-                    .mapToDouble(cart -> cart.getQuantity() * cart.getPrice()) // Giá * Số lượng
-                    .sum();
-
-            // Đưa danh sách sản phẩm và tổng giá trị vào model
-            model.addAttribute("cartItems", cartItems); // Danh sách giỏ hàng
-            model.addAttribute("totalAmount", totalAmount); // Tổng giá trị giỏ hàng
-
-            return "web/billy/cart-page";
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("errorMessage", "Không thể tải giỏ hàng. Vui lòng thử lại sau.");
-            return "error"; // Trả về trang lỗi
-        }
-    }
 
 }
 

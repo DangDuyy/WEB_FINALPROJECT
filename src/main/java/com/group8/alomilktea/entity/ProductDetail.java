@@ -27,4 +27,14 @@ public class  ProductDetail {
     @JoinColumn(name = "pro_id", referencedColumnName = "pro_id", foreignKey = @ForeignKey(name = "FK_Product_ProducDelail"))
     @ToString.Exclude // Bỏ trường này khi gọi toString()
     private Product product;
+
+    @Override
+    public String toString() {
+        return "ProductDetail{" +
+                "price=" + price +
+                ", proDId=" + proDId +
+                ", size=" + size +
+                ", product=" + product +
+                '}';
+    }
 }
