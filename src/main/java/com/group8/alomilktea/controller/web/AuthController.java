@@ -6,6 +6,7 @@ import com.group8.alomilktea.entity.User;
 import com.group8.alomilktea.model.OTPCodeModel;
 import com.group8.alomilktea.model.ResetPasswordRequest;
 import com.group8.alomilktea.model.SignUpModel;
+import com.group8.alomilktea.model.UserModel;
 import com.group8.alomilktea.repository.RoleRepository;
 import com.group8.alomilktea.service.IUserService;
 import com.group8.alomilktea.utils.AppUtil;
@@ -15,20 +16,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -67,6 +71,8 @@ public class AuthController {
         }
         return "web/auth/login";
     }
+
+
     @RequestMapping(path = "/auth/login1", method = RequestMethod.GET)
     public String user(Model model) {
 
@@ -246,4 +252,60 @@ public class AuthController {
         }
         return "redirect:/auth/login";
     }
+
+    @PostMapping("auth/updateinfor")
+    @ResponseBody
+    public ResponseEntity<?> saveOrUpdate(@Valid @ModelAttribute("user") UserModel userModel, BindingResult result) {
+        Map<String, Object> response = new HashMap<>();
+
+        // Kiểm tra lỗi
+        if (result.hasErrors()) {
+            response.put("status", "error");
+            response.put("message", "Có lỗi xảy ra, vui lòng kiểm tra lại thông tin!");
+            response.put("errors", result.getAllErrors());
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        User entity = new User();
+        BeanUtils.copyProperties(userModel, entity);
+
+        // Cập nhật thông tin người dùng
+        userService.updateUser(entity);
+
+        response.put("status", "success");
+        response.put("message", userModel.getIsEdit()
+                ? "Thông tin người dùng đã được cập nhật thành công!"
+                : "Người dùng đã được lưu thành công!");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("auth/updateAddress")
+    @ResponseBody
+    public ResponseEntity<?> updateAddress( @RequestParam("homeaddress") String homeAddress,
+                                           @RequestParam("town") String town,
+                                           @RequestParam("district") String district,
+                                           @RequestParam("city") String city) {
+
+        Map<String, Object> response = new HashMap<>();
+        String address;
+
+            // Tạo địa chỉ đầy đủ
+            address = String.format("%s, %s, %s, %s", homeAddress, town, district, city);
+
+            // Lấy người dùng hiện tại (ví dụ: qua SecurityContextHolder hoặc session)
+        User currentUser = userService.getUserLogged();
+        if (currentUser == null) {
+            response.put("status", "error");
+            response.put("message", "Người dùng không tồn tại!");
+            return ResponseEntity.badRequest().body(response);
+        }
+        currentUser.setAddress(address);
+        userService.updateUser(currentUser);
+            // Trả về phản hồi thành công
+            response.put("status", "success");
+            response.put("message", "Cập nhật địa chỉ thành công!");
+            response.put("address", address);
+            return ResponseEntity.ok(response);
+    }
+
 }

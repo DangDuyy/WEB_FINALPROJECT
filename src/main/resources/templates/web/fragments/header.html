@@ -38,7 +38,7 @@
 										<li><a th:href="@{wishlist.html}">Wishlist</a></li>
 										<li><a th:href="@{/auth/login}">Login</a></li>
 										<li><a th:href="@{/auth/register}">Register</a></li>
-										<li><a th:href="@{my-account.html}">my account</a></li>
+										<li><a th:href="@{/home/myaccount}">my account</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -73,7 +73,7 @@
 								</div>
 								<!-- Hiển thị khi người dùng đã đăng nhập -->
 								<div sec:authorize="isAuthenticated()" class="nav-item dropdown-center" style="margin-right: 20px;">
-									<a th:href="@{/account/my-account}" class="nav-link">
+									<a th:href="@{/home/myaccount}" class="nav-link">
 										<div class="header-icon-style">
 											<i class="icon-user icons"></i>
 										</div>
