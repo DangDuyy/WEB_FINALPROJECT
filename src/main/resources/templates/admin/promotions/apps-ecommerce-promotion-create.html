@@ -15,7 +15,7 @@
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="#!" class="text-slate-400 dark:text-zink-200">Product</a>
+                        <a href="#!" class="text-slate-400 dark:text-zink-200">Promotion</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
                         Add New
@@ -26,21 +26,21 @@
                 <div class="xl:col-span-9">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Create Product</h6>
-                            <form th:action="${isEdit ? '/admin/product/edit/save' : '/admin/product/add/save'}" method="post">
+                            <h6 class="mb-4 text-15">Create Promotion</h6>
+                            <form th:action="${isEdit ? '/admin/promotion/edit/save' : '/admin/promotion/add/save'}" method="post">
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
-                                    <input type="hidden" th:if="${isEdit}" th:name="id" th:value="${product.proId}" />
-                                    <!-- Product Title -->
+                                    <input type="hidden" th:if="${isEdit}" th:name="id" th:value="${promotion.promotionId}" />
+                                    <!-- Promotion Title -->
                                     <div class="xl:col-span-6">
-                                        <label for="productNameInput" class="inline-block mb-2 text-base font-medium">Product Title</label>
-                                        <input type="text" id="productNameInput" name="name"
-                                               th:value="${product.name}"
+                                        <label for="promotionNameInput" class="inline-block mb-2 text-base font-medium">Promotion Title</label>
+                                        <input type="text" id="promotionNameInput" name="name"
+                                               th:value="${promotion.name}"
                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                               placeholder="Product title" required maxlength="20">
+                                               placeholder="Promotion title" required maxlength="20">
                                     </div>
                                     <!-- Image Upload Options -->
                                     <div class="lg:col-span-2 xl:col-span-12">
-                                        <label class="inline-block mb-2 text-base font-medium">Product Image</label>
+                                        <label class="inline-block mb-2 text-base font-medium">Promotion Image</label>
                                         <div>
                                             <label class="inline-block mb-2 text-sm font-medium">Upload from Computer</label>
                                             <input type="file" name="imageFile"
@@ -51,34 +51,25 @@
                                         <div class="mt-4">
                                             <label class="inline-block mb-2 text-sm font-medium">Or Enter Image URL</label>
                                             <input type="url" name="imageUrl"
-                                                   th:value="${product.logo}"
+                                                   th:value="${promotion.logo}"
                                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                    placeholder="https://example.com/image.jpg">
                                         </div>
                                     </div>
                                     <!-- Description -->
                                     <div class="lg:col-span-2 xl:col-span-12">
-                                        <label for="productDescription" class="inline-block mb-2 text-base font-medium">Description</label>
+                                        <label for="promotionDescription" class="inline-block mb-2 text-base font-medium">Description</label>
                                         <textarea name="description"
-                                                  th:text="${product.description}"
+                                                  th:text="${promotion.description}"
                                                   class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                  id="productDescription" placeholder="Enter Description" rows="5"></textarea>
+                                                  id="promotionDescription" placeholder="Enter Description" rows="5"></textarea>
                                     </div>
                                     <div class="xl:col-span-6">
-                                        <label for="categoryId">Category:</label>
-                                        <select id="categoryId" name="categoryId" required>
+                                        <label for="productId">Product:</label>
+                                        <select id="productId" name="productId" required>
                                             <option value="">Select Category</option>
-                                            <th:block th:each="category : ${categories}">
-                                                <option th:value="${category.cateId}" th:text="${category.name}"></option>
-                                            </th:block>
-                                        </select>
-                                    </div>
-                                    <div class="xl:col-span-6">
-                                        <label for="roleIds">Promotion:</label>
-                                        <select id="roleIds" name="roleIds" required>
-                                            <option value="">Select Promotion</option>
-                                            <th:block th:each="promotion : ${promotions}">
-                                                <option th:value="${promotion.promotionId}" th:text="${promotion.name}"></option>
+                                            <th:block th:each="product : ${products}">
+                                                <option th:value="${product.proId}" th:text="${product.name}"></option>
                                             </th:block>
                                         </select>
                                     </div>
@@ -92,7 +83,7 @@
                                     </button>
                                     <button type="submit"
                                             class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600">
-                                        <span th:text="${isEdit} ? 'Update Product' : 'Create Product'">Create Product</span>
+                                        <span th:text="${isEdit} ? 'Update Promotion' : 'Create Promotion'">Create Promotion</span>
                                     </button>
                                 </div>
                             </form>
@@ -102,7 +93,7 @@
                 <div class="xl:col-span-3">
                     <div class="card sticky top-[calc(theme('spacing.header')_*_1.3)]">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Product Card Preview</h6>
+                            <h6 class="mb-4 text-15">Promotion Card Preview</h6>
 
                             <div class="px-5 py-8 rounded-md bg-sky-50 dark:bg-zink-600">
                                 <img th:src="@{assets/images/img-03.png}" alt="" class="block mx-auto h-44">
@@ -153,7 +144,7 @@
                                 </div>
                             </div>
                             <div class="flex gap-2 mt-4">
-                                <button type="button" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">Create Products</button>
+                                <button type="button" class="w-full bg-white border-dashed text-custom-500 btn border-custom-500 hover:text-custom-500 hover:bg-custom-50 hover:border-custom-600 focus:text-custom-600 focus:bg-custom-50 focus:border-custom-600 active:text-custom-600 active:bg-custom-50 active:border-custom-600 dark:bg-zink-700 dark:ring-custom-400/20 dark:hover:bg-custom-800/20 dark:focus:bg-custom-800/20 dark:active:bg-custom-800/20">Create Promotions</button>
                                 <button type="button" class="w-full text-white bg-purple-500 border-purple-500 btn hover:text-white hover:bg-purple-600 hover:border-purple-600 focus:text-white focus:bg-purple-600 focus:border-purple-600 focus:ring focus:ring-purple-100 active:text-white active:bg-purple-600 active:border-purple-600 active:ring active:ring-purple-100 dark:ring-purple-400/10">Draft</button>
                             </div>
                         </div>

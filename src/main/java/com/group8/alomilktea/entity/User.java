@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.group8.alomilktea.common.enums.Status;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -27,6 +28,8 @@ public class User implements Serializable {
 
     @Column(name = "password", length = 255)
     private String password;
+
+    private Status status;
 
     @Column(name = "full_name", length = 255)
     private String fullName;

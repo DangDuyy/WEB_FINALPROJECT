@@ -16,11 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping("admin/orders")
+@RequestMapping("/admin/orders")
 public class OderController {
     @Autowired(required = true)
     IOrderService orderSer;
-    @RequestMapping("")
+    @RequestMapping("/list")
     public String listOrders(
             ModelMap model,
             @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
