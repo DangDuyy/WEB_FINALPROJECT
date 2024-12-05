@@ -143,7 +143,7 @@ public class AuthController {
             return "redirect:/auth/register";
         }
         Set<Roles> role = new HashSet<>();
-        Roles roleuser = roleRepository.findById(1).orElse(null);
+        Roles roleuser = roleRepository.findById(2).orElse(null);
         if (roleuser != null) {
             role.add(roleuser);
         }
@@ -153,6 +153,7 @@ public class AuthController {
                 .address(userReq.getAddress())
                 .phone(userReq.getPhone())
                 .email(userReq.getEmail())
+                .password(userReq.getPasswordHash())
                 .fullName(userReq.getFullName())
                 .roles(role)
                 .build();

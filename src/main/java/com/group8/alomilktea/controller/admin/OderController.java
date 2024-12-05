@@ -30,7 +30,7 @@ public class OderController {
         model.addAttribute("totalPage", page.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalOrders", totalOrders);
-        return "admin/orders/list.html";
+        return "admin/orders/list";
     }
 
 

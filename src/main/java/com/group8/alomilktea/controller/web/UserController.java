@@ -6,6 +6,7 @@ import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.service.ICartService;
 import com.group8.alomilktea.service.IProductService;
 import com.group8.alomilktea.service.IUserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,12 +58,12 @@ public class UserController {
     // Controller xử lý yêu cầu AJAX để lấy giá sản phẩm theo size
     @RequestMapping("/getPrice")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> getPrice(@RequestParam Long productId, @RequestParam String size) {
+    public ResponseEntity<Map<String, Object>> getPrice(@RequestParam Integer productId, @RequestParam String size) {
         Map<String, Object> response = new HashMap<>();
         try {
             // Sử dụng phương thức trả về đối tượng duy nhất
-            ProductDetailDTO product = productService.findProductInfoByIDAndSize(productId, size);
-
+            ProductDetail product = productService.findPriceByProductIdAndSize(productId,ProductAttribute.getEnum(size));
+            System.out.println(product);
             if (product != null) {
                 response.put("success", true);
                 response.put("price", product.getPrice());
@@ -79,13 +80,13 @@ public class UserController {
 
 
 
-
     @GetMapping("/addToCart")
     public ResponseEntity<String> addToCart(
             @RequestParam("productId") Integer proId,
             @RequestParam("qty") Integer qty,
             @RequestParam("size") String size,
-            @RequestParam("price") Double price) {
+            @RequestParam("price") Double price,
+            HttpServletRequest request) {
 
         try {
             String successMessage = "Thêm vào giỏ hàng thành công";
@@ -114,12 +115,14 @@ public class UserController {
 
                 // Kiểm tra tồn kho nếu cần
 
-
                 // Cập nhật số lượng trong giỏ hàng
                 cart.setQuantity(updatedQuantity);
                 cartService.save(cart);
 
-                return new ResponseEntity<>(successMessage, HttpStatus.OK);
+                // Trả lại URL hiện tại
+                return ResponseEntity.status(HttpStatus.OK)
+                        .header("Location", request.getRequestURL().toString())
+                        .body(successMessage);
             } else {
                 // Nếu sản phẩm khác size hoặc không tồn tại trong giỏ hàng, thêm mục mới
                 CartKey cartKey = new CartKey(userLogged.getUserId(), proId, size);  // Sử dụng proId và size làm khóa hợp nhất
@@ -131,19 +134,22 @@ public class UserController {
                 newCart.setQuantity(qty);
                 newCart.setPrice(price);
 
-                // Kiểm tra tồn kho
-
+                // Kiểm tra tồn kho nếu cần
 
                 // Lưu giỏ hàng mới
                 cartService.save(newCart);
 
-                return new ResponseEntity<>(successMessage, HttpStatus.OK);
+                // Trả lại URL hiện tại
+                return ResponseEntity.status(HttpStatus.OK)
+                        .header("Location", request.getRequestURL().toString())
+                        .body(successMessage);
             }
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("Lỗi khi thêm sản phẩm vào giỏ hàng: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
 }

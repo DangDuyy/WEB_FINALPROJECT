@@ -3,6 +3,7 @@ package com.group8.alomilktea.entity;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,8 @@ public class Promotion {
 
     @Column(name = "discount_rate")
     private Integer discountRate;
+    @Column(name = "validity")
+    private Date validity;
 
     @Column(name = "is_active")
     private Integer isActive;
@@ -37,6 +40,22 @@ public class Promotion {
         this.description = description;
         this.discountRate = discountRate;
         this.isActive = isActive;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public Date getValidity() {
+        return validity;
+    }
+
+    public void setValidity(Date validity) {
+        this.validity = validity;
     }
 
     public int getPromotionId() {

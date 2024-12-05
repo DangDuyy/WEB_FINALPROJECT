@@ -24,11 +24,6 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public <S extends User> S save(S entity) {
-		return userRepository.save(entity);
-	}
-
-	@Override
 	public Page<User> findAll(Pageable pageable) {
 		return userRepository.findAll(pageable);
 	}
@@ -39,13 +34,18 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public Optional<User> findById(Integer id) {
-		return userRepository.findById(id);
+	public long count() {
+		return userRepository.count();
 	}
 
 	@Override
-	public long count() {
-		return userRepository.count();
+	public void save(User user) {
+		userRepository.save(user);
+	}
+
+	@Override
+	public User findById(Integer id) {
+		return userRepository.findById(id).orElse(null);
 	}
 
 	@Override
@@ -128,5 +128,10 @@ public class UserServiceImpl implements IUserService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public List<User> findAllShippers() {
+		return userRepository.findAllShippers();
 	}
 }
