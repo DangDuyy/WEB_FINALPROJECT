@@ -112,6 +112,7 @@
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_code" data-sort="product_code">Shipment Code</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Shipment Title</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Price</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Shipper</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Actions</th>
                             </tr>
                             </thead>
@@ -120,7 +121,8 @@
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${shipment.shipCid}">C001</td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${shipment.shipCname}">Beverages</td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${shipment.price}">Beverages</td>
-<!--                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort">-->
+                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${shipment.user.fullName}">Beverages</td>
+                                <!--                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort">-->
 <!--                                    <img th:src="@{${product.logo}}" alt="Logo" class="img-thumbnail">-->
 <!--                                </td>-->
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 action">

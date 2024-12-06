@@ -1,12 +1,18 @@
 package com.group8.alomilktea.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "promotion")
 public class Promotion {
 
@@ -17,6 +23,9 @@ public class Promotion {
 
     @Column(name = "name", length = 255)
     private String name;
+
+    @Column(name="logo")
+    private String logo;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
@@ -32,69 +41,4 @@ public class Promotion {
     // Constructors, getters, and setters
     @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
-    public Promotion() {
-    }
-
-    public Promotion(String name, String description, Integer discountRate, Integer isActive) {
-        this.name = name;
-        this.description = description;
-        this.discountRate = discountRate;
-        this.isActive = isActive;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public Date getValidity() {
-        return validity;
-    }
-
-    public void setValidity(Date validity) {
-        this.validity = validity;
-    }
-
-    public int getPromotionId() {
-        return promotionId;
-    }
-
-    public void setPromotionId(int promotionId) {
-        this.promotionId = promotionId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getDiscountRate() {
-        return discountRate;
-    }
-
-    public void setDiscountRate(Integer discountRate) {
-        this.discountRate = discountRate;
-    }
-
-    public Integer getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(Integer isActive) {
-        this.isActive = isActive;
-    }
 }

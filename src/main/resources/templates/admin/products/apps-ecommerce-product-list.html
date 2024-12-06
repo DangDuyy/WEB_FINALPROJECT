@@ -125,7 +125,7 @@
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${product.name}">Beverages</td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 category" th:text="${productCategoryMap[product.proId]}"></td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort">
-                                    <img th:src="@{${product.logo}}" alt="Logo" class="img-thumbnail">
+                                    <img th:src="@{${product.imageLink}}" alt="Logo" class="img-thumbnail">
                                 </td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 category" th:text="${productPromotionMap[product.proId]}"></td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort description-column"

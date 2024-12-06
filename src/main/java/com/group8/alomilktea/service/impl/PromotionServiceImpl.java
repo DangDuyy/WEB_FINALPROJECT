@@ -21,4 +21,14 @@ public class PromotionServiceImpl implements IPromotionService {
     public Promotion findById(Integer id) {
         return repo.findById(id).orElse(null);
     }
+
+    @Override
+    public void save(Promotion promotion) {
+        repo.save(promotion);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        repo.deleteById(id);
+    }
 }

@@ -127,44 +127,7 @@
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h5 class="panel-title"><span>2.</span> <a data-bs-toggle="collapse"
-                                                                                   data-bs-target="#payment-4">Shipping
-                                            method</a></h5>
-                                    </div>
-                                    <div id="payment-4" class="panel-collapse collapse" data-bs-parent="#faq">
-                                        <div class="panel-body">
-                                            <div class="shipping-method-wrapper">
-                                                <form action="#" method="post">
-                                                    <div class="shipping-method">
-                                                        <p>Select a shipping method:</p>
-                                                        <!-- Loop through the list of shipping methods from the database -->
-                                                        <div th:each="shipmentCompany : ${shippingMethods}">
-                                                            <label>
-                                                                <input type="radio" th:name="'shipmentMethod'"
-                                                                       th:value="${shipmentCompany.shipCid}"/>
-                                                                <span th:text="${shipmentCompany.shipCname}">Shipping Method Name</span>
-                                                                -
-                                                                <span th:text="${shipmentCompany.price}">Price</span>
-                                                            </label>
-                                                            <br/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="billing-back-btn">
-                                                        <div class="billing-back">
-                                                            <a href="#"><i class="ion-arrow-up-c"></i> back</a>
-                                                        </div>
-                                                        <div class="billing-btn">
-                                                            <button type="submit">Continue</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h5 class="panel-title"><span>3.</span>
+                                        <h5 class="panel-title"><span>2.</span>
                                             <a data-bs-toggle="collapse" data-bs-target="#payment-6">Order Review</a>
                                         </h5>
                                     </div>
@@ -185,71 +148,83 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <!-- Lặp qua các sản phẩm trong giỏ hàng -->
                                                         <tr th:each="item : ${cartItems}">
                                                             <td>
-                                                                <!-- Hiển thị hình ảnh sản phẩm -->
                                                                 <div class="o-pro-img">
-                                                                    <img th:src="${item.product.imageLink}" alt="Product Image" width="50" height="50"/>
+                                                                    <img th:src="${item.product.imageLink}"
+                                                                         alt="Product Image" width="50" height="50"/>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="o-pro-dec">
-                                                                    <p th:text="${item.product.name}"></p> <!-- Tên sản phẩm -->
+                                                                    <p th:text="${item.product.name}"></p>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="o-pro-size">
-                                                                    <p th:text="${item.id.size}"></p> <!-- Kích thước sản phẩm -->
+                                                                    <p th:text="${item.id.size}"></p>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="o-pro-price">
-                                                                    <p th:text="${item.price}"></p> <!-- Giá sản phẩm -->
+                                                                    <p th:text="${item.price}"></p>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="o-pro-qty">
-                                                                    <p th:text="${item.quantity}"></p> <!-- Số lượng sản phẩm -->
+                                                                    <p th:text="${item.quantity}"></p>
                                                                 </div>
                                                             </td>
                                                             <td>
                                                                 <div class="o-pro-subtotal">
-                                                                    <p th:text="${item.quantity * item.price}"></p> <!-- Tổng giá trị (subtotal) -->
+                                                                    <p th:text="${item.quantity * item.price}"></p>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         </tbody>
                                                         <tfoot>
-                                                        <tr>
-                                                            <td colspan="3">Subtotal</td>
-                                                            <td colspan="1" th:text="${totalAmount}"></td>
-                                                        </tr>
+                                                    </table>
+                                                </div>
 
-                                                        <tr class="tr-f">
-                                                            <td colspan="3">Shipping & Handling (Flat Rate - Fixed</td>
-                                                            <td colspan="1">$45.00</td>
+                                                <div class="billing-back-btn">
+                                                    <span>
+                                                        Choose a Discount Code?
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#discountModal">Apply Discount</a>
+                                                        <br> <!-- Dòng mới -->
+                                                        Choose Shipping Method?
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#shippingModal">Select Shipping</a>
+                                                    </span>
+                                                    <table>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <td colspan="5">Subtotal:</td>
+                                                            <td id="totalAmount" th:text="${totalAmount}"></td>
+                                                            <!-- Added ID -->
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="3">Grand Total</td>
-                                                            <td colspan="1">$4,722.00</td>
+                                                            <td colspan="5">Shipping Cost:</td>
+                                                            <td id="shippingAmount" th:text="${shipcost}"></td>
+                                                            <!-- Added ID -->
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="5">Discount:</td>
+                                                            <td id="discountAmount" th:text="${discount}"></td>
+                                                            <!-- Added ID -->
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="5">Grand Total:</td>
+                                                            <td id="grandTotalAmount" name="grandTotalAmount"
+                                                                th:text="${grandTotal}"></td>
+                                                            <!-- Added ID -->
                                                         </tr>
                                                         </tfoot>
                                                     </table>
 
-                                                </div>
-
-                                                <div class="billing-back-btn">
-                                               <span>
-                                                Choose a Discount Code?
-             <a href="#" data-bs-toggle="modal" data-bs-target="#discountModal">Apply Discount</a>
-                                                </span>
-
+                                                    <!-- Modal for Discount Codes -->
                                                     <!-- Modal for Discount Codes -->
                                                     <div class="modal fade" id="discountModal" tabindex="-1"
                                                          aria-labelledby="discountModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
-                                                            <!-- Thêm lớp modal-dialog-centered -->
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="discountModalLabel">
@@ -270,19 +245,24 @@
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <!-- Lặp qua danh sách promotion -->
-                                                                        <tr th:each="promotion : ${promotions}">
-                                                                            <td th:text="${promotion.name}"></td> <!-- Tên chương trình khuyến mãi -->
-                                                                            <td th:text="${promotion.description}"></td> <!-- Mô tả -->
-                                                                            <td th:text="${promotion.discountRate + '%'}"></td> <!-- Phần trăm giảm giá -->
-                                                                            <td th:text="${#dates.format(promotion.validity, 'dd MMM yyyy')}"></td> <!-- Ngày hết hạn -->
+                                                                        <tr th:each="promotion : ${promotions}"
+                                                                            th:data-promotion-id="${promotion.promotionId}"
+                                                                            th:data-rate="${promotion.discountRate}">
+
+                                                                            <td th:text="${promotion.name}"></td>
+                                                                            <td th:text="${promotion.description}"></td>
+                                                                            <td th:text="${promotion.discountRate + '%'}"></td>
+                                                                            <td th:text="${#dates.format(promotion.validity, 'dd MMM yyyy')}"></td>
                                                                             <td>
-                                                                                <button class="btn btn-primary">Apply</button>
+                                                                                <button class="btn btn-primary apply-discount">
+                                                                                    Apply
+                                                                                </button>
                                                                             </td>
                                                                         </tr>
+
+
                                                                         </tbody>
                                                                     </table>
-
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -292,10 +272,54 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
 
-                                                    <div class="billing-btn">
-                                                        <button type="submit">Continue</button>
+                                                <div class="billing-back-btn">
+                                                    <!-- Modal for Shipping Methods -->
+                                                    <div class="modal fade" id="shippingModal" tabindex="-1"
+                                                         aria-labelledby="shippingModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="shippingModalLabel">
+                                                                        Choose Shipping Method</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <table class="table">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th scope="col">Shipping Method</th>
+                                                                            <th scope="col">Price</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr th:each="shipping : ${shippingMethods}"
+                                                                            th:data-shipping-price="${shipping.price}">
+                                                                            <td th:text="${shipping.shipCname}"></td>
+                                                                            <td th:text="${shipping.price}"></td>
+                                                                            <td>
+                                                                                <button class="btn btn-primary select-shipping">
+                                                                                    Select
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                </div>
+                                                <div class="billing-btn">
+                                                    <button type="submit">Continue</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -303,122 +327,181 @@
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h5 class="panel-title"><span>4.</span> <a data-bs-toggle="collapse"
-                                                                                   data-bs-target="#payment-5">payment
-                                            information</a></h5>
-                                    </div>
-                                    <div id="payment-5" class="panel-collapse collapse" data-bs-parent="#faq">
-                                        <div class="panel-body">
-                                            <div class="payment-info-wrapper">
-                                                <div class="ship-wrapper">
-                                                    <div class="single-ship">
-                                                        <input type="radio" checked="" value="address" name="address">
-                                                        <label>Check / Money order </label>
-                                                    </div>
-                                                    <div class="single-ship">
-                                                        <input type="radio" value="dadress" name="address">
-                                                        <label>Credit Card (saved) </label>
-                                                    </div>
-                                                </div>
-                                                <div class="payment-info">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 col-md-6">
-                                                            <div class="billing-info">
-                                                                <label>Name on Card </label>
-                                                                <input type="text">
-                                                            </div>
+                                        <h5 class="panel-title"><span>3.</span> <a data-bs-toggle="collapse"
+                                                                                       data-bs-target="#payment-5">Payment
+                                                Information</a></h5>
+                                        </div>
+                                        <div id="payment-5" class="panel-collapse collapse" data-bs-parent="#faq">
+                                            <div class="panel-body">
+                                                <div class="payment-info-wrapper">
+                                                    <div class="ship-wrapper">
+                                                        <div class="single-ship">
+                                                            <input type="radio" value="vnpay" name="payment-method"
+                                                                   id="vnpay">
+                                                            <label for="vnpay">VN Pay</label>
                                                         </div>
-                                                        <div class="col-lg-6 col-md-6">
-                                                            <div class="billing-select">
-                                                                <label>Credit Card Type</label>
-                                                                <select>
-                                                                    <option>American Express</option>
-                                                                    <option>Visa</option>
-                                                                    <option>MasterCard</option>
-                                                                    <option>Discover</option>
-                                                                </select>
-                                                            </div>
+                                                        <div class="single-ship">
+                                                            <input type="radio" value="cash-on-delivery"
+                                                                   name="payment-method" id="cash-on-delivery">
+                                                            <label for="cash-on-delivery">Cash on Delivery</label>
                                                         </div>
-                                                        <div class="col-lg-12 col-md-12">
-                                                            <div class="billing-info">
-                                                                <label>Credit Card Number </label>
-                                                                <input type="text">
-                                                            </div>
+                                                        <div class="single-ship">
+                                                            <input type="radio" value="momo" name="payment-method"
+                                                                   id="momo">
+                                                            <label for="momo">Momo Payment</label>
                                                         </div>
                                                     </div>
-                                                    <div class="expiration-date">
-                                                        <label>Expiration Date </label>
-                                                        <div class="row">
-                                                            <div class="col-lg-6 col-md-6">
-                                                                <div class="billing-select">
-                                                                    <select>
-                                                                        <option>Month</option>
-                                                                        <option>January</option>
-                                                                        <option>February</option>
-                                                                        <option> March</option>
-                                                                        <option>April</option>
-                                                                        <option> May</option>
-                                                                        <option>June</option>
-                                                                        <option>July</option>
-                                                                        <option>August</option>
-                                                                        <option>September</option>
-                                                                        <option> October</option>
-                                                                        <option> November</option>
-                                                                        <option> December</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 col-md-6">
-                                                                <div class="billing-select">
-                                                                    <select>
-                                                                        <option>Year</option>
-                                                                        <option>2015</option>
-                                                                        <option>2016</option>
-                                                                        <option>2017</option>
-                                                                        <option>2022</option>
-                                                                        <option>2019</option>
-                                                                        <option>2020</option>
-                                                                        <option>2022</option>
-                                                                        <option>2022</option>
-                                                                        <option>2023</option>
-                                                                        <option>2024</option>
-                                                                        <option>2025</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
+                                                    <div class="payment-info">
+                                                        <!-- Remove extra payment details for now -->
+                                                    </div>
+                                                    <div class="billing-back-btn">
+                                                        <div class="billing-back">
+                                                            <a href="#"><i class="ion-arrow-up-c"></i> back</a>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12">
-                                                            <div class="billing-info">
-                                                                <label>Card Verification Number</label>
-                                                                <input type="text">
-                                                            </div>
+                                                        <div class="billing-btn">
+                                                            <button type="button" onclick="handlePayment()">
+                                                                Continue
+                                                            </button>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="billing-back-btn">
-                                                    <div class="billing-back">
-                                                        <a href="#"><i class="ion-arrow-up-c"></i> back</a>
-                                                    </div>
-                                                    <div class="billing-btn">
-                                                        <button type="submit">Continue</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <script>
+                                        function handlePayment() {
+                                            // Lấy giá trị tổng thanh toán
+                                            const grandTotal = document.getElementById("grandTotalAmount").innerText.trim();
+
+                                            // Kiểm tra nếu giá trị grandTotal không hợp lệ
+                                            if (!grandTotal || isNaN(grandTotal)) {
+                                                alert("Invalid grand total amount.");
+                                                return;
+                                            }
+                                            // Lấy giá trị của phương thức thanh toán đã chọn
+                                            const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+                                            if (!paymentMethod) {
+                                                alert("Please select a payment method.");
+                                                return;
+                                            }
+
+                                            // Xử lý theo phương thức thanh toán
+                                            switch (paymentMethod.value) {
+                                                case 'vnpay':
+                                                    // Gửi yêu cầu thanh toán VNPay
+                                                    fetch(`/api/v1/payment/vn-pay?grandTotalAmount=${encodeURIComponent(grandTotal)}`, {
+                                                        method: 'GET'
+                                                    })
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            console.log(data.code + "lo cc");  // Log để kiểm tra đối tượng dữ liệu
+                                                            console.log(data.data.ketao + " hêllo");
+                                                            if (data.data && data.data.ketao) {
+                                                                window.location.href = data.data.ketao;  // Redirect đến VNPay
+                                                            } else {
+                                                                alert("VNPay payment failed: " + (data.message || "Unknown error."));
+                                                            }
+                                                        })
+                                                        .catch(error => {
+                                                            console.error("Error during VNPay payment:", error);
+                                                            alert("An error occurred during VNPay payment.");
+                                                        });
+                                                    break;
+                                                case 'cash-on-delivery':
+                                                    // Chuyển hướng đến trang COD
+                                                    alert("Cash on Delivery selected. Proceeding with order.");
+                                                    window.location.href = "/cash-on-delivery";
+                                                    break;
+                                                case 'momo':
+                                                    // Chuyển hướng đến trang thanh toán MoMo
+                                                    alert("Momo Payment selected. Proceeding with order.");
+                                                    window.location.href = "/momo-payment";
+                                                    break;
+                                                default:
+                                                    alert("Invalid payment method selected.");
+                                            }
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <script th:inline="javascript">
+                    document.addEventListener('DOMContentLoaded', function () {
+                        let subtotal = parseFloat(document.getElementById('totalAmount').textContent) || 0;
+                        let shippingCost = parseFloat(document.getElementById('shippingAmount').textContent) || 0;
+                        let discount = parseFloat(document.getElementById('discountAmount').textContent) || 0;
+
+                        const totalAmountElement = document.getElementById('totalAmount');
+                        const shippingAmountElement = document.getElementById('shippingAmount');
+                        const discountAmountElement = document.getElementById('discountAmount');
+                        const grandTotalAmountElement = document.getElementById('grandTotalAmount');
+
+                        // In giá trị ban đầu
+                        console.log('Initial Values:', {subtotal, shippingCost, discount});
+
+                        // Tính toán tổng tiền
+                        function calculateGrandTotal() {
+                            const grandTotal = subtotal + shippingCost - discount;
+                            console.log('Calculating Grand Total:', {subtotal, shippingCost, discount, grandTotal});
+                            grandTotalAmountElement.textContent = grandTotal.toFixed(2);
+                        }
+                        // Xử lý modal vận chuyển
+                        $('#shippingModal .select-shipping').off('click').on('click', function (event) {
+                            event.preventDefault();
+                            const row = $(this).closest('tr');  // Lấy dòng tr chứa button
+                            const shippingPrice = row.data('shipping-price');  // Lấy giá trị từ data-shipping-price
+                            console.log('Shipping Price:', shippingPrice);  // Kiểm tra giá trị
+                            shippingCost = parseFloat(shippingPrice) || 0;  // Chuyển giá trị thành số
+                            console.log('Shipping Selected:', {shippingCost});
+                            shippingAmountElement.textContent = shippingCost.toFixed(2);
+                            calculateGrandTotal();
+                            $('#shippingModal').modal('hide');
+                        });
+                        // Xử lý modal giảm giá
+                        $('#discountModal .apply-discount').off('click').on('click', function (event) {
+                            event.preventDefault();
+                            const row = $(this).closest('tr');  // Lấy dòng tr chứa nút Apply
+                            const discountRate = parseFloat(row.data('rate')) || 0;  // Lấy giá trị discountRate từ data-rate
+                            discount = subtotal * (discountRate / 100);  // Tính toán giá trị giảm giá
+                            console.log('Discount Applied:', {discountRate, discount});  // Kiểm tra giá trị giảm giá
+                            discountAmountElement.textContent = discount.toFixed(2);  // Cập nhật hiển thị giảm giá
+                            calculateGrandTotal();  // Tính toán tổng tiền mới
+                            $('#discountModal').modal('hide');  // Đóng modal giảm giá
+                        });
+
+
+                        // Xử lý focus và accessibility cho modal
+                        $('#discountModal').on('shown.bs.modal', function () {
+                            $('#discountModal .apply-discount:first').focus();
+                            $(this).removeAttr('aria-hidden').removeAttr('inert');
+                        });
+
+                        $('#discountModal').on('hidden.bs.modal', function () {
+                            $(this).attr('aria-hidden', 'true').attr('inert', '');
+                            $('#openDiscountModalButton').focus(); // Trả focus về nút mở modal
+                        });
+
+                        $('#shippingModal').on('shown.bs.modal', function () {
+                            $('#shippingModal .select-shipping:first').focus();
+                            $(this).removeAttr('aria-hidden').removeAttr('inert');
+                        });
+
+                        $('#shippingModal').on('hidden.bs.modal', function () {
+                            $(this).attr('aria-hidden', 'true').attr('inert', '');
+                            $('#openShippingModalButton').focus(); // Trả focus về nút mở modal
+                        });
+
+                        // Khởi động tính toán ban đầu
+                        calculateGrandTotal();
+                    });
+                </script>
             </div>
         </div>
     </div>
 </div>
 </div>
-<!-- all js here -->
 <script th:src="@{/assets/js/vendor/jquery-1.12.4.min.js}"></script>
 <script th:src="@{/assets/js/popper.js}"></script>
 <script th:src="@{/assets/js/bootstrap.min.js}"></script>
