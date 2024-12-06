@@ -10,11 +10,12 @@ import com.group8.alomilktea.service.ICartService;
 import com.group8.alomilktea.service.IPromotionService;
 import com.group8.alomilktea.service.IShipmentCompany;
 import com.group8.alomilktea.service.IUserService;
+import io.swagger.v3.oas.models.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("checkout")
+@RequestMapping("/checkout")
 public class CheckoutController {
     String PaymentMethod;
     String Note;
@@ -35,10 +36,9 @@ public class CheckoutController {
 
     @Autowired(required = true)
     IShipmentCompany shipmentCompany;
+
     @GetMapping("")
     public String ThongtinKh(ModelMap model) {
-        double sum = 0;
-
         User user = userService.getUserLogged();
         String add = user.getAddress();
         String[] parts = add.split("\\s*,\\s*");
@@ -53,17 +53,51 @@ public class CheckoutController {
 
         model.addAttribute("user", user);
         List<Cart> cartItems = cartService.findByUserId(user.getUserId());
-        List<Double> tong = new ArrayList<>();
-        // Tính tổng giá trị của giỏ hàng
+
+        // Tính tổng tiền hàng
         double totalAmount = cartItems.stream()
-                .mapToDouble(cart -> cart.getQuantity() * cart.getPrice()) // Giá * Số lượng
+                .mapToDouble(item -> item.getQuantity() * item.getPrice())
                 .sum();
-        List<Promotion> promotions = promoService.findAll();
-        model.addAttribute("promotions", promotions);
-        List<ShipmentCompany> express = shipmentCompany.findAll();
-        model.addAttribute("shippingMethods", express);
-        model.addAttribute("cartItems", cartItems); // Danh sách giỏ hàng
-        model.addAttribute("totalAmount", totalAmount); // Tổng giá trị giỏ hàng*/
+
+        // Kiểm tra và thay thế NaN nếu cần
+        if (Double.isNaN(totalAmount)) {
+            totalAmount = 0.0;
+            System.out.println("Bị lôi totalAmount");
+        }
+
+        // Lấy phí vận chuyển (thay đổi phần này cho phù hợp với logic của bạn)
+        double shipCost = 0; // Giá trị mặc định
+        List<ShipmentCompany> shippingMethods = shipmentCompany.findAll();
+
+
+            shipCost = shippingMethods.get(0).getPrice(); //Lấy phí vận chuyển của phương thức đầu tiên
+
+        System.out.println("Bị lôi shipcost" + shipCost);
+
+
+        // Giảm giá (ban đầu là 0)
+        double discount = 0;
+
+        // Kiểm tra và thay thế NaN nếu cần
+
+
+        // Tính tổng cộng
+        double grandTotal = totalAmount + shipCost - discount;
+        System.out.println("Bị lôi shipcost" + grandTotal);
+
+
+        model.addAttribute("user", user);
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("totalAmount", totalAmount);
+        model.addAttribute("promotions", promoService.findAll());
+        model.addAttribute("shipcost", shipCost);
+        model.addAttribute("discount", discount);
+        model.addAttribute("grandTotal", grandTotal);
+        model.addAttribute("shippingMethods", shippingMethods); //Thêm shippingMethods vào model
         return "web/billy/checkout";
     }
+
+
+
+
 }
