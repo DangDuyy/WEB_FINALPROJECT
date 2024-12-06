@@ -20,8 +20,6 @@ public class Order {
     @Column(name = "order_id")
     private Integer orderId;
 
-    // Các thuộc tính khác...
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "FK_user_order"))
     private User user;  // Mối quan hệ với bảng User
@@ -33,7 +31,7 @@ public class Order {
     private String date;
     @Column(name = "delivery_address")
     private String deliAddress;
-    @Column(name = "payment_method", columnDefinition = "varchar(255) default 'standard'")
+    @Column(name = "payment_method", columnDefinition = "varchar(255) default 'COD'")
     private String paymentMethod;
 
     @Column(name = "status")

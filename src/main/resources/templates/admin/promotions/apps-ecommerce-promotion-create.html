@@ -15,7 +15,7 @@
                 </div>
                 <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                     <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                        <a href="#!" class="text-slate-400 dark:text-zink-200">Category</a>
+                        <a href="#!" class="text-slate-400 dark:text-zink-200">Promotion</a>
                     </li>
                     <li class="text-slate-700 dark:text-zink-100">
                         Add New
@@ -26,21 +26,28 @@
                 <div class="xl:col-span-9">
                     <div class="card">
                         <div class="card-body">
-                            <h6 class="mb-4 text-15">Create Category</h6>
-                            <form th:action="${isEdit ? '/admin/category/edit/save' : '/admin/category/add/save'}" method="post">
+                            <h6 class="mb-4 text-15">Create Promotion</h6>
+                            <form th:action="${isEdit ? '/admin/promotion/edit/save' : '/admin/promotion/add/save'}" method="post">
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
-                                    <input type="hidden" th:if="${isEdit}" th:name="id" th:value="${category.cateId}" />
-                                    <!-- Category Title -->
+                                    <input type="hidden" th:if="${isEdit}" th:name="id" th:value="${promotion.promotionId}" />
+                                    <!-- Promotion Title -->
                                     <div class="xl:col-span-6">
-                                        <label for="categoryNameInput" class="inline-block mb-2 text-base font-medium">Category Title</label>
-                                        <input type="text" id="categoryNameInput" name="name"
-                                               th:value="${category.name}"
+                                        <label for="promotionNameInput" class="inline-block mb-2 text-base font-medium">Promotion Title</label>
+                                        <input type="text" id="promotionNameInput" name="name"
+                                               th:value="${promotion.name}"
                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                               placeholder="Category title" required maxlength="20">
+                                               placeholder="Promotion title" required maxlength="20">
+                                    </div>
+                                    <div class="xl:col-span-6">
+                                        <label for="discountRate" class="inline-block mb-2 text-base font-medium">Discount Rate(%)</label>
+                                        <input type="text" id="discountRate" name="discountRate"
+                                               th:value="${promotion.discountRate}"
+                                               class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                                               placeholder="Promotion title" required maxlength="20">
                                     </div>
                                     <!-- Image Upload Options -->
                                     <div class="lg:col-span-2 xl:col-span-12">
-                                        <label class="inline-block mb-2 text-base font-medium">Category Image</label>
+                                        <label class="inline-block mb-2 text-base font-medium">Promotion Image</label>
                                         <div>
                                             <label class="inline-block mb-2 text-sm font-medium">Upload from Computer</label>
                                             <input type="file" name="imageFile"
@@ -51,18 +58,27 @@
                                         <div class="mt-4">
                                             <label class="inline-block mb-2 text-sm font-medium">Or Enter Image URL</label>
                                             <input type="url" name="imageUrl"
-                                                   th:value="${category.logo}"
+                                                   th:value="${promotion.logo}"
                                                    class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                    placeholder="https://example.com/image.jpg">
                                         </div>
                                     </div>
                                     <!-- Description -->
                                     <div class="lg:col-span-2 xl:col-span-12">
-                                        <label for="categoryDescription" class="inline-block mb-2 text-base font-medium">Description</label>
+                                        <label for="promotionDescription" class="inline-block mb-2 text-base font-medium">Description</label>
                                         <textarea name="description"
-                                                  th:text="${category.description}"
+                                                  th:text="${promotion.description}"
                                                   class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                                  id="categoryDescription" placeholder="Enter Description" rows="5"></textarea>
+                                                  id="promotionDescription" placeholder="Enter Description" rows="5"></textarea>
+                                    </div>
+                                    <div class="xl:col-span-6">
+                                        <label for="productId">Product:</label>
+                                        <select id="productId" name="productId" required>
+                                            <option value="">Select Category</option>
+                                            <th:block th:each="product : ${products}">
+                                                <option th:value="${product.proId}" th:text="${product.name}"></option>
+                                            </th:block>
+                                        </select>
                                     </div>
                                 </div><!--end grid-->
 
@@ -74,7 +90,7 @@
                                     </button>
                                     <button type="submit"
                                             class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600">
-                                        <span th:text="${isEdit} ? 'Update Category' : 'Create Category'">Create Category</span>
+                                        <span th:text="${isEdit} ? 'Update Promotion' : 'Create Promotion'">Create Promotion</span>
                                     </button>
                                 </div>
                             </form>
@@ -87,6 +103,10 @@
         <!-- container-fluid -->
     </div>
 </section>
+
+
 </body>
-<!-- Mirrored from themesdesign.in/tailwick/html-dark/apps-ecommerce-category-create.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 15 Nov 2024 15:40:27 GMT -->
+
+
+<!-- Mirrored from themesdesign.in/tailwick/html-dark/apps-ecommerce-promotion-create.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 15 Nov 2024 15:40:27 GMT -->
 </html>

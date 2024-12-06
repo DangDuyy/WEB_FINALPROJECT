@@ -1,13 +1,11 @@
 package com.group8.alomilktea.service;
 
 import com.group8.alomilktea.common.enums.ProductAttribute;
-import com.group8.alomilktea.entity.Cart;
 import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.entity.ProductDetail;
 import com.group8.alomilktea.model.ProductDetailDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,4 +34,7 @@ public interface IProductService {
     ProductDetailDTO findProductInfoByIDAndSize(Long productId, String size);
 
     ProductDetail findPriceByProductIdAndSize( Integer productId, ProductAttribute size);
+
+    List<Product> findByIds(List<Integer> ids);
+
 }

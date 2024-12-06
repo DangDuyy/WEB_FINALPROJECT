@@ -1,20 +1,23 @@
 package com.group8.alomilktea.service.impl;
 
+import com.group8.alomilktea.common.enums.Status;
+import com.group8.alomilktea.config.security.AuthUser;
+import com.group8.alomilktea.entity.User;
+import com.group8.alomilktea.repository.UserRepository;
 import com.group8.alomilktea.service.IUserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import com.group8.alomilktea.config.security.AuthUser;
-import com.group8.alomilktea.entity.User;
-import com.group8.alomilktea.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
 	@Autowired
 	UserRepository userRepository;
@@ -133,5 +136,25 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public List<User> findAllShippers() {
 		return userRepository.findAllShippers();
+	}
+
+	@Override
+	public void saveUserOnline(User user) {
+		user.setStatus(Status.ONLINE);
+		userRepository.save(user);
+	}
+
+	@Override
+	public void disconnect(User user) {
+		var storedUser = userRepository.findById(user.getUserId()).orElse(null);
+		if (storedUser != null) {
+			storedUser.setStatus(Status.OFFLINE);
+			userRepository.save(storedUser);
+		}
+	}
+
+	@Override
+	public List<User> findConnectedUsers() {
+		return userRepository.findAllByStatus(Status.ONLINE);
 	}
 }

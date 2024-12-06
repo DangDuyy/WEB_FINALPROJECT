@@ -1,16 +1,15 @@
 package com.group8.alomilktea.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-
-import java.io.Serializable;
-import java.util.Objects;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "order_detail")
 @Data
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDetail {
 
     @Id
@@ -30,38 +29,4 @@ public class OrderDetail {
     private int quantity;
 
     // Constructors, getters, and setters
-
-    public OrderDetail() {
-    }
-
-    public OrderDetail(Order order, Product product, int quantity) {
-        this.order = order;
-        this.product = product;
-        this.quantity = quantity;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }

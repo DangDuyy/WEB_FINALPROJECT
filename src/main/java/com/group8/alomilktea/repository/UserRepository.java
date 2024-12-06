@@ -1,5 +1,6 @@
 package com.group8.alomilktea.repository;
 
+import com.group8.alomilktea.common.enums.Status;
 import com.group8.alomilktea.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	@Query("SELECT u FROM User u JOIN u.roles r WHERE r.id = 4")
 	List<User> findAllShippers();
+
+	List<User> findAllByStatus(Status status);
+
 }

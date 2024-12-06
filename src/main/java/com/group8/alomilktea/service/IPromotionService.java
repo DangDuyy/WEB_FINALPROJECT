@@ -9,4 +9,8 @@ public interface IPromotionService {
     List<Promotion> findAll();
 
     Promotion findById(Integer id);
+
+    void save(Promotion promotion);
+
+    void deleteById(Integer id);
 }

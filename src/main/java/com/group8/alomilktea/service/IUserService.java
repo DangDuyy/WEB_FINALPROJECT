@@ -1,8 +1,8 @@
 package com.group8.alomilktea.service;
 
+import com.group8.alomilktea.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.group8.alomilktea.entity.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,5 +36,9 @@ public interface IUserService {
 	User getUserLogged();
 
 	List<User> findAllShippers();
+
+	public void saveUserOnline(User user);
+	public void disconnect(User user);
+	public List<User> findConnectedUsers();
 
 }

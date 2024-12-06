@@ -76,6 +76,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<Product> findByIds(List<Integer> ids) {
+        return repo.findByProIdIn(ids);
+    }
+
+    @Override
     public String getCategoryNameByProductId(Integer productId) {
         return repo.findCategoryNameByProductId(productId);
     }
