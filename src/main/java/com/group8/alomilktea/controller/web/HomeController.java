@@ -2,13 +2,12 @@ package com.group8.alomilktea.controller.web;
 
 import com.group8.alomilktea.config.security.AuthUser;
 import com.group8.alomilktea.common.enums.ProductAttribute;
-import com.group8.alomilktea.entity.Cart;
-import com.group8.alomilktea.entity.Product;
-import com.group8.alomilktea.entity.ProductDetail;
-import com.group8.alomilktea.entity.User;
+import com.group8.alomilktea.entity.*;
+import com.group8.alomilktea.model.CategoryModel;
 import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.model.UserModel;
 import com.group8.alomilktea.service.ICartService;
+import com.group8.alomilktea.service.ICategoryService;
 import com.group8.alomilktea.service.IProductService;
 import com.group8.alomilktea.service.IUserService;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequestMapping(value = {"","/","home","trang-chu"})
 @Controller
@@ -34,10 +34,14 @@ public class HomeController{
     IUserService userService;
     @Autowired
     ICartService cartService;
+    @Autowired
+    ICategoryService categoryService;
     @GetMapping()
     public String trangchu(Model model){
         List<ProductDetailDTO> list = productService.findProductInfoBySize();
+        List<Category> listcat = categoryService.findAll();
         model.addAttribute("products", list);
+        model.addAttribute("categories", listcat);
         if (list.isEmpty()) {
             System.out.println("No products found");
         } else {
@@ -86,7 +90,7 @@ public class HomeController{
                 UserModel userModel = new UserModel();
                 BeanUtils.copyProperties(user, userModel);
                 userModel.setIsEdit(true);
-
+                String name =userModel.getUsername();
                 // Retrieve address and handle possible null or empty values
                 String add = userModel.getAddress();
                 if (add != null && !add.trim().isEmpty()) {
@@ -115,4 +119,14 @@ public class HomeController{
         return "redirect:/auth/login";
     }
 
+    @GetMapping("/api/categories")
+    @ResponseBody
+    public List<CategoryModel> getCategories() {
+        List<Category> categories = categoryService.findAll();
+        System.out.println("Categories: " + categories);  // Log thông tin danh mục ra console
+        List<CategoryModel> categoryDTOs = categories.stream()
+                .map(category -> new CategoryModel(category.getCateId(), category.getName()))
+                .collect(Collectors.toList());
+        return categoryDTOs;
+    }
 }

@@ -76,6 +76,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<ProductDetailDTO> findProductInfoByCatID(Integer CateId) {
+        return repo.findProductInfoByCatID(CateId);
+    }
+
+    @Override
     public String getCategoryNameByProductId(Integer productId) {
         return repo.findCategoryNameByProductId(productId);
     }

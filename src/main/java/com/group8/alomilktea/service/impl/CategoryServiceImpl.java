@@ -56,4 +56,9 @@ public class CategoryServiceImpl implements ICategoryService {
     public <S extends Category> S save(S entity) {
         return repo.save(entity);
     }
+
+    @Override
+    public String findNameById(Integer id) {
+        return repo.findNameById(id);
+    }
 }

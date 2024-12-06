@@ -164,57 +164,14 @@
 						<div class="main-menu">
 							<nav>
 								<ul>
-									<li class="top-hover"><a th:href="@{index.html}">home <i class="ion-chevron-down"></i></a>
-										<ul class="submenu">
-											<li><a th:href="@{index.html}">home version 1</a></li>
-											<li><a th:href="@{index-2.html}">home version 2</a></li>
-										</ul>
-									</li>
+									<li><a th:href="@{/}">home</a></li>
 									<li><a th:href="@{about-us.html}">about</a></li>
-									<li class="mega-menu-position top-hover"><a th:href="@{/web/product}">shop <i class="ion-chevron-down"></i></a>
-										<ul class="mega-menu">
+									<li class="top-hover"><a th:href="@{/web/product}">Categories <i class="ion-chevron-down"></i></a>
+										<ul class="submenu">
 											<li>
-												<ul>
-													<li class="mega-menu-title"><a th:href="@{#}">Categories 01</a></li>
-													<li><a th:href="@{shop.html}">salad</a></li>
-													<li><a th:href="@{shop.html}">sandwich</a></li>
-													<li><a th:href="@{shop.html}">bread</a></li>
-													<li><a th:href="@{shop.html}">steak</a></li>
-													<li><a th:href="@{shop.html}">tuna steak</a></li>
-													<li><a th:href="@{shop.html}">spaghetti </a></li>
-												</ul>
-											</li>
-											<li>
-												<ul>
-													<li class="mega-menu-title"><a th:href="@{#}">Categories 02</a></li>
-													<li><a th:href="@{shop.html}">rice</a></li>
-													<li><a th:href="@{shop.html}">pizza</a></li>
-													<li><a th:href="@{shop.html}">hamburger</a></li>
-													<li><a th:href="@{shop.html}">eggs</a></li>
-													<li><a th:href="@{shop.html}">sausages</a></li>
-													<li><a th:href="@{shop.html}">apple juice</a></li>
-												</ul>
-											</li>
-											<li>
-												<ul>
-													<li class="mega-menu-title"><a th:href="@{#}">Categories 03</a></li>
-													<li><a th:href="@{shop.html}">milk</a></li>
-													<li><a th:href="@{shop.html}">grape juice</a></li>
-													<li><a th:href="@{shop.html}">cookie</a></li>
-													<li><a th:href="@{shop.html}">candy</a></li>
-													<li><a th:href="@{shop.html}">cake</a></li>
-													<li><a th:href="@{shop.html}">cupcake</a></li>
-												</ul>
-											</li>
-											<li>
-												<ul>
-													<li class="mega-menu-title"><a th:href="@{#}">Categories 04</a></li>
-													<li><a th:href="@{shop.html}">pie</a></li>
-													<li><a th:href="@{shop.html}">stoberry</a></li>
-													<li><a th:href="@{shop.html}">sandwich</a></li>
-													<li><a th:href="@{shop.html}">bread</a></li>
-													<li><a th:href="@{shop.html}">steak</a></li>
-													<li><a th:href="@{shop.html}">hamburger</a></li>
+												<ul id="category-list">
+													<li class="mega-menu-title"><a href="#">Categories</a></li>
+													<!-- Các danh mục sẽ được thêm vào đây bằng JavaScript -->
 												</ul>
 											</li>
 										</ul>
@@ -262,12 +219,7 @@
 						<div class="mobile-menu">
 							<nav id="mobile-menu-active">
 								<ul class="menu-overflow" id="nav">
-									<li><a th:href="@{index.html}">Home</a>
-										<ul>
-											<li><a th:href="@{index.html}">home version 1</a></li>
-											<li><a th:href="@{index-2.html}">home version 2</a></li>
-										</ul>
-									</li>
+									<li><a th:href="@{/}">home</a>
 									<li><a th:href="@{#}">pages</a>
 										<ul>
 											<li><a th:href="@{about-us.html}">about us </a></li>
@@ -283,46 +235,12 @@
 											<li><a th:href="@{testimonial.html}">Testimonials</a></li>
 										</ul>
 									</li>
-									<li><a th:href="@{shop.html}"> Shop </a>
-										<ul>
-											<li><a th:href="@{#}">Categories 01</a>
-												<ul>
-													<li><a th:href="@{shop.html}">salad</a></li>
-													<li><a th:href="@{shop.html}">sandwich</a></li>
-													<li><a th:href="@{shop.html}">bread</a></li>
-													<li><a th:href="@{shop.html}">steak</a></li>
-													<li><a th:href="@{shop.html}">tuna steak</a></li>
-													<li><a th:href="@{shop.html}">spaghetti </a></li>
-												</ul>
-											</li>
-											<li><a th:href="@{#}">Categories 02</a>
-												<ul>
-													<li><a th:href="@{shop.html}">rice</a></li>
-													<li><a th:href="@{shop.html}">pizza</a></li>
-													<li><a th:href="@{shop.html}">hamburger</a></li>
-													<li><a th:href="@{shop.html}">eggs</a></li>
-													<li><a th:href="@{shop.html}">sausages</a></li>
-													<li><a th:href="@{shop.html}">apple juice</a></li>
-												</ul>
-											</li>
-											<li><a th:href="@{#}">Categories 03</a>
-												<ul>
-													<li><a th:href="@{shop.html}">milk</a></li>
-													<li><a th:href="@{shop.html}">grape juice</a></li>
-													<li><a th:href="@{shop.html}">cookie</a></li>
-													<li><a th:href="@{shop.html}">candy</a></li>
-													<li><a th:href="@{shop.html}">cake</a></li>
-													<li><a th:href="@{shop.html}">cupcake</a></li>
-												</ul>
-											</li>
-											<li><a th:href="@{#}">Categories 04</a>
-												<ul>
-													<li><a th:href="@{shop.html}">pie</a></li>
-													<li><a th:href="@{shop.html}">stoberry</a></li>
-													<li><a th:href="@{shop.html}">sandwich</a></li>
-													<li><a th:href="@{shop.html}">bread</a></li>
-													<li><a th:href="@{shop.html}">steak</a></li>
-													<li><a th:href="@{shop.html}">hamburger</a></li>
+									<li class="top-hover"><a th:href="@{/web/product}">Categories <i class="ion-chevron-down"></i></a>
+										<ul class="submenu">
+											<li>
+												<ul id="category-list1">
+													<li class="mega-menu-title"><a href="#">Categories</a></li>
+													<!-- Các danh mục sẽ được thêm vào đây bằng JavaScript -->
 												</ul>
 											</li>
 										</ul>
@@ -345,6 +263,51 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				fetch('/api/categories') // Đường dẫn tới API trả về danh sách danh mục
+						.then(response => {
+							if (!response.ok) {
+								throw new Error('Network response was not ok');
+							}
+							return response.json();
+						})
+						.then(data => {
+							console.log(data);  // In dữ liệu trả về từ API ra console
+							const categoryList = document.getElementById('category-list');
+
+							// Kiểm tra nếu dữ liệu có tồn tại và không rỗng
+							if (data && Array.isArray(data)) {
+								data.forEach(category => {
+									// Tạo phần tử li cho mỗi danh mục
+									const li = document.createElement('li');
+									const a = document.createElement('a');
+
+									// Đặt liên kết href và nội dung
+									a.href = `/web/category/${category.cateId}`;  // Giả sử `cateId` là ID của danh mục
+									a.textContent = category.name;  // Giả sử `name` là tên của danh mục
+
+									// Thêm thẻ <a> vào <li> và sau đó thêm <li> vào <ul id="category-list">
+									li.appendChild(a);
+									categoryList.appendChild(li);
+								});
+							} else {
+								const li = document.createElement('li');
+								li.textContent = 'No categories available';
+								categoryList.appendChild(li);
+							}
+						})
+						.catch(error => {
+							console.error('Error loading categories:', error);
+							const categoryList = document.getElementById('category-list');
+							const li = document.createElement('li');
+							li.textContent = 'Failed to load categories';
+							categoryList.appendChild(li);
+						});
+			});
+		</script>
+
 		<!-- mobile-menu-area-end -->
 	</header>
 </div>

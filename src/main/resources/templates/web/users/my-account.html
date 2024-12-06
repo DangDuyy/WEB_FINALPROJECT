@@ -47,7 +47,7 @@
                         <div class="col-lg-6 col-md-6">
                           <div class="billing-info">
                             <label>Username</label>
-                            <input type="text" name="userName" th:value="${user.userName}">
+                            <input type="text" name="userName" th:value="${user.username}">
                           </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
@@ -167,11 +167,13 @@
                   </div>
                 </div>
               </div>
+            <form action="/user-cart" method="POST">
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h5 class="panel-title"><span>4</span> <a href="wishlist.html">Modify your wish list   </a></h5>
+                  <h5 class="panel-title"><span>4</span> <a href="#" onclick="this.closest('form').submit();">Modify your wish list   </a></h5>
                 </div>
               </div>
+            </form>
             </div>
           </div>
         </div>

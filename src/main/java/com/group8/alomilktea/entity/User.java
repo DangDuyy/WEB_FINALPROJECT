@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "user") // Ð?m b?o tên b?ng là "users"
+@Table(name = "user") // ï¿½?m b?o tï¿½n b?ng lï¿½ "users"
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -89,6 +89,14 @@ public class UserController {
             HttpServletRequest request) {
 
         try {
+
+            User userLogged = userService.getUserLogged();
+            if (userLogged == null) {
+                // Nếu chưa đăng nhập, chuyển hướng đến trang login
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .header("Location", "/auth/login") // Đường dẫn tới trang login
+                        .body("Vui lòng đăng nhập để tiếp tục.");
+            }
             String successMessage = "Thêm vào giỏ hàng thành công";
 
             // Tìm sản phẩm trong cơ sở dữ liệu
@@ -98,7 +106,7 @@ public class UserController {
             }
 
             Product product = optProduct.get();
-            User userLogged = userService.getUserLogged();
+//            User userLogged = userService.getUserLogged();
 
             // Lấy danh sách giỏ hàng của người dùng
             List<Cart> cartList = cartService.findByUserId(userLogged.getUserId());
