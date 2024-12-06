@@ -1,7 +1,8 @@
 package com.group8.alomilktea.controller.admin;
 
 import com.group8.alomilktea.entity.ShipmentCompany;
-import com.group8.alomilktea.service.IShipmentService;
+import com.group8.alomilktea.entity.User;
+import com.group8.alomilktea.service.IShipmentCompany;
 import com.group8.alomilktea.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ public class ShipmentController {
     private IUserService userService;
 
     @Autowired
-    private IShipmentService shipmentCompanyService;
+    private IShipmentCompany shipmentCompanyService;
 
     // List all ShipmentCompanies with pagination
     @RequestMapping("/list")
@@ -53,12 +54,15 @@ public class ShipmentController {
     public String saveShipmentCompany(
             @RequestParam("methodname") String methodname,
             @RequestParam("price") Double price,
+            @RequestParam("shipperId") Integer user_id,
             ModelMap model) {
+
+        User user = userService.findById(user_id);
 
         ShipmentCompany shipmentCompany = new ShipmentCompany();
         shipmentCompany.setShipCname(methodname);
         shipmentCompany.setPrice(price);
-
+        shipmentCompany.setUser(user);
 
         shipmentCompanyService.save(shipmentCompany);
         model.addAttribute("message", "Shipment Company created successfully!");
@@ -85,6 +89,7 @@ public class ShipmentController {
             @RequestParam("id") Integer id,
             @RequestParam("methodname") String methodname,
             @RequestParam("price") Double price,
+            @RequestParam("shipperId") Integer user_id,
             ModelMap model) {
 
         ShipmentCompany shipmentCompany = shipmentCompanyService.findById(id);
@@ -93,8 +98,11 @@ public class ShipmentController {
             return "redirect:/admin/shipment/list";
         }
 
+        User user = userService.findById(user_id);
+
         shipmentCompany.setShipCname(methodname);
         shipmentCompany.setPrice(price);
+        shipmentCompany.setUser(user);
 
         shipmentCompanyService.save(shipmentCompany);
         model.addAttribute("message", "Shipment Company updated successfully!");

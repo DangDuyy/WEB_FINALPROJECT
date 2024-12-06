@@ -6,5 +6,7 @@ public class Constant {
 	public static final String COOKIE_REMEMBER = "username";
 
 	public static int SALT_LENGTH = 6;
-	
+
+	public static final String uploadDir = "C:/uploads/images";
+
 }

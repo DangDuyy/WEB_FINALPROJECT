@@ -30,9 +30,6 @@
         @JoinColumn(name = "promotion_id", referencedColumnName = "promotion_id",foreignKey = @ForeignKey(name = "FK_Product_Promotion") ) // tham chiếu đến promotionId của bảng Promotion
         private Promotion promotion;
 
-        @Column(name = "logo", length = 1000)
-        private String logo;
-
         @Column(name = "image_link", length = 1000)
         private String imageLink;
 

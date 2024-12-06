@@ -2,6 +2,7 @@ package com.group8.alomilktea.controller.admin;
 
 import com.group8.alomilktea.entity.Order;
 import com.group8.alomilktea.service.IOrderService;
+import com.group8.alomilktea.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin/orders")
-public class OderController {
+public class OrderController {
     @Autowired(required = true)
     IOrderService orderSer;
+
+    @Autowired()
+    IUserService userService;
     @RequestMapping("/list")
     public String listOrders(
             ModelMap model,
@@ -30,7 +34,7 @@ public class OderController {
         model.addAttribute("totalPage", page.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalOrders", totalOrders);
-        return "admin/orders/list";
+        return "admin/orders/apps-ecommerce-orders";
     }
 
 
