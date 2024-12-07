@@ -40,16 +40,30 @@ public class CheckoutController {
     @GetMapping("")
     public String ThongtinKh(ModelMap model) {
         User user = userService.getUserLogged();
+
         String add = user.getAddress();
-        String[] parts = add.split("\\s*,\\s*");
-        if (parts.length >= 3) {
-            model.addAttribute("province", parts[3].trim());
-            model.addAttribute("city", parts[2].trim());
-            model.addAttribute("commune", parts[1].trim());
-            model.addAttribute("address", parts[0].trim());
+        if (add != null && !add.trim().isEmpty()) {
+            String[] parts = add.split("\\s*,\\s*");
+            if (parts.length >= 4) { // Ensure the array has enough parts
+                model.addAttribute("province", parts[3].trim());
+                model.addAttribute("city", parts[2].trim());
+                model.addAttribute("commune", parts[1].trim());
+                model.addAttribute("address", parts[0].trim());
+            } else if (parts.length == 3) {
+                model.addAttribute("commune", parts[2].trim());
+                model.addAttribute("city", parts[1].trim());
+                model.addAttribute("address", parts[0].trim());
+            } else if (parts.length == 2) {
+                model.addAttribute("city", parts[1].trim());
+                model.addAttribute("address", parts[0].trim());
+            } else if (parts.length == 1) {
+                model.addAttribute("address", parts[0].trim());
+            }
         } else {
-            model.addAttribute("address", add.trim());
+            // Handle case where add is null or empty
+            model.addAttribute("address", "No address provided");
         }
+
 
         model.addAttribute("user", user);
         List<Cart> cartItems = cartService.findByUserId(user.getUserId());
@@ -70,7 +84,7 @@ public class CheckoutController {
         List<ShipmentCompany> shippingMethods = shipmentCompany.findAll();
 
 
-            shipCost = shippingMethods.get(0).getPrice(); //Lấy phí vận chuyển của phương thức đầu tiên
+        shipCost = shippingMethods.get(0).getPrice(); //Lấy phí vận chuyển của phương thức đầu tiên
 
         System.out.println("Bị lôi shipcost" + shipCost);
 
@@ -96,8 +110,6 @@ public class CheckoutController {
         model.addAttribute("shippingMethods", shippingMethods); //Thêm shippingMethods vào model
         return "web/billy/checkout";
     }
-
-
 
 
 }

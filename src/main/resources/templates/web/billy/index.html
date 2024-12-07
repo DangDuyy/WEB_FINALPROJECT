@@ -189,7 +189,7 @@
                 <div class="best-food-width-1">
                     <div class="single-banner">
                         <div class="hover-style">
-                            <a href="#"><img src="assets/img/banner/banner-5.jpg" alt=""></a>
+                            <a href="#"><img th:src="@{/assets/img/banner/banner-5.jpg}" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -216,7 +216,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-1.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-1.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -241,7 +241,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-2.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-2.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -265,7 +265,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-3.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-3.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -290,7 +290,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-4.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-4.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -318,7 +318,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-5.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-5.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -343,7 +343,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-6.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-6.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -367,7 +367,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-7.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-7.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -392,7 +392,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-8.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-8.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -420,7 +420,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-9.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-9.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -445,7 +445,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-10.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-10.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -469,7 +469,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-1.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-1.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -494,7 +494,7 @@
                                 <div class="product-wrapper">
                                     <div class="product-img">
                                         <a href="product-details.html">
-                                            <img src="assets/img/product/product-2.jpg" alt="">
+                                            <img th:src="@{/assets/img/product/product-2.jpg}" alt="">
                                         </a>
                                         <div class="product-action">
                                             <div class="pro-action-left">
@@ -522,27 +522,15 @@
                 <div class="best-food-width-1 mrg-small-35">
                     <div class="single-banner">
                         <div class="hover-style">
-                            <a href="#"><img src="assets/img/banner/banner-6.jpg" alt=""></a>
+                            <a href="#"><img th:src="@{/assets/img/banner/banner-6.jpg}" alt=""></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div replace="web/fragments/modal :: modal"></div>
+    <div th:replace="web/fragments/modal :: modal"></div>
 </div>
-
-
-<!-- all js here -->
-<script src="assets/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="assets/js/popper.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/imagesloaded.pkgd.min.js"></script>
-<script src="assets/js/isotope.pkgd.min.js"></script>
-<script src="assets/js/ajax-mail.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
-<script src="assets/js/plugins.js"></script>
-<script src="assets/js/main.js"></script>
 <!-- Thư viện Slick Carousel -->
 
 

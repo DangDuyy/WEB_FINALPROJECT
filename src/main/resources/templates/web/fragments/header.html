@@ -57,6 +57,7 @@
 							</a>
 						</div>
 					</div>
+
 					<div class="col-lg-9 col-md-8 col-12 col-sm-8">
 						<div class="header-middle-right f-right">
 							<div class="header-login">
@@ -100,17 +101,18 @@
 									</div>
 								</a>
 							</div>
-							<div class="header-cart">
+							<div class="header-wishlist">
 								<a th:href="@{/user-cart}">
 									<div class="header-icon-style">
 										<i class="icon-handbag icons"></i>
-										<span class="count-style">02</span>
+										<span class="count-style" th:text="${cartItems != null ? cartItems.size() : 0}">02</span>
 									</div>
 									<div class="cart-text">
 										<span class="digit">My Cart</span>
-										<span class="cart-digit-bold">$209.00</span>
+										<span class="cart-digit-bold" th:text="${totalAmount}">$209.00</span>
 									</div>
 								</a>
+
 								<!--<div class="shopping-cart-content">
 									<ul>
 										<li class="single-shopping-cart">
@@ -150,7 +152,6 @@
 									</div>
 								</div>-->
 							</div>
-
 						</div>
 					</div>
 				</div>
