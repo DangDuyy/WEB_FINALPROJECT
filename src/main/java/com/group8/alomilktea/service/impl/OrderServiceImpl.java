@@ -59,6 +59,11 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    public Order findById(Integer id) {
+        return orderRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Page<Order> findAll(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
@@ -96,5 +101,10 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public List<Integer> getQuarterTotal() {
         return orderRepository.getQuarterTotal();
+    }
+
+    @Override
+    public int countByStatus(String status) {
+        return orderRepository.countByStatus(status);
     }
 }

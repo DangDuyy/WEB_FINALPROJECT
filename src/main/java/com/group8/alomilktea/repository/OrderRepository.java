@@ -65,4 +65,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
                     + "GROUP BY q.quarter_number;"
     )
     List<Integer> getQuarterTotal();
+
+    int countByStatus(String status);
 }

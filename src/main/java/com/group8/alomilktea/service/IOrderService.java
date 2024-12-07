@@ -15,6 +15,7 @@ public interface IOrderService {
     long count();
     List<Order> findAll();
 
+    Order findById(Integer id);
     Page<Order> findAll(Pageable pageable);
 
     <S extends Order> S save(S entity);
@@ -27,4 +28,7 @@ public interface IOrderService {
     float rateCom();
     List<Integer> getMonthlyTotal();
     List<Integer> getQuarterTotal();
+
+    public int countByStatus(String status);
+
 }
