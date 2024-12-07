@@ -1026,7 +1026,7 @@ textarea:focus {
     padding-bottom: 97px
 }
 .pb-100 {
-    padding-bottom: 50px
+    padding-bottom: 100px
 }
 .pb-105 {
     padding-bottom: 105px
@@ -2245,14 +2245,6 @@ textarea:focus {
     display: none;
 }
 .product-tab-list > a h4 {
-    color: #000;
-    display: inline-block;
-    font-size: 24px;
-    font-weight: 500;
-    margin: 0 27px;
-    position: relative;
-}
-.event-content > a h4 {
     color: #000;
     display: inline-block;
     font-size: 24px;
@@ -5526,16 +5518,16 @@ h5.panel-title span {
     width: 90%;
 }
 .banner-text h2{
-     font-size: 36px; /* Tăng cỡ chữ cho tiêu đề */
-     font-weight: bold;
-     color: firebrick; /* Màu cam ấm */
-     margin-bottom: 4px;
-     margin-top: 50px;
-     text-transform: uppercase;
-     margin-left: 40px;
-     letter-spacing: 1px; /* Tăng khoảng cách giữa các chữ */
-     text-align: center; /
- }
+    font-size: 36px; /* Tăng cỡ chữ cho tiêu đề */
+    font-weight: bold;
+    color: firebrick; /* Màu cam ấm */
+    margin-bottom: 4px;
+    margin-top: 50px;
+    text-transform: uppercase;
+    margin-left: 40px;
+    letter-spacing: 1px; /* Tăng khoảng cách giữa các chữ */
+    text-align: center; /
+}
 
 
 /* Style cho tiêu đề */
@@ -5576,7 +5568,7 @@ h5.panel-title span {
 .btn-view-more:hover {
     background-color: darkred; /* Màu tối hơn khi hover */
 }
-/* Style cho tiêu đề sự kiện giảm giá */
+Style cho tiêu đề sự kiện giảm giá
 .discount-event-title {
     text-align: center; /* Căn giữa chữ */
     font-family: 'Arial', sans-serif; /* Chọn font chữ */
@@ -5623,17 +5615,6 @@ h5.panel-title span {
 .product-img img {
     width: 100%; /* Đảm bảo ảnh không bị kéo dãn */
     height: auto;
-}
-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 10;
 }
 
 .prev-btn {
