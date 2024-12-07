@@ -97,4 +97,29 @@ public class OrderServiceImpl implements IOrderService {
     public List<Integer> getQuarterTotal() {
         return orderRepository.getQuarterTotal();
     }
+
+    @Override
+    public long countPendingOrders() {
+        return orderRepository.countOrdersByStatus("Pending");
+    }
+
+    @Override
+    public long countDoneOrders() {
+        return orderRepository.countOrdersByStatus("Done");
+    }
+
+    @Override
+    public long countCancelOrders() {
+        return orderRepository.countOrdersByStatus("Cancel");
+    }
+
+    @Override
+    public long countShippingOrders() {
+        return orderRepository.countOrdersByStatus("Shipping");
+    }
+
+    @Override
+    public int getCompletedOrderRate() {
+        return orderRepository.rateCompleted();
+    }
 }
