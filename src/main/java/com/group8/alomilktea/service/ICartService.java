@@ -6,6 +6,13 @@ import java.util.List;
 
 public interface ICartService {
     List<Cart> findByUserId(Integer userId);
+    
     List<Cart> findByUserIdAndProid(Integer userId,Integer proId);
+    
     <S extends Cart> S save(S entity);
+    
+    void deleteAll();
+
+
+    void clearCart(Integer userId);
 }

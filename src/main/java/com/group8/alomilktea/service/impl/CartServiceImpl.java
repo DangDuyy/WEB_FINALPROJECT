@@ -12,7 +12,7 @@ import java.util.List;
 public class CartServiceImpl implements ICartService {
     private CartRepository cartRepository;
     @Autowired
-    public CartServiceImpl(CartRepository cartRepository) {
+    CartServiceImpl(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
     }
 
@@ -24,6 +24,15 @@ public class CartServiceImpl implements ICartService {
     @Override
     public List<Cart> findByUserIdAndProid(Integer userId, Integer proId) {
         return cartRepository.findByUserIdAndProid(userId, proId);
+    }
+    @Override
+    public void deleteAll() {
+        cartRepository.deleteAll();
+    }
+
+    @Override
+    public void clearCart(Integer userId) {
+        cartRepository.clearCart(userId);
     }
 
     @Override

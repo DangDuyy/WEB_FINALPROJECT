@@ -52,74 +52,40 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="billing-info">
                                                             <label>Province</label>
-                                                            <input type="text" class="form-control" th:name="province"
-                                                                   th:value="${province}">
+                                                            <input type="text" id="province" name="province" th:value="${province}" required>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="billing-info">
                                                             <label>City/Town</label>
-                                                            <input type="text" class="form-control" th:name="city"
-                                                                   th:value="${city}">
+                                                            <input type="text" id="city" name="city" th:value="${city}" required>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="billing-info">
                                                             <label>Commune/Ward</label>
-                                                            <input type="text" class="form-control" th:name="commune"
-                                                                   th:value="${commune}">
+                                                            <input type="text" id="commune" name="commune" th:value="${commune}" required>
                                                         </div>
                                                     </div>
-
-                                                    <!--
-                                                    <div class="col-lg-6 col-md-6">
-                                                        <div class="billing-select">
-                                                            <label>Country</label>
-                                                            <select class="form-control" th:name="country">
-                                                                <option value="1" th:selected="${user != null && user.country == 1}">Vietnamese</option>
-                                                                <option value="2" th:selected="${user != null && user.country == 2}">China</option>
-                                                                <option value="3" th:selected="${user != null && user.country == 3}">Capuchin</option>
-                                                                <option value="4" th:selected="${user != null && user.country == 4}">Malaysia</option>
-                                                                <option value="5" th:selected="${user != null && user.country == 5}">Laos</option>
-                                                                <option value="6" th:selected="${user != null && user.country == 6}">Philippines</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    -->
 
                                                     <div class="col-lg-12 col-md-12">
                                                         <div class="billing-info">
                                                             <label>Address</label>
-                                                            <input type="text" class="form-control" th:name="address"
-                                                                   th:value="${address}">
+                                                            <input type="text" id="address" name="address" th:value="${address}" required>
                                                         </div>
                                                     </div>
+
 
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="billing-info">
                                                             <label>Telephone</label>
                                                             <input type="text" class="form-control" th:name="telephone"
-                                                                   th:value="${user != null ? user.phone : ''}">
+                                                                   th:value="${user != null ? user.phone : ''}" required >
                                                         </div>
                                                     </div>
 
-                                                </div>
-                                                <!--<div class="ship-wrapper">
-                                                    <div class="single-ship">
-                                                        <input type="radio" name="address" value="address" checked="">
-                                                        <label>Ship to this address</label>
-                                                    </div>
-                                                </div>-->
-                                                <div class="billing-back-btn">
-                                                    <div class="billing-back">
-                                                        <a href="#"><i class="ion-arrow-up-c"></i> back</a>
-                                                    </div>
-                                                    <div class="billing-btn">
-                                                        <button type="submit" class="btn btn-primary">Get a Quote
-                                                        </button>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -219,9 +185,6 @@
                                                         </tr>
                                                         </tfoot>
                                                     </table>
-
-                                                    <!-- Modal for Discount Codes -->
-                                                    <!-- Modal for Discount Codes -->
                                                     <div class="modal fade" id="discountModal" tabindex="-1"
                                                          aria-labelledby="discountModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
@@ -318,9 +281,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="billing-btn">
-                                                    <button type="submit">Continue</button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -372,7 +332,10 @@
                                         function handlePayment() {
                                             // Lấy giá trị tổng thanh toán
                                             const grandTotal = document.getElementById("grandTotalAmount").innerText.trim();
-
+                                            var province = document.getElementById('province').value;
+                                            var city = document.getElementById('city').value;
+                                            var commune = document.getElementById('commune').value;
+                                            var address = document.getElementById('address').value;
                                             // Kiểm tra nếu giá trị grandTotal không hợp lệ
                                             if (!grandTotal || isNaN(grandTotal)) {
                                                 alert("Invalid grand total amount.");
@@ -389,10 +352,11 @@
                                             switch (paymentMethod.value) {
                                                 case 'vnpay':
                                                     // Gửi yêu cầu thanh toán VNPay
-                                                    fetch(`/api/v1/payment/vn-pay?grandTotalAmount=${encodeURIComponent(grandTotal)}`, {
+                                                    fetch(`/api/v1/payment/vn-pay?grandTotalAmount=${encodeURIComponent(grandTotal)}&province=${encodeURIComponent(province)}&city=${encodeURIComponent(city)}&commune=${encodeURIComponent(commune)}&address=${encodeURIComponent(address)}`, {
                                                         method: 'GET'
                                                     })
-                                                        .then(response => response.json())
+
+                                                            .then(response => response.json())
                                                         .then(data => {
                                                             console.log(data.code + "lo cc");  // Log để kiểm tra đối tượng dữ liệu
                                                             console.log(data.data.ketao + " hêllo");
@@ -408,9 +372,21 @@
                                                         });
                                                     break;
                                                 case 'cash-on-delivery':
-                                                    // Chuyển hướng đến trang COD
-                                                    alert("Cash on Delivery selected. Proceeding with order.");
-                                                    window.location.href = "/cash-on-delivery";
+                                                    // Gửi yêu cầu backend để xử lý thanh toán Cash on Delivery
+                                                case 'cash-on-delivery':
+                                                    // Gửi yêu cầu backend để xử lý thanh toán Cash on Delivery
+                                                    fetch(`/api/v1/payment/cash-on-delivery?grandTotalAmount=${encodeURIComponent(grandTotal)}&province=${encodeURIComponent(province)}&city=${encodeURIComponent(city)}&commune=${encodeURIComponent(commune)}&address=${encodeURIComponent(address)}`, {
+                                                        method: 'GET',
+                                                    })
+                                                        .then(response => response.text())  // Use response.text() to handle HTML response
+                                                        .then(html => {
+                                                            // Display the HTML content returned by the backend (for confirmation)
+                                                            document.body.innerHTML = html;  // Replace the entire page content with the response from backend
+                                                        })
+                                                        .catch(error => {
+                                                            console.error("Error during Cash on Delivery payment:", error);
+                                                            alert("An error occurred during Cash on Delivery payment.");
+                                                        });
                                                     break;
                                                 case 'momo':
                                                     // Chuyển hướng đến trang thanh toán MoMo
