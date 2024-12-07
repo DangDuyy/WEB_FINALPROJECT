@@ -6,12 +6,8 @@ import com.group8.alomilktea.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -28,21 +24,54 @@ public class OrderController {
     public String listOrders(
             ModelMap model,
             @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+        long newod = orderSer.countByStatus("New");
+        long pendingod = orderSer.countByStatus("Pending");
+        long shipod = orderSer.countByStatus("Shipping");
+        long deleod = orderSer.countByStatus("Delivered");
+        long cancelod = orderSer.countByStatus("Cancelled");
+
+        System.out.println(pendingod + 5);
+
         Page<Order> page = orderSer.getAll(pageNo);
         long totalOrders = orderSer.count();
         model.addAttribute("orders", page.getContent());
         model.addAttribute("totalPage", page.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalOrders", totalOrders);
+        model.addAttribute("newod", newod);
+        model.addAttribute("pendingod", pendingod);
+        model.addAttribute("shipod", shipod);
+        model.addAttribute("deliod", deleod);
+        model.addAttribute("cancelod", cancelod);
         return "admin/orders/apps-ecommerce-orders";
     }
 
 
-    @GetMapping("updateState/{orderId}/{newState}")
-    public String updateOrderState(@PathVariable("orderId") Integer orderId, @PathVariable("newState") String newState) {
-        orderSer.updateOrderState(orderId, newState);
-        return "redirect:/admin/orders";
+    @PostMapping("updateState/{orderId}")
+    public String updateOrderState(@PathVariable("orderId") Integer orderId, String newState, ModelMap modelMap) {
+        // Lấy đơn hàng từ cơ sở dữ liệu
+        Order order = orderSer.findById(orderId);
+
+        // Xử lý lỗi nếu trạng thái không phải là "Pending"
+        String error = "";
+        if (order.getStatus().equals("Pending") && newState.equals("Shipping")) {
+            // Chuyển trạng thái của đơn hàng từ "Pending" sang "Shipping"
+            order.setStatus("Shipping");
+        } else if (!order.getStatus().equals("Pending")) {
+            // Nếu trạng thái không phải "Pending", không thể thay đổi
+            error = "Bạn chỉ có thể duyệt đơn hàng đang chờ xử lý";
+        }
+
+        // Lưu trạng thái mới của đơn hàng
+        orderSer.save(order);
+
+        // Trả về thông tin đơn hàng và thông báo lỗi (nếu có)
+        modelMap.addAttribute("order", order);
+        modelMap.addAttribute("error", error);
+
+        return "redirect:/admin/orders/list"; // Quay lại danh sách đơn hàng
     }
+
 
 
     @GetMapping("delete/{orderId}")
@@ -59,19 +88,4 @@ public class OrderController {
     public List<Order> getOrdersByUserId(@PathVariable Integer userId) {
         return orderSer.findOder(userId);
     }
-    @GetMapping("/search")
-    public String searchOrder(@RequestParam("search") String search, Model model) {
-        try {
-            Integer userId = Integer.parseInt(search); // Nếu tìm kiếm bằng UserId
-            List<Order> orders = orderSer.findOder(userId);
-            model.addAttribute("orders", orders);
-        } catch (NumberFormatException e) {
-            model.addAttribute("message", "Invalid UserId. Please enter a valid number.");
-            model.addAttribute("orders", List.of()); // Trả về danh sách rỗng
-        }
-
-        return "admin/orders/list"; // Tên file Thymeleaf hiển thị kết quả
-    }
-
-
 }

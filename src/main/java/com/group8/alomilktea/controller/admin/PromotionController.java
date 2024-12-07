@@ -5,10 +5,17 @@ import com.group8.alomilktea.entity.Promotion;
 import com.group8.alomilktea.service.IProductService;
 import com.group8.alomilktea.service.IPromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,11 +36,17 @@ public class PromotionController {
                                     @RequestParam(name = "page", defaultValue = "0") int page,
                                     @RequestParam(name = "size", defaultValue = "10") int size) {
 
-        List<Promotion> promotions = promotionService.findAll();
-        model.addAttribute("promotions", promotions);
+        // Tạo đối tượng Pageable để phân trang
+        Pageable pageable = PageRequest.of(page, size);
+
+        // Lấy danh sách promotions với phân trang
+        Page<Promotion> promotionPage = promotionService.findAll(pageable);
+
+        // Thêm dữ liệu vào model
+        model.addAttribute("promotions", promotionPage.getContent());
 
         // Map to store Product names for each promotion
-        Map<Integer, String> promotionProductMap = promotions.stream()
+        Map<Integer, String> promotionProductMap = promotionPage.getContent().stream()
                 .collect(Collectors.toMap(
                         Promotion::getPromotionId,
                         promotion -> {
@@ -44,6 +57,12 @@ public class PromotionController {
                         }));
 
         model.addAttribute("promotionProductMap", promotionProductMap);
+
+        // Thêm thông tin phân trang vào model
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", promotionPage.getTotalPages());
+        model.addAttribute("totalItems", promotionPage.getTotalElements());
+        model.addAttribute("pageSize", size);
 
         return "admin/promotions/apps-ecommerce-promotion-list";
     }
@@ -66,6 +85,8 @@ public class PromotionController {
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("discountRate") Integer discountRate,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            @RequestParam(value = "imageUrl", required = false) String imageUrl,
             @RequestParam(value = "productIds", required = false) List<Integer> productIds,
             ModelMap model) {
 
@@ -78,6 +99,20 @@ public class PromotionController {
         if (productIds != null && !productIds.isEmpty()) {
             List<Product> selectedProducts = productService.findByIds(productIds);
             promotion.setProducts(selectedProducts);
+        }
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+                promotion.setLogo("/uploads/" + fileName);
+                imageFile.transferTo(new File("uploads/" + fileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        else if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+            promotion.setLogo(imageUrl);
         }
 
         promotionService.save(promotion);
