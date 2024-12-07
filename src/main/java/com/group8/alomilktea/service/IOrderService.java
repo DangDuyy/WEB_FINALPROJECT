@@ -28,7 +28,11 @@ public interface IOrderService {
     float rateCom();
     List<Integer> getMonthlyTotal();
     List<Integer> getQuarterTotal();
+    long countPendingOrders();
+    long countDoneOrders();
+    long countCancelOrders();
+    long countShippingOrders();
+    int getCompletedOrderRate();
 
     public int countByStatus(String status);
-
 }
