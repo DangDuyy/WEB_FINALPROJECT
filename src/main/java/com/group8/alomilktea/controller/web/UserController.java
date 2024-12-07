@@ -36,15 +36,15 @@ public class UserController {
     @GetMapping()
     public String trangchu(Model model) {
         String currentUserName = "1";  // Giả lập người dùng có id = 1
-
         // Lấy danh sách sản phẩm
         List<ProductDetailDTO> list = productService.findProductInfoBySize();
         model.addAttribute("products", list);
         model.addAttribute("userId", currentUserName);  // Thêm userId vào model
-
         System.out.println("Product list: " + list);
         return "web/billy/index";
     }
+
+
 
     @GetMapping("detail/{id}")
     public String product(@PathVariable("id") Integer id, Model model) {
