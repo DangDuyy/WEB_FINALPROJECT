@@ -15,9 +15,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query(nativeQuery = true, value = "SELECT * FROM orders ORDER BY date DESC")
     Page<Order> findAllCustom(Pageable pageable);
     @Query("""
-		    SELECT o FROM Order o WHERE o.user.userId = :userId
-		""")
+    SELECT o FROM Order o WHERE o.user.userId = :userId
+        """)
     List<Order> findOrderByUserId(@Param("userId") Integer userId);
+
     @Query(value = "SELECT IFNULL(SUM(CASE " +
             "WHEN currency = 'VNĐ' THEN total " +
             "WHEN currency = 'USD' THEN total * 24390.243902 " +

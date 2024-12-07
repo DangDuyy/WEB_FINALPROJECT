@@ -97,7 +97,6 @@ public class OrderServiceImpl implements IOrderService {
     public List<Integer> getQuarterTotal() {
         return orderRepository.getQuarterTotal();
     }
-
     @Override
     public long countPendingOrders() {
         return orderRepository.countOrdersByStatus("Pending");
