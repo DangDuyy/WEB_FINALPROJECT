@@ -1,6 +1,7 @@
 package com.group8.alomilktea.service.impl;
 
 import com.group8.alomilktea.entity.Cart;
+import com.group8.alomilktea.entity.CartKey;
 import com.group8.alomilktea.repository.CartRepository;
 import com.group8.alomilktea.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.List;
 public class CartServiceImpl implements ICartService {
     private CartRepository cartRepository;
     @Autowired
-    public CartServiceImpl(CartRepository cartRepository) {
+    CartServiceImpl(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
     }
 
@@ -24,6 +25,23 @@ public class CartServiceImpl implements ICartService {
     @Override
     public List<Cart> findByUserIdAndProid(Integer userId, Integer proId) {
         return cartRepository.findByUserIdAndProid(userId, proId);
+    }
+    @Override
+    public void deleteAll() {
+        cartRepository.deleteAll();
+    }
+
+    @Override
+    public void clearCart(Integer userId) {
+        cartRepository.clearCart(userId);
+    }
+    @Override
+    public void deleteById(CartKey id) {
+        cartRepository.deleteById(id);
+    }
+    @Override
+    public boolean existsById(CartKey id) {
+        return cartRepository.existsById(id);
     }
 
     @Override

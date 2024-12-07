@@ -13,14 +13,23 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PaymentService {
     private final VNPAYConfig vnPayConfig;
-
+    public long amount =0;
+    public String fullAddress;
     public PaymentDTO.VNPayResponse createVnPayPayment(HttpServletRequest request) {
         String amountParam = request.getParameter("grandTotalAmount");
+        String province = request.getParameter("province");
+        String city = request.getParameter("city");
+        String commune = request.getParameter("commune");
+        String address = request.getParameter("address");
+
+        // Xây dựng địa chỉ đầy đủ
+        fullAddress = address + ", " + commune + ", " + city + ", " + province;
         if (amountParam == null || amountParam.isEmpty()) {
             throw new IllegalArgumentException("Amount parameter is required and cannot be null or empty");
         }
+
         double amountDouble = Double.parseDouble(amountParam);
-        long amount = (long) (amountDouble * 100);
+        amount = (long) (amountDouble * 100);
         System.out.println("amount is " + amount);
 
         String bankCode = request.getParameter("bankCode");

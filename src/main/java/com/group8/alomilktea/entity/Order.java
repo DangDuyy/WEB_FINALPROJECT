@@ -22,15 +22,17 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "FK_user_order"))
-    private User user;  // Mối quan hệ với bảng User
+    private User user;
 
     @Column(name = "currency")
     private String currency;
 
     @Column(name = "date")
     private String date;
+
     @Column(name = "delivery_address")
     private String deliAddress;
+
     @Column(name = "payment_method", columnDefinition = "varchar(255) default 'COD'")
     private String paymentMethod;
 
@@ -40,14 +42,12 @@ public class Order {
     @Column(name = "total")
     private Double total;
 
-
     @ManyToOne
     @JoinColumn(name = "ship_cid", referencedColumnName = "ship_cid", foreignKey = @ForeignKey(name = "FK_Ship_Oder"))
     private ShipmentCompany shipmentCompany;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails = new ArrayList<>();
-
     public Order(String currency, String date, String paymentMethod, ShipmentCompany shipmentCompany,String status, Double total, User user) {
         this.currency = currency;
         this.date = date;

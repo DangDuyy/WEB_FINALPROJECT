@@ -1,24 +1,18 @@
 package com.group8.alomilktea.entity;
 
-import java.io.Serializable;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 
 @Setter
 @Getter
 @Entity
-@Table(name = "cart")
+@Table(name = "wishlist")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cart implements Serializable {
+public class Wishlist implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
@@ -38,13 +32,9 @@ public class Cart implements Serializable {
     @JoinColumn(name = "pro_id", insertable = false, updatable = false)
     private Product product;
 
-    public Cart(CartKey id, int quantity) {
+    public Wishlist(CartKey id, int quantity) {
         this.id = id;
         this.quantity = quantity;
     }
-
-
-// Getters and Setters
-
 
 }
