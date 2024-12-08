@@ -45,4 +45,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     ProductDetail findPriceByProductIdAndSize(@Param("productId") Integer productId, @Param("size") ProductAttribute size);
 
     List<Product> findByProIdIn(List<Integer> ids);
+   @Query("SELECT new com.group8.alomilktea.model.ProductDetailDTO( " +
+            "p.proId, p.name, p.description, p.imageLink, p.category.cateId, " +
+            "pd.proDId, pd.size, pd.price) " +
+            "FROM Product p " +
+            "LEFT JOIN p.productDetails pd " +
+            "WHERE pd.size = 'M' AND p.category.cateId = :catId")
+    List<ProductDetailDTO> findProductInfoByCatID(@Param("catId") Integer catId);
 }

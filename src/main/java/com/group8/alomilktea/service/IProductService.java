@@ -37,4 +37,5 @@ public interface IProductService {
 
     List<Product> findByIds(List<Integer> ids);
 
+ List<ProductDetailDTO> findProductInfoByCatID(Integer CateId);
 }

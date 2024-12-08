@@ -89,7 +89,12 @@ public class ProductService implements IProductService {
     public String getPromotionNameByProductId(Integer productId) {
         return repo.findPromotionNameByProductId(productId);
     }
+	@Override
 
+
+    public List<ProductDetailDTO> findProductInfoByCatID(Integer CateId) {
+        return repo.findProductInfoByCatID(CateId);
+    }
 }
 
 

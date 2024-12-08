@@ -59,6 +59,11 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    public Order findById(Integer id) {
+        return orderRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public Page<Order> findAll(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
@@ -97,4 +102,33 @@ public class OrderServiceImpl implements IOrderService {
     public List<Integer> getQuarterTotal() {
         return orderRepository.getQuarterTotal();
     }
+    @Override
+    public long countPendingOrders() {
+        return orderRepository.countOrdersByStatus("Pending");
+    }
+
+    @Override
+    public long countDoneOrders() {
+        return orderRepository.countOrdersByStatus("Done");
+    }
+
+    @Override
+    public long countCancelOrders() {
+        return orderRepository.countOrdersByStatus("Cancel");
+    }
+
+    @Override
+    public long countShippingOrders() {
+        return orderRepository.countOrdersByStatus("Shipping");
+    }
+
+    @Override
+    public int getCompletedOrderRate() {
+        return orderRepository.rateCompleted();
+    }
+
+	@Override
+	    public int countByStatus(String status) {
+	        return orderRepository.countByStatus(status);
+	    }
 }

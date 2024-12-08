@@ -20,4 +20,5 @@ public enum ProductAttribute {
             if (v.getSize().equals(size)) return v;
         throw new IllegalArgumentException();
     }
+
 }
