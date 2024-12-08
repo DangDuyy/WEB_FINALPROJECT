@@ -135,10 +135,16 @@
                                         <img th:src="@{${product.imageLink}}" alt="Product Image">
                                     </a>
                                 </div>
+                                <div class="product-action">
+                                    <div class="pro-action-left">
+                                        <a title="Add to Cart"  th:href="@{/web/product/detail/{id}(id=${product.proId})}"><i class="ion-android-cart"></i> Buy Item</a>
+                                    </div>
+                                </div>
                                 <div class="product-content">
                                     <h4 th:text="${product.name}"></h4>
                                         <span th:text="${product.price} + ' $'"></span>
                                 </div>
+
                         </div>
                     </div>
                 </div>
@@ -161,6 +167,11 @@
                                 <div class="product-content">
                                     <h4 th:text="${product.name}"></h4>
                                         <span th:text="${product.price} + ' $'"></span>
+                                </div>
+                                <div class="product-action">
+                                    <div class="pro-action-left">
+                                        <a title="Add to Cart"  th:href="@{/web/product/detail/{id}(id=${product.proId})}"><i class="ion-android-cart"></i> Buy Item</a>
+                                    </div>
                                 </div>
                         </div>
                     </div>
