@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IOrderService {
     Page<Order> getAll(Integer pageNo);
-
+    Page<Order> getOderByStatus(Integer pageNo, String status,Long shipId);
     void updateOrderState(Integer orderId, String newState);
     void deleteById(Integer id);
     List<Order> findOder(Integer userId);
@@ -35,4 +35,6 @@ public interface IOrderService {
     int getCompletedOrderRate();
 
     public int countByStatus(String status);
+    public int countByStatusAndShip(String status, Long shipId);
+    long countbyShipID(Long ShipId);
 }

@@ -62,6 +62,11 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
+	public Long findShipCIdByUser(String email) {
+		return userRepository.findShipCIdByUser(email);
+	}
+
+	@Override
 	public User updateUser(User model) {
 		Integer userId = model.getUserId();
 		if (userId != null) {

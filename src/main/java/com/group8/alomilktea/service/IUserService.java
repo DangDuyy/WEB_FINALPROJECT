@@ -27,6 +27,8 @@ public interface IUserService {
 
 	Optional<User> findByEmail(String email);
 
+	Long findShipCIdByUser (String email);
+
 	User updateAddress(String email, String newAddress);
 
 	Page<User> getAll(Integer pageNo);

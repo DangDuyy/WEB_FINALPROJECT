@@ -26,6 +26,12 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    public Page<Order> getOderByStatus(Integer pageNo, String status,Long shipId) {
+        Pageable pageable = PageRequest.of(pageNo - 1, 10);
+        return orderRepository.findOderByStatus(pageable,status,shipId);
+    }
+
+    @Override
     public void updateOrderState(Integer orderId, String newState) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
 
@@ -131,4 +137,14 @@ public class OrderServiceImpl implements IOrderService {
 	    public int countByStatus(String status) {
 	        return orderRepository.countByStatus(status);
 	    }
+
+    @Override
+    public int countByStatusAndShip(String status, Long shipId) {
+        return orderRepository.countByStatusAndShip(status,shipId);
+    }
+
+    @Override
+    public long countbyShipID(Long ShipId) {
+        return orderRepository.countbyShipID(ShipId);
+    }
 }
