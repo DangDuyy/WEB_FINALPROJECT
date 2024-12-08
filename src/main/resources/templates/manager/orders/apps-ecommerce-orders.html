@@ -99,9 +99,13 @@
                     <div class="card-body">
                         <div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
                             <div class="lg:col-span-3">
-                                <div class="relative">
-                                    <input type="text" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search for ..." autocomplete="off">
-                                    <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
+                                <div class="relative hidden ltr:ml-3 rtl:mr-3 lg:block group-data-[layout=horizontal]:hidden group-data-[layout=horizontal]:lg:block">
+                                    <form th:action="@{/manager/orders/search}" method="get" style="display: inline-block; z-index: 10;">
+                                        <input type="text"
+                                               class="py-2 pr-4 text-sm text-topbar-item bg-topbar border border-topbar-border rounded pl-8 placeholder:text-slate-400 form-control focus-visible:outline-0 min-w-[300px] focus:border-blue-400"
+                                               name="search" placeholder="Search for ..." autocomplete="off">
+
+                                    </form>
                                 </div>
                             </div><!--end col-->
 
@@ -112,16 +116,16 @@
                                 <a href="javascript:void(0);" data-tab-toggle data-target="allOrders" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="boxes" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">All Orders</span></a>
                             </li>
                             <li class="group">
-                                <a href="javascript:void(0);" data-tab-toggle data-target="pendingOrder" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="loader" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Pending</span></a>
+                                <a th:href="@{/manager/orders/listPen}" data-tab-toggle data-target="pendingOrder" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="loader" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Pending</span></a>
                             </li>
                             <li class="group">
-                                <a href="javascript:void(0);" data-tab-toggle data-target="deliveredOrder" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="package-check" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Delivered</span></a>
+                                <a th:href="@{/manager/orders/listDeliver}"  data-tab-toggle data-target="deliveredOrder" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="package-check" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Delivered</span></a>
                             </li>
                             <li class="group">
-                                <a href="javascript:void(0);" data-tab-toggle data-target="returnsOrders" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="refresh-ccw" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Returns</span></a>
+                                <a th:href="@{/manager/orders/listShip}" data-tab-toggle data-target="PendingOrders" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="refresh-ccw" class="inline-block size-4 ltr:mr-1 rtl:ml-1"></i> <span class="align-middle">Shipping</span></a>
                             </li>
                             <li class="group">
-                                <a href="javascript:void(0);" data-tab-toggle data-target="cancelledOrders" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="package-x" class="inline-block size-4 ltr:mr-1 rtl:ml-1 "></i> <span class="align-middle">Cancelled</span></a>
+                                <a th:href="@{/manager/orders/listCancel}" data-tab-toggle data-target="cancelledOrders" class="inline-block px-4 py-1.5 text-base transition-all duration-300 ease-linear rounded-md text-slate-500 dark:text-zink-200 border border-transparent group-[.active]:bg-custom-500 group-[.active]:text-white dark:group-[.active]:text-white hover:text-custom-500 dark:hover:text-custom-500 active:text-custom-500 dark:active:text-custom-500 -mb-[1px]"><i data-lucide="package-x" class="inline-block size-4 ltr:mr-1 rtl:ml-1 "></i> <span class="align-middle">Cancelled</span></a>
                             </li>
                         </ul>
 
@@ -157,7 +161,7 @@
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 order_date" th:text="${item.date}">08 Jun, 2023</td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name" th:text="${item.user.fullName}"></td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name" th:text="${item.user.phone}"></td>
-                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name" th:text="${item.user.address}"></td>
+                                        <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 customer_name" th:text="${item.deliAddress}"></td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method" th:text="${item.paymentMethod}"></td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 payment_method" th:text="${item.shipmentCompany.shipCname != null ? item.shipmentCompany.shipCname : 'N/A'}"></td>
                                         <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 amount" th:text="${item.total}">$541.32</td>

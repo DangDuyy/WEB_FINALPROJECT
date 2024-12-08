@@ -1,6 +1,7 @@
 package com.group8.alomilktea.controller.manager;
 
 import com.group8.alomilktea.entity.Order;
+import com.group8.alomilktea.entity.User;
 import com.group8.alomilktea.service.IOrderService;
 import com.group8.alomilktea.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,91 @@ public class ManagerOderController {
             model.addAttribute("orders", List.of()); // Trả về danh sách rỗng
         }
 
-        return "manager/orders/list"; // Tên file Thymeleaf hiển thị kết quả
+        return "manager/orders/apps-ecommerce-orders"; // Tên file Thymeleaf hiển thị kết quả
+    }
+    @RequestMapping("/listShip")
+    public String listOrdersShip(
+            ModelMap model,
+            @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+
+        User userLogged = userService.getUserLogged(); // Get logged-in user details
+        if (userLogged != null) {
+            String email = userLogged.getEmail();
+            Long Cid = userService.findShipCIdByUser(email);
+            if (Cid != null) {
+                long shipod = orderSer.countByStatusAndShip("Shipping",Cid);
+                Page<Order> page = orderSer.getOderByStatus(pageNo, "Shipping",Cid);
+                model.addAttribute("orders", page.getContent());
+                model.addAttribute("totalPage", page.getTotalPages());
+                model.addAttribute("currentPage", pageNo);
+                model.addAttribute("shipod", shipod);
+                return "manager/orders/apps-ecommerce-orders";
+            }
+        }
+        return "redirect:/auth/login";
+
+    }
+    @RequestMapping("/listDeliver")
+    public String listOrders1(
+            ModelMap model,
+            @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+        User userLogged = userService.getUserLogged(); // Get logged-in user details
+        if (userLogged != null) {
+            String email = userLogged.getEmail();
+            Long Cid = userService.findShipCIdByUser(email);
+            if (Cid != null) {
+                long deleod = orderSer.countByStatusAndShip("Delivered",Cid);
+                Page<Order> page = orderSer.getOderByStatus(pageNo, "Delivered",Cid);
+                model.addAttribute("orders", page.getContent());
+                model.addAttribute("totalPage", page.getTotalPages());
+                model.addAttribute("currentPage", pageNo);
+                model.addAttribute("deliod", deleod);
+                return "manager/orders/apps-ecommerce-orders";
+            }
+        }
+        return "redirect:/auth/login";
+    }
+    @RequestMapping("/listCancel")
+    public String listOrders2(
+            ModelMap model,
+            @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+        User userLogged = userService.getUserLogged(); // Get logged-in user details
+        if (userLogged != null) {
+            String email = userLogged.getEmail();
+            Long Cid = userService.findShipCIdByUser(email);
+            if (Cid != null) {
+                long cancelod = orderSer.countByStatusAndShip("Cancelled",Cid);
+                Page<Order> page = orderSer.getOderByStatus(pageNo, "Cancelled",Cid);
+
+                model.addAttribute("orders", page.getContent());
+                model.addAttribute("totalPage", page.getTotalPages());
+                model.addAttribute("currentPage", pageNo);
+                model.addAttribute("cancelod", cancelod);
+                return "manager/orders/apps-ecommerce-orders";
+            }
+        }
+        return "redirect:/auth/login";
+
+    }
+    @RequestMapping("/listPen")
+    public String listOrders3(
+            ModelMap model,
+            @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+        User userLogged = userService.getUserLogged(); // Get logged-in user details
+        if (userLogged != null) {
+            String email = userLogged.getEmail();
+            Long Cid = userService.findShipCIdByUser(email);
+            if (Cid != null) {
+                long returnod = orderSer.countByStatusAndShip("Pending", Cid);
+
+                Page<Order> page = orderSer.getOderByStatus(pageNo, "Pending", Cid);
+                model.addAttribute("orders", page.getContent());
+                model.addAttribute("totalPage", page.getTotalPages());
+                model.addAttribute("currentPage", pageNo);
+                model.addAttribute("returnod", returnod);
+                return "manager/orders/apps-ecommerce-orders";
+            }
+        }
+        return "redirect:/auth/login";
     }
 }

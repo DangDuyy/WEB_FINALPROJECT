@@ -36,14 +36,14 @@
                                         <input type="text" id="promotionNameInput" name="name"
                                                th:value="${promotion.name}"
                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                               placeholder="Promotion title" required maxlength="20">
+                                               placeholder="Promotion title" required>
                                     </div>
                                     <div class="xl:col-span-6">
                                         <label for="discountRate" class="inline-block mb-2 text-base font-medium">Discount Rate(%)</label>
                                         <input type="text" id="discountRate" name="discountRate"
                                                th:value="${promotion.discountRate}"
                                                class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
-                                               placeholder="Promotion title" required maxlength="20">
+                                               placeholder="Promotion title" required>
                                     </div>
                                     <!-- Image Upload Options -->
                                     <div class="lg:col-span-2 xl:col-span-12">
@@ -71,15 +71,15 @@
                                                   class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 placeholder:text-slate-400 dark:placeholder:text-zink-200"
                                                   id="promotionDescription" placeholder="Enter Description" rows="5"></textarea>
                                     </div>
-                                    <div class="xl:col-span-6">
-                                        <label for="productId">Product:</label>
-                                        <select id="productId" name="productId" required>
-                                            <option value="">Select Category</option>
-                                            <th:block th:each="product : ${products}">
-                                                <option th:value="${product.proId}" th:text="${product.name}"></option>
-                                            </th:block>
-                                        </select>
-                                    </div>
+<!--                                    <div class="xl:col-span-6">-->
+<!--                                        <label for="productId">Product:</label>-->
+<!--                                        <select id="productId" name="productId" required>-->
+<!--                                            <option value="">Select Category</option>-->
+<!--                                            <th:block th:each="product : ${products}">-->
+<!--                                                <option th:value="${product.proId}" th:text="${product.name}"></option>-->
+<!--                                            </th:block>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
                                 </div><!--end grid-->
 
                                 <!-- Buttons -->
