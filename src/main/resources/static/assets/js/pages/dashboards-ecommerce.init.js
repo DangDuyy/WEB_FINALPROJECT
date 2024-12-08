@@ -67,99 +67,119 @@ function getChartColorsArray(chartId) {
 }
 
 //Sales Revenue Overview
-var options = {
-    series: [{
-        name: 'Total Sales',
-        data: [44, 55, 41, 67, 22, 43, 21, 49, 20, 41, 67, 22,]
-    }, {
-        name: 'Total Profit',
-        data: [11, 17, 15, 15, 21, 14, 15, 13, 5, 15, 15, 21,]
-    }],
-    chart: {
-        type: 'bar',
-        height: 300,
-        stacked: true,
-        stackType: '100%',
-        toolbar: {
-            show: false,
-        },
-    },
-    xaxis: {
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    },
-    tooltip: {
-        y: {
-            formatter: function (val) {
-                return "$" + val + "k"
-            }
-        }
-    },
-    grid: {
-        show: true,
-        padding: {
-            top: -20,
-            right: -10,
-        }
-    },
-    plotOptions: {
-        bar: {
-            horizontal: false,
-            columnWidth: '50%',
-        },
-    },
-    colors: getChartColorsArray("salesRevenueOverview"),
-    fill: {
-        opacity: 1
-    },
-    legend: {
-        position: 'bottom',
-    },
-};
+// Gọi API để lấy dữ liệu doanh thu
+fetch('/api/revenue')
+    .then(response => response.json()) // Chuyển đổi phản hồi từ JSON
+    .then(data => {
+        // Dữ liệu doanh thu theo tháng
+        var monthlyRevenue = data;
 
-var chart = new ApexCharts(document.querySelector("#salesRevenueOverview"), options);
-chart.render();
+        // Cập nhật biểu đồ với dữ liệu doanh thu
+        var options = {
+            series: [{
+                name: 'Total Sales',
+                data: monthlyRevenue // Dữ liệu doanh thu từ API
+            }],
+            chart: {
+                type: 'bar',
+                height: 300,
+                toolbar: {
+                    show: false,
+                },
+            },
+            xaxis: {
+                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return  parseInt(val, 10) + " VNĐ"
+                    }
+                }
+            },
+            grid: {
+                show: true,
+                padding: {
+                    top: -20,
+                    right: -10,
+                }
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '50%',
+                },
+            },
+            colors: getChartColorsArray("salesRevenueOverview"),
+            fill: {
+                opacity: 1
+            },
+            legend: {
+                position: 'bottom',
+            },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#salesRevenueOverview"), options);
+        chart.render(); // Render biểu đồ
+    })
+    .catch(error => console.log('Error fetching data:', error));
+
+
 
 
 //Order Statistics
-var options = {
-    series: [{
-        name: 'Pending',
-        data: [17, 16, 19, 22, 24, 29, 25, 20, 25, 31, 28, 35,]
-    },{
-        name: 'New Orders',
-        data: [30, 24, 32, 27, 16, 22, 32, 21, 24, 20, 38, 28]
-    }],
-    chart: {
-        type: 'line',
-        height: 310,
-        toolbar: {
-            show: false,
-        },
-    },
-    stroke: {
-        curve: 'smooth',
-        width: 2,
-    },
-    colors: getChartColorsArray("orderStatisticsChart"),
-    dataLabels: {
-        enabled: false
-    },
-    grid: {
-        show: true,
-        padding: {
-            top: -20,
-            right: 0,
-        }
-    },
-    markers: {
-        hover: {
-            sizeOffset: 4
-        }
-    }
-};
+fetch('/api/orders-count')  // URL của API mà bạn sẽ gọi để lấy dữ liệu
+    .then(response => response.json())  // Chuyển đổi phản hồi từ JSON
+    .then(data => {
+        // Giả sử API trả về một object như { pending: [...], cancel: [...] }
+        var pendingData = data.pending;  // Dữ liệu cho Pending
+        var cancelData = data.cancel;    // Dữ liệu cho Cancel
 
-var chart = new ApexCharts(document.querySelector("#orderStatisticsChart"), options);
-chart.render();
+        // Cập nhật biểu đồ với dữ liệu từ API
+        var options = {
+            series: [{
+                name: 'Pending',
+                data: pendingData // Dữ liệu Pending từ API
+            }, {
+                name: 'Cancel',
+                data: cancelData // Dữ liệu Cancel từ API
+            }],
+            chart: {
+                type: 'line',
+                height: 310,
+                toolbar: {
+                    show: false,
+                },
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2,
+            },
+            colors: getChartColorsArray("orderStatisticsChart"),
+            dataLabels: {
+                enabled: false
+            },
+            grid: {
+                show: true,
+                padding: {
+                    top: -20,
+                    right: 0,
+                }
+            },
+            markers: {
+                hover: {
+                    sizeOffset: 4
+                }
+            }
+        };
+
+        // Tạo hoặc cập nhật biểu đồ với dữ liệu mới
+        var chart = new ApexCharts(document.querySelector("#orderStatisticsChart"), options);
+        chart.render();  // Render biểu đồ
+    })
+    .catch(error => console.log('Error fetching data:', error));  // Xử lý lỗi nếu có
+
+
 
 //Traffic Resources Chart
 var options = {
@@ -417,7 +437,7 @@ var options = {
             borderRadius: 6,
             columnWidth: '44%',
             dataLabels: {
-                total: {    
+                total: {
                     enabled: true,
                     style: {
                         fontSize: '13px',

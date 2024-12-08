@@ -9,8 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
@@ -23,6 +22,12 @@ public class OrderServiceImpl implements IOrderService {
     public Page<Order> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo - 1, 10);
         return orderRepository.findAllCustom(pageable);
+    }
+
+    @Override
+    public Page<Order> getOderByStatus(Integer pageNo, String status,Long shipId) {
+        Pageable pageable = PageRequest.of(pageNo - 1, 10);
+        return orderRepository.findOderByStatus(pageable,status,shipId);
     }
 
     @Override
@@ -133,7 +138,19 @@ public class OrderServiceImpl implements IOrderService {
 	    }
 
     @Override
-    public List<Order> findOrderByStatus(String status) {
-        return orderRepository.findOrderByStatus(status);
+    public int countByStatusAndShip(String status, Long shipId) {
+        return orderRepository.countByStatusAndShip(status,shipId);
     }
+
+    @Override
+    public long countbyShipID(Long ShipId) {
+        return orderRepository.countbyShipID(ShipId);
+    }
+    @Override
+    public long countOrder() {
+        return orderRepository.countOrders();
+    }
+
+
+
 }

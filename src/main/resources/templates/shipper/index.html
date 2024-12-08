@@ -2,7 +2,7 @@
 <html lang="en" class="light scroll-smooth group" data-layout="vertical" data-sidebar="dark" data-sidebar-size="lg" data-mode="dark" data-topbar="dark"
       data-skin="default" data-navbar="sticky" data-content="fluid" dir="ltr"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{manager/layout-admin.html}">
+      layout:decorate="~{admin/layout-admin.html}">
 
 <body class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
     <section layout:fragment="content">
@@ -322,52 +322,37 @@
                             <div class="flex items-center justify-center mx-auto rounded-full size-14 bg-custom-100 text-custom-500 dark:bg-custom-500/20">
                                 <i data-lucide="wallet-2"></i>
                             </div>
-                            <!-- Hiển thị doanh thu cả năm -->
-                            <h5 class="mt-4 mb-2">
-                                <span th:text="${revenueYear}">0</span>
-                            </h5>
-                            <p class="text-slate-500 dark:text-zink-200">Total Revenue (Year)</p>
+                            <h5 class="mt-4 mb-2">$<span class="counter-value" data-target="236.18">0</span>k</h5>
+                            <p class="text-slate-500 dark:text-zink-200">Total Revenue</p>
                         </div>
-                    </div>
-
+                    </div><!--end col-->
                     <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
                         <div class="text-center card-body">
                             <div class="flex items-center justify-center mx-auto text-purple-500 bg-purple-100 rounded-full size-14 dark:bg-purple-500/20">
                                 <i data-lucide="package"></i>
                             </div>
-                            <!-- Hiển thị tổng số đơn hàng -->
-                            <h5 class="mt-4 mb-2">
-                                <span th:text="${totalOrders}">0</span>
-                            </h5>
+                            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="13461">0</span></h5>
                             <p class="text-slate-500 dark:text-zink-200">Total Orders</p>
                         </div>
-                    </div>
-
+                    </div><!--end col-->
                     <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
                         <div class="text-center card-body">
                             <div class="flex items-center justify-center mx-auto text-green-500 bg-green-100 rounded-full size-14 dark:bg-green-500/20">
                                 <i data-lucide="truck"></i>
                             </div>
-                            <h5 class="mt-4 mb-2">
-                                <span th:text="${deliveredOrders}">0</span> <!-- Hiển thị số đơn đã giao -->
-                            </h5>
-                            <p class="text-slate-500 dark:text-zink-200">Shipping</p>
+                            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="17150">0</span></h5>
+                            <p class="text-slate-500 dark:text-zink-200">Delivered</p>
                         </div>
                     </div><!--end col-->
-
-
                     <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-2">
                         <div class="text-center card-body">
                             <div class="flex items-center justify-center mx-auto text-red-500 bg-red-100 rounded-full size-14 dark:bg-red-500/20">
                                 <i data-lucide="package-x"></i>
                             </div>
-                            <h5 class="mt-4 mb-2">
-                                <span th:text="${cancelledOrders}">0</span> <!-- Hiển thị số đơn đã hủy -->
-                            </h5>
+                            <h5 class="mt-4 mb-2"><span class="counter-value" data-target="3519">0</span></h5>
                             <p class="text-slate-500 dark:text-zink-200">Cancelled</p>
                         </div>
                     </div><!--end col-->
-
                     <div class="col-span-12 card 2xl:col-span-8">
                         <div class="card-body">
                             <div class="flex flex-col gap-4 mb-4 md:mb-3 md:items-center md:flex-row">
@@ -384,10 +369,8 @@
                                             <i data-lucide="bar-chart"></i>
                                         </div>
                                         <div class="grow">
-                                            <p class="mb-1 text-slate-500 dark:text-zink-200">Total Venue</p>
-                                            <h5 class="mt-4 mb-2">
-                                                <span th:text="${revenueYear}">0</span>
-                                            </h5>
+                                            <p class="mb-1 text-slate-500 dark:text-zink-200">Total Sales</p>
+                                            <h5 class="text-15">$<span class="counter-value" data-target="1517.36">0</span>k</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -397,8 +380,8 @@
                                             <i data-lucide="trending-up"></i>
                                         </div>
                                         <div class="grow">
-
-
+                                            <p class="mb-1 text-slate-500 dark:text-zink-200">Total Profit</p>
+                                            <h5 class="text-15">$<span class="counter-value" data-target="746.84">0</span>k</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -920,7 +903,11 @@
                                     <div class="overflow-hidden grow">
                                         <h6 class="truncate">Mesh Ergonomic Black Chair</h6>
                                         <div class="text-yellow-500">
-
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-fill"></i>
+                                            <i class="ri-star-half-fill"></i>
                                         </div>
                                     </div>
                                     <h6 class="shrink-0"><i data-lucide="shopping-cart" class="inline-block align-middle size-4 text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1"></i> 798</h6>

@@ -14,6 +14,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM orders ORDER BY date DESC")
     Page<Order> findAllCustom(Pageable pageable);
+    @Query("SELECT o FROM Order o WHERE o.status = :status AND o.shipmentCompany.shipCid = :shipId ORDER BY o.date DESC")
+    Page<Order> findOderByStatus(Pageable pageable,@Param("status") String status,@Param("shipId") Long shipId);
     @Query("""
     SELECT o FROM Order o WHERE o.user.userId = :userId
         """)
@@ -90,4 +92,31 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query("SELECT o FROM Order o WHERE o.status = :status")
     List<Order> findOrderByStatus(@Param("status") String status);
+
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.status = :status and o.shipmentCompany.shipCid = :shipId")
+    int countByStatusAndShip(@Param("status") String status,@Param("shipId") Long shipId);
+
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.shipmentCompany.shipCid = :shipId")
+    int countbyShipID(@Param("shipId") Long shipId);
+
+    @Query("SELECT COUNT(o) FROM Order o")
+    long countOrders();
+
+    @Query(value = "SELECT IFNULL(SUM(CASE " +
+            "WHEN currency = 'VNĐ' THEN total " +
+            "WHEN currency = 'USD' THEN total * 24390.243902 " +
+            "END), 0) AS total_month " +
+            "FROM orders " +
+            "WHERE MONTH(STR_TO_DATE(date, '%d/%m/%Y %H:%i:%s')) = :month " +
+            "AND YEAR(STR_TO_DATE(date, '%d/%m/%Y %H:%i:%s')) = YEAR(CURRENT_DATE()) " +
+            "AND status = 'Done';", nativeQuery = true)
+    long getRevenueForMonth(@Param("month") int month);
+
+    @Query(value = "SELECT COUNT(*) FROM orders o WHERE o.status = :status " +
+            "AND MONTH(STR_TO_DATE(o.date, '%d/%m/%Y %H:%i:%s')) = :month " +
+            "AND YEAR(STR_TO_DATE(o.date, '%d/%m/%Y %H:%i:%s')) = YEAR(CURRENT_DATE())",
+            nativeQuery = true)
+    long getOrderCountByStatus(@Param("status") String status, @Param("month") int month);
+
+
 }

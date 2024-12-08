@@ -5594,15 +5594,9 @@ Style cho tiêu đề sự kiện giảm giá
 .product-slider {
     display: flex;
     overflow: hidden;
-    gap: 10px; /* Khoảng cách giữa các sản phẩm */
+    gap: 25px; /* Khoảng cách giữa các sản phẩm */
     position: relative;
-}
-
-.custom-col-6 {
-    flex: 0 0 20%; /* 5 sản phẩm, mỗi sản phẩm chiếm 20% */
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center; /* Căn giữa các sản phẩm */
+    margin: 20px 0;
 }
 
 .product-wrapper {
@@ -5611,18 +5605,20 @@ Style cho tiêu đề sự kiện giảm giá
     display: flex;
     justify-content: center; /* Căn giữa các sản phẩm */
 }
-
+.product-img img:hover {
+    transform: scale(1.05);
+}
 .product-img img {
     width: 100%; /* Đảm bảo ảnh không bị kéo dãn */
     height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
 }
 
-.prev-btn {
-    left: 10px;
-}
 
-.next-btn {
-    right: 10px;
+/* Đảm bảo slider có vị trí tương đối */
+#tab0 {
+    position: relative;
 }
 /* Điều chỉnh nếu cần khi màn hình nhỏ */
 @media (max-width: 768px) {
