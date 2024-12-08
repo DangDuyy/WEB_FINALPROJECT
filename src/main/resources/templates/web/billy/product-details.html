@@ -58,7 +58,7 @@
                             function updatePrice() {
                                 // Lấy giá trị kích thước đã chọn
                                 var size = document.querySelector('input[name="drinkSize"]:checked').value;
-
+                                var price = /*[[${prd[0].price}]]*/
                                 // Lấy productId từ Thymeleaf (cần kiểm tra xem productId có hợp lệ không)
                                 var productId = /*[[${prd[0].proId}]]*/;
                                 if (!productId) {
@@ -112,6 +112,7 @@
                                 var productId = /*[[${prd[0].proId}]]*/;
                                 var price = /*[[${prd[0].price}]]*/;
                                 var productName = /*[[${prd[0].name}]]*/;
+                                console.log("gias: "+ price);
 
                                 // Get selected size value
                                 var size = document.querySelector('input[name="drinkSize"]:checked').value;

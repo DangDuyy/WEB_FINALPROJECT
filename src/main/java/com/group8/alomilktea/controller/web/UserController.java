@@ -48,10 +48,8 @@ public class UserController {
 
     @GetMapping("detail/{id}")
     public String product(@PathVariable("id") Integer id, Model model) {
-        String currentUserName = "1";  // Giả lập người dùng có id = 1
         List<ProductDetailDTO> product = productService.findProductInfoByID(id);
         model.addAttribute("prd", product);  // Sửa lại là "prd" thay vì "product"
-        model.addAttribute("userId", currentUserName);  // Thêm userId vào model
         System.out.println("Product found: " + product);
         return "web/billy/product-details";
     }
@@ -90,7 +88,7 @@ public class UserController {
 
         try {
             String successMessage = "Thêm vào giỏ hàng thành công";
-
+            ProductDetail product1 = productService.findPriceByProductIdAndSize(proId,ProductAttribute.getEnum(size));
             // Tìm sản phẩm trong cơ sở dữ liệu
             Optional<Product> optProduct = productService.findById0p(proId);
             if (optProduct.isEmpty()) {
@@ -132,7 +130,7 @@ public class UserController {
                 newCart.setUser(userLogged);
                 newCart.getId().setSize(size);
                 newCart.setQuantity(qty);
-                newCart.setPrice(price);
+                newCart.setPrice(product1.getPrice());
 
                 // Kiểm tra tồn kho nếu cần
 

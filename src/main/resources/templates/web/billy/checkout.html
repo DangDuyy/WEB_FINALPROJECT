@@ -256,22 +256,26 @@
                                                                         <tr>
                                                                             <th scope="col">Shipping Method</th>
                                                                             <th scope="col">Price</th>
+                                                                            <th scope="col">Action</th>
                                                                         </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                         <tr th:each="shipping : ${shippingMethods}"
-                                                                            th:data-shipping-price="${shipping.price}">
-                                                                            <td th:text="${shipping.shipCname}"></td>
-                                                                            <td th:text="${shipping.price}"></td>
+                                                                            th:data-shipping-id="${shipping.shipCid}"
+                                                                            th:data-shipping-price="${shipping.price}"
+                                                                            th:data-shipping-name="${shipping.shipCname}">
+                                                                            <td th:text="${shipping.shipCname}"></td> <!-- Hiển thị tên phương thức vận chuyển -->
+                                                                            <td th:text="${shipping.price}"></td> <!-- Hiển thị giá của phương thức vận chuyển -->
                                                                             <td>
-                                                                                <button class="btn btn-primary select-shipping">
-                                                                                    Select
-                                                                                </button>
+                                                                                <button class="btn btn-primary select-shipping">Select</button>
                                                                             </td>
                                                                         </tr>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
+
+                                                                <!-- Trường ẩn để lưu tên phương thức vận chuyển đã chọn -->
+                                                                <input type="hidden" id="selectedShippingMethodId" th:value="${shipid}">
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close
@@ -336,7 +340,9 @@
                                             var city = document.getElementById('city').value;
                                             var commune = document.getElementById('commune').value;
                                             var address = document.getElementById('address').value;
-                                            // Kiểm tra nếu giá trị grandTotal không hợp lệ
+                                            var shippingMethodId = document.getElementById('selectedShippingMethodId').value;
+                                            console.log("hello " + shippingMethodId)
+                                            // K    iểm tra nếu giá trị grandTotal không hợp lệ
                                             if (!grandTotal || isNaN(grandTotal)) {
                                                 alert("Invalid grand total amount.");
                                                 return;
@@ -352,7 +358,7 @@
                                             switch (paymentMethod.value) {
                                                 case 'vnpay':
                                                     // Gửi yêu cầu thanh toán VNPay
-                                                    fetch(`/api/v1/payment/vn-pay?grandTotalAmount=${encodeURIComponent(grandTotal)}&province=${encodeURIComponent(province)}&city=${encodeURIComponent(city)}&commune=${encodeURIComponent(commune)}&address=${encodeURIComponent(address)}`, {
+                                                    fetch(`/api/v1/payment/vn-pay?grandTotalAmount=${encodeURIComponent(grandTotal)}&province=${encodeURIComponent(province)}&city=${encodeURIComponent(city)}&commune=${encodeURIComponent(commune)}&address=${encodeURIComponent(address)}&shippingMethodId=${encodeURIComponent(shippingMethodId)}`, {
                                                         method: 'GET'
                                                     })
 
@@ -372,10 +378,9 @@
                                                         });
                                                     break;
                                                 case 'cash-on-delivery':
+
                                                     // Gửi yêu cầu backend để xử lý thanh toán Cash on Delivery
-                                                case 'cash-on-delivery':
-                                                    // Gửi yêu cầu backend để xử lý thanh toán Cash on Delivery
-                                                    fetch(`/api/v1/payment/cash-on-delivery?grandTotalAmount=${encodeURIComponent(grandTotal)}&province=${encodeURIComponent(province)}&city=${encodeURIComponent(city)}&commune=${encodeURIComponent(commune)}&address=${encodeURIComponent(address)}`, {
+                                                    fetch(`/api/v1/payment/cash-on-delivery?grandTotalAmount=${encodeURIComponent(grandTotal)}&province=${encodeURIComponent(province)}&city=${encodeURIComponent(city)}&commune=${encodeURIComponent(commune)}&address=${encodeURIComponent(address)}&shippingMethodId=${encodeURIComponent(shippingMethodId)}`, {
                                                         method: 'GET',
                                                     })
                                                         .then(response => response.text())  // Use response.text() to handle HTML response
@@ -424,13 +429,18 @@
                             grandTotalAmountElement.textContent = grandTotal.toFixed(2);
                         }
                         // Xử lý modal vận chuyển
-                        $('#shippingModal .select-shipping').off('click').on('click', function (event) {
+                        $('#shippingModal .select-shipping').off('click').on('click ', function (event) {
                             event.preventDefault();
+
                             const row = $(this).closest('tr');  // Lấy dòng tr chứa button
-                            const shippingPrice = row.data('shipping-price');  // Lấy giá trị từ data-shipping-price
-                            console.log('Shipping Price:', shippingPrice);  // Kiểm tra giá trị
+                            const shippingMethodName = row.data('shipping-name');  // Tên phương thức vận chuyển
+                            const shippingPrice = row.data('shipping-price');
+                            const shippingMethodId = row.data('shipping-id');  // Lấy giá trị từ data-shipping-price
+                            console.log("Shippingid:"+ shippingMethodId);  // Kiểm tra giá trị
                             shippingCost = parseFloat(shippingPrice) || 0;  // Chuyển giá trị thành số
                             console.log('Shipping Selected:', {shippingCost});
+                            // Lưu tên phương thức vận chuyển đã chọn vào trường ẩn
+                            $('#selectedShippingMethodId').val(shippingMethodId);
                             shippingAmountElement.textContent = shippingCost.toFixed(2);
                             calculateGrandTotal();
                             $('#shippingModal').modal('hide');

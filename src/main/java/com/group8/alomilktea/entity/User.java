@@ -1,5 +1,6 @@
 package com.group8.alomilktea.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -76,8 +77,21 @@ public class User implements Serializable {
     private List<Rating> ratings;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Order> orders;  // M?i quan h? v?i b?ng Order
-
+    @JsonManagedReference
+    private List<Order> orders;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private ShipmentCompany shipmentCompany;
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", isAdmin=" + isAdmin +
+                ", active=" + active +
+                ", isEnabled=" + isEnabled +
+                '}';
+    }
 }
