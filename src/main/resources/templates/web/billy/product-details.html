@@ -30,6 +30,7 @@
                             <div class="pro-dec-rating"></div>
                             <div class="pro-dec-review"></div>
                         </div>
+
                         <span id="productPrice" th:text="${prd[0].price}"> $260.00</span>
                         <div class="in-stock"></div>
                         <p th:text="${prd[0].description}">
@@ -205,7 +206,7 @@
                 <div class="description-review-topbar nav text-center">
                     <a class="active" data-bs-toggle="tab" href="#des-details1">Description</a>
                     <a data-bs-toggle="tab" href="#des-details2">Tags</a>
-                    <a data-bs-toggle="tab" href="#des-details3">Review</a>
+                    <a data-bs-toggle="tab" href="#des-details3" id="review-tab">Review</a>
                 </div>
                 <div class="tab-content description-review-bottom">
                     <div id="des-details1" class="tab-pane active">
@@ -233,81 +234,160 @@
                             </ul>
                         </div>
                     </div>
+
+
+
                     <div id="des-details3" class="tab-pane">
-                        <div class="rattings-wrapper">
-                            <div class="sin-rattings">
-                                <div class="star-author-all">
-                                    <div class="ratting-star f-left">
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <span>(5)</span>
-                                    </div>
-                                    <div class="ratting-author f-right">
-                                        <h3>tayeb rayed</h3>
-                                        <span>12:24</span>
-                                        <span>9 March 2022</span>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost rud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost.</p>
-                            </div>
-                            <div class="sin-rattings">
-                                <div class="star-author-all">
-                                    <div class="ratting-star f-left">
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <i class="ion-star theme-color"></i>
-                                        <span>(5)</span>
-                                    </div>
-                                    <div class="ratting-author f-right">
-                                        <h3>farhana shuvo</h3>
-                                        <span>12:24</span>
-                                        <span>9 March 2022</span>
-                                    </div>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost rud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost.</p>
-                            </div>
+                        <!-- Danh sách đánh giá -->
+                        <input type="hidden" name="productId2" id="productId2" th:value="${prd[0].proId}" />
+                        <div class="rattings-wrapper" id="ratings-list">
+                            <!-- Các đánh giá sẽ được render từ JavaScript -->
                         </div>
-                        <div class="ratting-form-wrapper">
-                            <h3>Add your Comments :</h3>
-                            <div class="ratting-form">
-                                <form action="#">
-                                    <div class="star-box">
-                                        <h2>Rating:</h2>
-                                        <div class="ratting-star">
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="rating-form-style mb-20">
-                                                <input placeholder="Name" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="rating-form-style mb-20">
-                                                <input placeholder="Email" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="rating-form-style form-submit">
-                                                <textarea name="message" placeholder="Message"></textarea>
-                                                <input type="submit" value="add review">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+<!--                        <script>-->
+<!--                            fetch("/api/ratings/product/${prd[0].proId}") // Thay productId bằng ID sản phẩm-->
+<!--                                .then(response => response.json())-->
+<!--                                .then(data => {-->
+<!--                                    const ratingsContainer = document.querySelector(".rattings-wrapper");-->
+<!--                                    ratingsContainer.innerHTML = ""; // Xóa nội dung cũ-->
+<!--                                    data.forEach(rating => {-->
+<!--                                        ratingsContainer          .innerHTML += `-->
+<!--                                        <div class="sin-rattings">-->
+<!--                                            <div class="star-author-all">-->
+<!--                                                <div class="ratting-star f-left">-->
+<!--                                                    ${"★".repeat(rating.rate)}${"☆".repeat(5 - rating.rate)}-->
+<!--                                                    <span>(${rating.rate})</span>-->
+<!--                                                </div>-->
+<!--                                                <div class="ratting-author f-right">-->
+<!--                                                    <h3>${rating.user.username}</h3>-->
+<!--                                                    <span>${rating.date}</span>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <p>${rating.content}</p>-->
+<!--                                        </div>-->
+<!--                                    `;-->
+<!--                                    });-->
+<!--                                });-->
+<!--                        </script>-->
+                        <script>
+                            document.getElementById("review-tab").addEventListener("click", function() {
+                                var productId = /*[[${prd[0].proId}]]*/
+                                // Khi người dùng nhấn vào tab Review, gọi API để lấy danh sách đánh giá
+                                fetch("/api/ratings/product/" + productId) // Đảm bảo prd[0].proId chứa ID sản phẩm đúng
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        const ratingsContainer = document.querySelector(".rattings-wrapper");
+                                        ratingsContainer.innerHTML = ""; // Xóa nội dung cũ để tránh trùng lặp
+
+                                        // Nếu không có đánh giá, hiển thị thông báo
+                                        if (data.length === 0) {
+                                            ratingsContainer.innerHTML = "<p>No ratings available for this product.</p>";
+                                        } else {
+                                            // Duyệt qua các đánh giá và chèn vào trong phần tử
+                                            data.forEach(rating => {
+                                                ratingsContainer.innerHTML += `
+                        <div class="sin-rattings">
+                            <div class="star-author-all">
+                                <div class="ratting-star f-left">
+                                    ${"★".repeat(rating.rate)}${"☆".repeat(5 - rating.rate)}
+                                    <span>(${rating.rate})</span>
+                                </div>
+                                <div class="ratting-author f-right">
+                                    <h3>${rating.user.username}</h3>
+                                    <span>${rating.date}</span>
+                                </div>
                             </div>
+                            <p>${rating.content}</p>
+                        </div>
+                    `;
+                                            });
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error("Error fetching ratings:", error);
+                                    });
+                            });
+                        </script>
+
+                        <!-- Form thêm đánh giá -->
+                    <div class="ratting-form-wrapper">
+                        <h3>Thêm đánh giá của bạn :</h3>
+                        <div class="ratting-form">
+                            <form id="ratingForm">
+                                <!-- Chọn số sao -->
+                                <div class="star-box">
+                                    <h2>Đánh giá:</h2>
+                                    <div class="ratting-star" id="star-rating">
+                                        <i class="ion-star" data-value="1"></i>
+                                        <i class="ion-star" data-value="2"></i>
+                                        <i class="ion-star" data-value="3"></i>
+                                        <i class="ion-star" data-value="4"></i>
+                                        <i class="ion-star" data-value="5"></i>
+                                    </div>
+                                </div>
+                                <!-- Nhập tên -->
+                                <div class="col-md-6">
+                                    <!-- Nhập bình luận -->
+                                    <div class="col-md-12">
+                                        <div class="rating-form-style form-submit">
+                                            <textarea id="comment" name="comment" placeholder="Viết bình luận..." required></textarea>
+<!--                                            <span id="productID" th:text="" style="display:none;">ID</span>-->
+                                            <input type="hidden" name="productId" id="productId" th:value="${prd[0].proId}" /> <!-- Thay thế giá trị productId -->
+                                            <input id="submit-rating" type="button" value="Thêm đánh giá">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
+
+                    <script>
+                        // Xử lý sự kiện khi người dùng chọn sao
+                        let ratingValue = 0;  // Biến để lưu giá trị sao
+                        document.querySelectorAll("#star-rating i").forEach(star => {
+                            star.addEventListener("click", function () {
+                                ratingValue = parseInt(this.getAttribute("data-value"));
+                                console.log("Đánh giá sao:", ratingValue);  // Log để kiểm tra số sao
+
+                                document.querySelectorAll("#star-rating i").forEach(star => {
+                                    star.classList.remove("theme-color"); // Xóa lớp theme-color cũ
+                                });
+
+                                // Thêm lớp theme-color vào các sao đã chọn
+                                for (let i = 0; i < ratingValue; i++) {
+                                    document.querySelectorAll("#star-rating i")[i].classList.add("theme-color");
+                                }
+                            });
+                        });
+                        document.getElementById("submit-rating").addEventListener("click", function (e) {
+                            e.preventDefault();
+
+                            // Lấy dữ liệu từ form
+                            const formData = new FormData();
+                            formData.append("userId", 1); // Gửi ID người dùng đã đăng nhập
+                            formData.append("productId", document.getElementById("productId").value); // Lấy productId từ input ẩn
+                            formData.append("content", document.getElementById("comment").value); // Lấy nội dung bình luận
+                            formData.append("rate", ratingValue); // Số sao đã chọn
+                            formData.append("platform", "web");
+                            formData.append("date", new Date().toISOString()); // Lấy thời gian hiện tại
+                            console.log("Product ID: ", productId);
+                            console.log("Dữ liệu gửi đi:", formData); // Log dữ liệu để kiểm tra
+
+                            // Gửi yêu cầu POST tới API thêm đánh giá
+                            fetch("/api/ratings/add", {
+                                method: "POST",
+                                body: formData // Gửi dữ liệu dưới dạng form data
+                            }).then(response => response.json())
+                                .then(data => {
+                                    console.log("Dữ liệu phản hồi từ server:", data); // Log dữ liệu phản hồi từ server
+                                    alert("Đánh giá đã được thêm thành công!");
+                                    location.reload(); // Tải lại trang để hiển thị đánh giá mới
+                                }).catch(error => {
+                                console.error("Error:", error);
+                                alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+                            });
+                        });
+                    </script>
+                        </div>
                 </div>
             </div>
         </div>

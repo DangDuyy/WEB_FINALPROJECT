@@ -19,7 +19,7 @@ public class Rating {
     @Column(name = "rating_id")
     private Integer ratingId;
 
-    @Id
+
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)
     private User user;
