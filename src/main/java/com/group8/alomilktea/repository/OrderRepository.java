@@ -90,6 +90,12 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     int countByStatus(String status);
 
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.status = :status and o.shipmentCompany.shipCid = :shipId")
+    int countByStatusAndShip(@Param("status") String status,@Param("shipId") Long shipId);
+
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.shipmentCompany.shipCid = :shipId")
+    int countbyShipID(@Param("shipId") Long shipId);
+
     @Query("SELECT COUNT(o) FROM Order o")
     long countOrders();
 

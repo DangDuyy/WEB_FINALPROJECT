@@ -36,6 +36,8 @@ public interface IOrderService {
     int getCompletedOrderRate();
 
     public int countByStatus(String status);
+    public int countByStatusAndShip(String status, Long shipId);
+    long countbyShipID(Long ShipId);
     long countOrder();
 
 }

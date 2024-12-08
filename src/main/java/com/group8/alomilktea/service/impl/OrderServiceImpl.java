@@ -132,6 +132,15 @@ public class OrderServiceImpl implements IOrderService {
 	    }
 
     @Override
+    public int countByStatusAndShip(String status, Long shipId) {
+        return orderRepository.countByStatusAndShip(status,shipId);
+    }
+
+    @Override
+    public long countbyShipID(Long ShipId) {
+        return orderRepository.countbyShipID(ShipId);
+    }
+    @Override
     public long countOrder() {
         return orderRepository.countOrders();
     }
