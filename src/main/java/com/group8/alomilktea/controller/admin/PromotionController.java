@@ -140,6 +140,8 @@ public class PromotionController {
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("discountRate") Integer discountRate,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            @RequestParam(value = "imageUrl", required = false) String imageUrl,
             @RequestParam(value = "productIds", required = false) List<Integer> productIds,
             ModelMap model) {
 
@@ -157,6 +159,17 @@ public class PromotionController {
         if (productIds != null && !productIds.isEmpty()) {
             List<Product> selectedProducts = productService.findByIds(productIds);
             promotion.setProducts(selectedProducts);
+        }
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+                promotion.setLogo("/uploads/" + fileName);
+                imageFile.transferTo(new File("uploads/" + fileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (imageUrl != null && !imageUrl.trim().isEmpty()) {
+            promotion.setLogo(imageUrl);
         }
 
         promotionService.save(promotion);
