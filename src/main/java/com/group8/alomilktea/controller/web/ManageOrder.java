@@ -54,5 +54,14 @@ public class ManageOrder {
             return ResponseEntity.status(500).body("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
         }
     }
+    @PutMapping("/return/{orderId}")
+    public ResponseEntity<?> returnOrder(@PathVariable Long orderId) {
+        try {
+            orderService.updateStatus(orderId, "Return");
+            return ResponseEntity.ok().body("{\"success\": true}");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("{\"success\": false, \"message\": \"" + e.getMessage() + "\"}");
+        }
+    }
 
 }
