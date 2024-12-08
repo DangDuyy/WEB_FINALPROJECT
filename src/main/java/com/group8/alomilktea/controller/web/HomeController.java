@@ -40,6 +40,8 @@ public class HomeController{
     ICategoryService categoryService;
     @Autowired
     IWishlistService wishlistService;
+    @Autowired
+    ISessionService sessionService;
 
     @ModelAttribute
     public void addGlobalAttributes(Model model) {
@@ -141,15 +143,8 @@ public class HomeController{
                     model.addAttribute("homeaddress", "No address provided");
                 }
                 // Lấy danh sách sản phẩm trong giỏ hàng của người dùng
-                List<Wishlist> wishlistItems = wishlistService.findByUserId(userLogged.getUserId());
-
-                // Tính tổng giá trị của giỏ hàng
-                double totalAmount = wishlistItems.stream()
-                        .mapToDouble(cart -> cart.getQuantity() * cart.getPrice()) // Giá * Số lượng
-                        .sum();
-
-                // Đưa danh sách sản phẩm và tổng giá trị vào model
-                model.addAttribute("wishItems", wishlistItems); // Danh sách giỏ hàng
+                List<Session> sessions = sessionService.findAllSortedByDate();
+                model.addAttribute("viewedItems", sessions);
                 model.addAttribute("user", userModel);
                 return "web/users/my-account";
             }

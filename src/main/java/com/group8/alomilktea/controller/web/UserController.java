@@ -3,10 +3,7 @@ package com.group8.alomilktea.controller.web;
 import com.group8.alomilktea.common.enums.ProductAttribute;
 import com.group8.alomilktea.entity.*;
 import com.group8.alomilktea.model.ProductDetailDTO;
-import com.group8.alomilktea.service.ICartService;
-import com.group8.alomilktea.service.IProductService;
-import com.group8.alomilktea.service.IUserService;
-import com.group8.alomilktea.service.IWishlistService;
+import com.group8.alomilktea.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +26,15 @@ public class UserController {
     @Autowired
     private IProductService productService;
 
-    @Autowired(required=true)
+    @Autowired(required = true)
     ICartService cartService;
 
-    @Autowired(required=true)
+    @Autowired(required = true)
     IUserService userService;
-    @Autowired(required=true)
+    @Autowired(required = true)
     IWishlistService wishlistService;
+    @Autowired
+    ISessionService sessionService;
 
     @GetMapping()
     public String trangchu(Model model) {
@@ -48,14 +48,30 @@ public class UserController {
     }
 
 
-
     @GetMapping("detail/{id}")
     public String product(@PathVariable("id") Integer id, Model model) {
+        Product product1 = productService.findById(id);
+
+        // Lấy thông tin người dùng đã đăng nhập
+        User user = userService.getUserLogged();
+        if (user != null) {
+            // Lưu session của người dùng
+            SessionKey sessionKey = new SessionKey(user.getUserId(), id);
+            Session session = new Session();
+            session.setId(sessionKey);
+            session.setProduct(product1);
+            session.setUser(user);
+            session.setDate(java.sql.Timestamp.valueOf(LocalDateTime.now()));  // Lưu ngày giờ hiện tại
+
+            // Lưu vào cơ sở dữ liệu
+            sessionService.save(session);
+        }
         List<ProductDetailDTO> product = productService.findProductInfoByID(id);
         model.addAttribute("prd", product);  // Sửa lại là "prd" thay vì "product"
         System.out.println("Product found: " + product);
         return "web/billy/product-details";
     }
+
     // Controller xử lý yêu cầu AJAX để lấy giá sản phẩm theo size
     @RequestMapping("/getPrice")
     @ResponseBody
@@ -63,7 +79,7 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         try {
             // Sử dụng phương thức trả về đối tượng duy nhất
-            ProductDetail product = productService.findPriceByProductIdAndSize(productId,ProductAttribute.getEnum(size));
+            ProductDetail product = productService.findPriceByProductIdAndSize(productId, ProductAttribute.getEnum(size));
             System.out.println(product);
             if (product != null) {
                 response.put("success", true);
@@ -78,7 +94,6 @@ public class UserController {
         }
         return ResponseEntity.ok(response);
     }
-
 
 
     @GetMapping("/addToCart")
@@ -99,7 +114,7 @@ public class UserController {
                         .body("Vui lòng đăng nhập để tiếp tục.");
             }
             String successMessage = "Thêm vào giỏ hàng thành công";
-            ProductDetail product1 = productService.findPriceByProductIdAndSize(proId,ProductAttribute.getEnum(size));
+            ProductDetail product1 = productService.findPriceByProductIdAndSize(proId, ProductAttribute.getEnum(size));
             // Tìm sản phẩm trong cơ sở dữ liệu
             Optional<Product> optProduct = productService.findById0p(proId);
             if (optProduct.isEmpty()) {
@@ -129,8 +144,8 @@ public class UserController {
                 cartService.save(cart);
 
                 // Trả lại URL hiện tại
-                return ResponseEntity.status(HttpStatus.OK)
-                        .header("Location", request.getRequestURL().toString())
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .header("Location", "/user-cart") // Chuyển hướng về trang chủ
                         .body(successMessage);
             } else {
                 // Nếu sản phẩm khác size hoặc không tồn tại trong giỏ hàng, thêm mục mới
@@ -149,8 +164,8 @@ public class UserController {
                 cartService.save(newCart);
 
                 // Trả lại URL hiện tại
-                return ResponseEntity.status(HttpStatus.OK)
-                        .header("Location", request.getRequestURL().toString())
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .header("Location", "/user-cart") // Chuyển hướng về trang chủ
                         .body(successMessage);
             }
         } catch (Exception e) {
@@ -158,6 +173,7 @@ public class UserController {
             return new ResponseEntity<>("Lỗi khi thêm sản phẩm vào giỏ hàng: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/addToWishlist")
     public ResponseEntity<String> addToWishlist(
             @RequestParam("productId") Integer proId,
@@ -175,7 +191,7 @@ public class UserController {
                         .body("Vui lòng đăng nhập để tiếp tục.");
             }
             String successMessage = "Thêm vào giỏ hàng thành công";
-            ProductDetail product1 = productService.findPriceByProductIdAndSize(proId,ProductAttribute.getEnum(size));
+            ProductDetail product1 = productService.findPriceByProductIdAndSize(proId, ProductAttribute.getEnum(size));
             // Tìm sản phẩm trong cơ sở dữ liệu
             Optional<Product> optProduct = productService.findById0p(proId);
             if (optProduct.isEmpty()) {
@@ -205,8 +221,8 @@ public class UserController {
                 wishlistService.save(wishlist);
 
                 // Trả lại URL hiện tại
-                return ResponseEntity.status(HttpStatus.OK)
-                        .header("Location", request.getRequestURL().toString())
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .header("Location", "/user-wishList") // Chuyển hướng về trang chủ
                         .body(successMessage);
             } else {
                 // Nếu sản phẩm khác size hoặc không tồn tại trong giỏ hàng, thêm mục mới
@@ -224,8 +240,8 @@ public class UserController {
                 // Lưu giỏ hàng mới
                 wishlistService.save(newWishlist);
                 // Trả lại URL hiện tại
-                return ResponseEntity.status(HttpStatus.OK)
-                        .header("Location", request.getRequestURL().toString())
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .header("Location", "/user-wishList") // Chuyển hướng về trang chủ
                         .body(successMessage);
             }
         } catch (Exception e) {
@@ -233,7 +249,6 @@ public class UserController {
             return new ResponseEntity<>("Lỗi khi thêm sản phẩm vào giỏ hàng: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 
 }
