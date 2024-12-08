@@ -59,6 +59,13 @@
         .showing-text {
             text-align: left;
         }
+        .btn-no-border {
+            border: none; /* Xóa viền */
+            background-color: transparent; /* Loại bỏ màu nền nếu cần */
+            cursor: pointer; /* Hiển thị con trỏ dạng nút bấm */
+            padding: 0; /* Loại bỏ khoảng cách padding nếu muốn */
+        }
+
 
     </style>
 
@@ -88,17 +95,6 @@
             <div class="card" id="productListTable">
                 <div class="card-body">
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-12">
-                        <div class="xl:col-span-3">
-                            <div class="relative">
-                                <input type="text" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search for ..." autocomplete="off">
-                                <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
-                            </div>
-                        </div><!--end col-->
-                        <div class="xl:col-span-2">
-                            <div>
-                                <input type="text" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" readonly="readonly" placeholder="Select Date">
-                            </div>
-                        </div><!--end col-->
                         <div class="lg:col-span-2 ltr:lg:text-right rtl:lg:text-left xl:col-span-2 xl:col-start-11">
                             <a th:href="@{/admin/user/add}" type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i data-lucide="plus" class="inline-block size-4"></i> <span class="align-middle">Add User</span></a>
                         </div>
@@ -109,12 +105,13 @@
                         <table class="w-full whitespace-nowrap" id="productTable">
                             <thead class="ltr:text-left rtl:text-right bg-slate-100 dark:bg-zink-600">
                             <tr>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_code" data-sort="product_code">User Code</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="product_name">Full Name</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="category">Email</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">Avatar</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort status" data-sort="status">Phone</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort description-column" data-sort="product">Address</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_code" data-sort="id">User Code</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="name">Full Name</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort product_name" data-sort="role">Role</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort category" data-sort="email">Email</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort status" data-sort="phone">Phone</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort description-column" data-sort="address">Address</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort description-column" data-sort="address">Status</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Actions</th>
                             </tr>
                             </thead>
@@ -123,9 +120,18 @@
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${user.userId}">C001</td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${user.fullName}">Beverages</td>
                                 <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 category" th:text="${userRoleMap[user.userId]}"></td>
-                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort">Logo</td>
+                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${user.email}">Email</td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${user.phone}">Beverages</td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${user.address}">Beverages</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 category">
+                                    <form th:action="@{/admin/user/toggle-status/{id}(id=${user.userId})}" method="post" class="d-inline">
+                                        <button th:text="${userStatusMap[user.userId]}"
+                                                th:classappend="${userStatusMap[user.userId] == 'Active' ? 'btn btn-success' : 'btn btn-danger'}"
+                                                type="submit"
+                                                class="btn-no-border px-3.5 py-2.5 font-semibold">
+                                        </button>
+                                    </form>
+                                </td>
                                 <!--                                <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort">-->
 <!--                                    <img th:src="@{${product.logo}}" alt="Logo" class="img-thumbnail">-->
 <!--                                </td>-->
