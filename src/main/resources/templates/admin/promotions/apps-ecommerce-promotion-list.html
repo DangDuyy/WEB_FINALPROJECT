@@ -112,7 +112,6 @@
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort promotion_code" data-sort="promotion_code">Promotion Code</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort promotion_name" data-sort="promotion_name">Promotion Name</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort promotion_name" data-sort="promotion_name">Discount Rate(%)</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort datail" data-sort="datail">Product</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort price" data-sort="price">Logo</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort description-column" data-sort="promotion">Description</th>
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 action">Actions</th>
@@ -123,11 +122,9 @@
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${promotion.promotionId}">C001</td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${promotion.name}">Beverages</td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort" th:text="${promotion.discountRate}">Beverages</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 category" th:text="${promotionProductMap[promotion.promotionId]}"></td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort">
                                     <img th:src="@{${promotion.logo}}" alt="Logo" class="img-thumbnail">
                                 </td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500 category" th:text="${promotionProductMap[promotion.promotionId]}"></td>
                                 <td class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500 sort description-column"
                                     th:text="${promotion.description}"
                                     th:attr="title=${promotion.description}">
