@@ -9,8 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
@@ -131,4 +130,12 @@ public class OrderServiceImpl implements IOrderService {
 	    public int countByStatus(String status) {
 	        return orderRepository.countByStatus(status);
 	    }
+
+    @Override
+    public long countOrder() {
+        return orderRepository.countOrders();
+    }
+
+
+
 }

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IOrderService {
     Page<Order> getAll(Integer pageNo);
@@ -35,4 +36,6 @@ public interface IOrderService {
     int getCompletedOrderRate();
 
     public int countByStatus(String status);
+    long countOrder();
+
 }

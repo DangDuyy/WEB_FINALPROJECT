@@ -89,4 +89,20 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
 
     int countByStatus(String status);
+
+    @Query("SELECT COUNT(o) FROM Order o")
+    long countOrders();
+
+    @Query(value = "SELECT IFNULL(SUM(CASE " +
+            "WHEN currency = 'VNĐ' THEN total " +
+            "WHEN currency = 'USD' THEN total * 24390.243902 " +
+            "END), 0) AS total_month " +
+            "FROM orders " +
+            "WHERE MONTH(STR_TO_DATE(date, '%d/%m/%Y %H:%i:%s')) = :month " +
+            "AND YEAR(STR_TO_DATE(date, '%d/%m/%Y %H:%i:%s')) = YEAR(CURRENT_DATE()) " +
+            "AND status = 'Done';", nativeQuery = true)
+    long getRevenueForMonth(@Param("month") int month);
+
+
+
 }
