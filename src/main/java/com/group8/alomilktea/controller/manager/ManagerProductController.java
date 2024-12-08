@@ -5,6 +5,7 @@
     import com.group8.alomilktea.entity.Product;
     import com.group8.alomilktea.entity.ProductDetail;
     import com.group8.alomilktea.entity.Promotion;
+    import com.group8.alomilktea.repository.BestSellingProductDTO;
     import com.group8.alomilktea.service.ICategoryService;
     import com.group8.alomilktea.service.IProductDetailService;
     import com.group8.alomilktea.service.IProductService;
@@ -253,4 +254,10 @@
     model.addAttribute("message", "Delete success");
     return "redirect:/manager/product/list";
     }
+        @GetMapping("/top-selling")
+        public String getTopSellingProducts(Model model) {
+            List<BestSellingProductDTO> topProducts = productService.getTop6BestSellingProducts();
+            model.addAttribute("topProducts", topProducts);
+            return "top-selling-products";
+        }
     }
