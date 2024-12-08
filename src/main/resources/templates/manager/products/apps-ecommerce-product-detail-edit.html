@@ -21,7 +21,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="mb-4 text-15">Create Product</h6>
-                            <form th:action="@{/Manager/product/details/edit/save}" method="post">
+                            <form th:action="@{/manager/product/details/edit/save}" method="post">
                                 <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 xl:grid-cols-12">
                                     <input type="hidden" th:name="prodId" th:value="${productDetail.proDId}" />
                                     <!-- Product Title -->
