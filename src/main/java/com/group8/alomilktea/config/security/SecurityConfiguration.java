@@ -85,6 +85,7 @@ public class SecurityConfiguration {
                         .requestMatchers(antMatcher("/web/users/**")).hasAnyAuthority(UserRole.USER.getRoleName(), UserRole.ADMIN.getRoleName())
                         .requestMatchers(antMatcher("/web/product/add-to-cart/**")).hasAnyAuthority(UserRole.USER.getRoleName(), UserRole.ADMIN.getRoleName())
                         .requestMatchers(antMatcher("/**")).permitAll()
+                        .requestMatchers(antMatcher("/shipper/**")).hasAnyAuthority(UserRole.SHIPPER.getRoleName())
                         .anyRequest().authenticated()
         ).formLogin(login -> login
                 .loginPage("/auth/login")

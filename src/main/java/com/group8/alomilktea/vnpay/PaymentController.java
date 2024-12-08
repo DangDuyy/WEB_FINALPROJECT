@@ -3,10 +3,7 @@ package com.group8.alomilktea.vnpay;
 
 import com.group8.alomilktea.config.response.ResponseObject;
 import com.group8.alomilktea.entity.*;
-import com.group8.alomilktea.service.ICartService;
-import com.group8.alomilktea.service.IOrderDetailService;
-import com.group8.alomilktea.service.IOrderService;
-import com.group8.alomilktea.service.IUserService;
+import com.group8.alomilktea.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,7 @@ public class PaymentController {
     private final ICartService cartService;
     private final IOrderService orderService;
     private final IOrderDetailService orderDetailService;
+    private final IShipmentCompany shipmentCompany;
 
     @GetMapping("/vn-pay")
     public ResponseObject<PaymentDTO.VNPayResponse> pay(HttpServletRequest request) {
@@ -40,7 +38,7 @@ public class PaymentController {
     public ResponseEntity<String> payCallbackHandler(HttpServletRequest request) {
         String status = request.getParameter("vnp_ResponseCode");
         String fullAddress = paymentService.fullAddress;
-
+        String shippingId = paymentService.shipingid;
         if ("00".equals(status)) {
             // Lấy thông tin người dùng
             User user = userService.getUserLogged();
@@ -51,7 +49,9 @@ public class PaymentController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("<html><body><h3>Giỏ hàng trống!</h3><a href='/'>Quay lại trang chủ</a></body></html>");
             }
-
+            int shipingid = Integer.parseInt(shippingId);
+            ShipmentCompany shipment = shipmentCompany.findById(shipingid);
+            System.out.println(shipment+ "helloooship");
             // Tính tổng giá phải thanh toán
             Double totalAmount = (double) paymentService.amount; // Lấy giá trị từ PaymentService
 
@@ -64,6 +64,7 @@ public class PaymentController {
             order.setPaymentMethod("VNPay");
             order.setStatus("Pending");
             order.setDeliAddress(fullAddress);
+            order.setShipmentCompany(shipment);
             orderService.save(order);
 
             // Tạo chi tiết đơn đặt hàng
@@ -106,13 +107,17 @@ public class PaymentController {
             @RequestParam String province,
             @RequestParam String city,
             @RequestParam String commune,
-            @RequestParam String address) {
+            @RequestParam String address,
+            @RequestParam String shippingMethodId) {
 
         // Log payment data for debugging
         String fullAddress = address + ", " + commune + ", " + city + ", " + province;
 
         // Simulate the processing of the COD order (e.g., storing order data)
+        int shipingid = Integer.parseInt(shippingMethodId);
 
+        ShipmentCompany shipment = shipmentCompany.findById(shipingid);
+        System.out.println("lo cc" + shipment);
         User user = userService.getUserLogged();
 
         // Lấy danh sách sản phẩm trong giỏ hàng
@@ -134,6 +139,7 @@ public class PaymentController {
         order.setPaymentMethod("CashOnDelivery");
         order.setStatus("Pending");
         order.setDeliAddress(fullAddress);
+        order.setShipmentCompany(shipment);
         orderService.save(order);
 
         // Tạo chi tiết đơn đặt hàng

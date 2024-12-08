@@ -1,5 +1,6 @@
 package com.group8.alomilktea.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "FK_user_order"))
+    @JsonIgnore
     private User user;
 
     @Column(name = "currency")
@@ -77,11 +79,11 @@ public class Order {
                 "orderId=" + orderId +
                 ", currency='" + currency + '\'' +
                 ", date='" + date + '\'' +
+                ", deliAddress='" + deliAddress + '\'' +
                 ", paymentMethod='" + paymentMethod + '\'' +
-                ", shippingMethod='" + shipmentCompany + '\'' +
-                ", status=" + status +
+                ", status='" + status + '\'' +
                 ", total=" + total +
-                ", user=" + user +
+                ", shipmentCompany=" + (shipmentCompany != null ? shipmentCompany.getShipCname() : null) +
                 '}';
     }
-}
+    }

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface IOrderService {
     Page<Order> getAll(Integer pageNo);
-
+    Page<Order> getOderByStatus(Integer pageNo, String status,Long shipId);
     void updateOrderState(Integer orderId, String newState);
     void deleteById(Integer id);
     List<Order> findOder(Integer userId);

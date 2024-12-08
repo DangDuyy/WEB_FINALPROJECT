@@ -14,6 +14,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM orders ORDER BY date DESC")
     Page<Order> findAllCustom(Pageable pageable);
+    @Query("SELECT o FROM Order o WHERE o.status = :status AND o.shipmentCompany.shipCid = :shipId ORDER BY o.date DESC")
+    Page<Order> findOderByStatus(Pageable pageable,@Param("status") String status,@Param("shipId") Long shipId);
     @Query("""
     SELECT o FROM Order o WHERE o.user.userId = :userId
         """)

@@ -25,6 +25,12 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    public Page<Order> getOderByStatus(Integer pageNo, String status,Long shipId) {
+        Pageable pageable = PageRequest.of(pageNo - 1, 10);
+        return orderRepository.findOderByStatus(pageable,status,shipId);
+    }
+
+    @Override
     public void updateOrderState(Integer orderId, String newState) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
 

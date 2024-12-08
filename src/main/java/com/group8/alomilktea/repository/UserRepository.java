@@ -26,4 +26,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	List<User> findAllByStatus(Status status);
 
+
+	@Query("""
+		select s.shipCid from User u JOIN ShipmentCompany s on u.userId = s.user.userId  where u.email = :email
+	""")
+	Long findShipCIdByUser(@Param("email") String email);
 }
