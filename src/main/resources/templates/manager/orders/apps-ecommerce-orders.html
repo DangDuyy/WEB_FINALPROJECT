@@ -76,7 +76,7 @@
                             <div class="flex items-center gap-3 card-body">
                                 <div class="flex items-center justify-center text-green-500 rounded-md size-12 text-15 bg-green-50 dark:bg-green-500/20 shrink-0"><i data-lucide="package-check"></i></div>
                                 <div class="grow">
-                                    <h5 class="mb-1 text-16" th:text="${deliod}">0</h5>
+                                    <h5 class="mb-1 text-16" th:text="${deleod}">0</h5>
                                     <p class="text-slate-500 dark:text-zink-200">Delivered Orders</p>
                                 </div>
                             </div>
@@ -170,7 +170,7 @@
                                                 <ul class="absolute z-50 hidden py-2 mt-1 ltr:text-left rtl:text-right list-none bg-white rounded-md shadow-md dropdown-menu min-w-[10rem] dark:bg-zink-600" aria-labelledby="orderAction1">
                                                     <li>
                                                         <form th:action="@{/manager/orders/updateState/{id}(id=${item.orderId})}" method="post">
-                                                            <input type="hidden" name="newState" value="Shipping" />  <!-- Example new state -->
+                                                            <input type="hidden" name="newState" value="Done" />  <!-- Example new state -->
                                                             <button type="submit" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200">
                                                                 <span class="align-middle">Accept</span>
                                                             </button>
@@ -179,7 +179,7 @@
                                                     <li>
                                                         <form th:action="@{/manager/orders/delete/{id}(id=${item.orderId})}" method="post" onsubmit="return confirm('Are you sure you want to cancel this order?');">
                                                             <button type="submit" class="block px-4 py-1.5 text-base transition-all duration-200 ease-linear text-slate-600 dropdown-item hover:bg-slate-100 hover:text-slate-500 focus:bg-slate-100 focus:text-slate-500 dark:text-zink-100 dark:hover:bg-zink-500 dark:hover:text-zink-200 dark:focus:bg-zink-500 dark:focus:text-zink-200">
-                                                                <span class="align-middle">Cancel</span>
+                                                                <span class="align-middle">Delete</span>
                                                             </button>
                                                         </form>
                                                     </li>

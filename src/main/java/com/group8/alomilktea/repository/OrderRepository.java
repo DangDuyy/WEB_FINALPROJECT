@@ -27,7 +27,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "END), 0) AS total_month " +
             "FROM orders " +
             "WHERE MONTH(STR_TO_DATE(date, '%d/%m/%Y %H:%i:%s')) = MONTH(CURRENT_DATE()) " +
-            "AND status = 'Done';",
+            "AND status = 'Delivered';",
             nativeQuery = true)
     int revenueOnCurrentMonth();
 
@@ -37,11 +37,11 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "END), 0) AS total_year " +
             "FROM orders " +
             "WHERE YEAR(STR_TO_DATE(date, '%d/%m/%Y %H:%i:%s')) = YEAR(CURRENT_DATE()) " +
-            "AND status = 'Done';",
+            "AND status = 'Delivered';",
             nativeQuery = true)
     int revenueOnCurrentYear();
 
-    @Query(value = "SELECT IFNULL(SUM(CASE WHEN status = 'Done' THEN 1 ELSE 0 END) / COUNT(*) * 100, 0) AS completed_rate " +
+    @Query(value = "SELECT IFNULL(SUM(CASE WHEN status = 'Delivered' THEN 1 ELSE 0 END) / COUNT(*) * 100, 0) AS completed_rate " +
             "FROM orders",
             nativeQuery = true)
     int rateCompleted();
@@ -52,7 +52,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "END), 0) AS total_quarter " +
             "FROM orders " +
             "WHERE QUARTER(STR_TO_DATE(date, '%d/%m/%Y %H:%i:%s')) = QUARTER(CURRENT_DATE()) " +
-            "AND status = 'Done';",
+            "AND status = 'Delivered';",
             nativeQuery = true)
     int revenueOnCurrentQuarter();
 
@@ -67,7 +67,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
                     + "                                   END), 0) AS total_sum, m.month_number\r\n"
                     + "FROM AllMonths m\r\n"
                     + "LEFT JOIN wck.orders o ON MONTH(STR_TO_DATE(o.date, '%d/%m/%Y %H:%i:%s')) = m.month_number\r\n"
-                    + "                      AND o.status = 'Done'\r\n"
+                    + "                      AND o.status = 'Delivered'\r\n"
                     + "GROUP BY m.month_number;"
     )
     List<Integer> getMonthlyTotal();
@@ -82,7 +82,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
                     + "                                 END), 0) AS total_sum\r\n"
                     + "FROM AllQuarters q\r\n"
                     + "LEFT JOIN wck.orders o ON QUARTER(STR_TO_DATE(o.date, '%d/%m/%Y %H:%i:%s')) = q.quarter_number\r\n"
-                    + "                    AND o.status = 'Done'\r\n"
+                    + "                    AND o.status = 'Delivered'\r\n"
                     + "GROUP BY q.quarter_number;"
     )
     List<Integer> getQuarterTotal();
@@ -109,7 +109,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "FROM orders " +
             "WHERE MONTH(STR_TO_DATE(date, '%d/%m/%Y %H:%i:%s')) = :month " +
             "AND YEAR(STR_TO_DATE(date, '%d/%m/%Y %H:%i:%s')) = YEAR(CURRENT_DATE()) " +
-            "AND status = 'Done';", nativeQuery = true)
+            "AND status = 'Delivered';", nativeQuery = true)
     long getRevenueForMonth(@Param("month") int month);
 
     @Query(value = "SELECT COUNT(*) FROM orders o WHERE o.status = :status " +

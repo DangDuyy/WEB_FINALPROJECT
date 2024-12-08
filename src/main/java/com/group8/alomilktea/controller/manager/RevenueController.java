@@ -1,6 +1,6 @@
 package com.group8.alomilktea.controller.manager;
 
-import com.group8.alomilktea.service.RevenueService;
+import com.group8.alomilktea.service.impl.RevenueServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +13,7 @@ import java.util.List;
 public class RevenueController {
 
     @Autowired
-    private RevenueService revenueService;
+    private RevenueServiceImpl revenueService;
 
     @GetMapping
     public List<Long> getMonthlyRevenue() {

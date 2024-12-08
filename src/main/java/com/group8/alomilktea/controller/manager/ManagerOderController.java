@@ -28,10 +28,10 @@ public class ManagerOderController {
         long newod = orderSer.countByStatus("New");
         long pendingod = orderSer.countByStatus("Pending");
         long shipod = orderSer.countByStatus("Shipping");
-        long deleod = orderSer.countByStatus("Done");
-        long cancelod = orderSer.countByStatus("Cancel");
+        long deleod = orderSer.countByStatus("Delivered");
+        long cancelod = orderSer.countByStatus("Cancelled");
 
-        System.out.println(pendingod + 5);
+        //System.out.println(cancelod + 5);
 
         Page<Order> page = orderSer.getAll(pageNo);
         long totalOrders = orderSer.count();
@@ -42,7 +42,7 @@ public class ManagerOderController {
         model.addAttribute("newod", newod);
         model.addAttribute("pendingod", pendingod);
         model.addAttribute("shipod", shipod);
-        model.addAttribute("deliod", deleod);
+        model.addAttribute("deleod", deleod);
         model.addAttribute("cancelod", cancelod);
         return "manager/orders/apps-ecommerce-orders";
     }
@@ -55,12 +55,12 @@ public class ManagerOderController {
 
         // Xử lý lỗi nếu trạng thái không phải là "Pending"
         String error = "";
-        if (order.getStatus().equals("Pending") && newState.equals("Shipping")) {
+        if (order.getStatus().equals("Shipping") && newState.equals("Delivered")) {
             // Chuyển trạng thái của đơn hàng từ "Pending" sang "Shipping"
-            order.setStatus("Shipping");
-        } else if (!order.getStatus().equals("Pending")) {
+            order.setStatus("Delivered");
+        } else if (!order.getStatus().equals("Shipping")) {
             // Nếu trạng thái không phải "Pending", không thể thay đổi
-            error = "Bạn chỉ có thể duyệt đơn hàng đang chờ xử lý";
+            error = "Bạn chỉ có thể duyệt đơn hàng đang vận chuyen";
         }
 
         // Lưu trạng thái mới của đơn hàng
