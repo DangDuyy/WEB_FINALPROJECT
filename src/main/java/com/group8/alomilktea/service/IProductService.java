@@ -4,6 +4,7 @@ import com.group8.alomilktea.common.enums.ProductAttribute;
 import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.entity.ProductDetail;
 import com.group8.alomilktea.model.ProductDetailDTO;
+import com.group8.alomilktea.repository.BestSellingProductDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -41,4 +42,5 @@ public interface IProductService {
 
     List<ProductDetailDTO> findProductsByCategoryAndPrice(Integer categoryId, Double minPrice, Double maxPrice);
 
+    List<BestSellingProductDTO> getTop6BestSellingProducts();
 }

@@ -4,7 +4,9 @@ import com.group8.alomilktea.common.enums.ProductAttribute;
 import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.entity.ProductDetail;
 import com.group8.alomilktea.model.ProductDetailDTO;
+import com.group8.alomilktea.repository.BestSellingProductDTO;
 import com.group8.alomilktea.repository.ProductRepository;
+import com.group8.alomilktea.repository.OrderDetailRepository;
 import com.group8.alomilktea.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,8 @@ public class ProductService implements IProductService {
     @Autowired
     private ProductRepository repo;
 
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
 
     @Override
     public Product save(Product product) {
@@ -100,6 +104,11 @@ public class ProductService implements IProductService {
     @Override
     public List<ProductDetailDTO> findProductsByCategoryAndPrice(Integer categoryId, Double minPrice, Double maxPrice) {
         return repo.findByCategoryAndPriceRange(categoryId, minPrice, maxPrice);
+    }
+
+    @Override
+    public List<BestSellingProductDTO> getTop6BestSellingProducts() {
+        return orderDetailRepository.findTop6BestSellingProducts();
     }
 
 
