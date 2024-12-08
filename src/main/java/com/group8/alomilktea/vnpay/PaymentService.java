@@ -15,13 +15,15 @@ public class PaymentService {
     private final VNPAYConfig vnPayConfig;
     public long amount =0;
     public String fullAddress;
+    public String shipingid;
     public PaymentDTO.VNPayResponse createVnPayPayment(HttpServletRequest request) {
         String amountParam = request.getParameter("grandTotalAmount");
         String province = request.getParameter("province");
         String city = request.getParameter("city");
         String commune = request.getParameter("commune");
         String address = request.getParameter("address");
-
+        shipingid = request.getParameter("shippingMethodId");
+        System.out.println("đuyeptrai" +shipingid);
         // Xây dựng địa chỉ đầy đủ
         fullAddress = address + ", " + commune + ", " + city + ", " + province;
         if (amountParam == null || amountParam.isEmpty()) {
