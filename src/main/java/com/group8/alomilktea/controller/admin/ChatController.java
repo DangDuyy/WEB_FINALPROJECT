@@ -1,49 +1,40 @@
 package com.group8.alomilktea.controller.admin;
 
-import com.group8.alomilktea.entity.User;
-import com.group8.alomilktea.service.IUserService;
+import com.group8.alomilktea.model.ChatMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin/chat")
 public class ChatController {
-    private final IUserService userService;
-
 
     @GetMapping
-    private String showChatbox(){
+    private String chatForm(){
         return "admin/chat/apps-chat";
     }
-    @MessageMapping("/user.addUser")
-    @SendTo("/user/public")
-    public User addUser(
-            @Payload User user
+    @MessageMapping("/chat.sendMessage")
+    @SendTo("/topic/public")
+    public ChatMessage sendMessage(
+            @Payload ChatMessage chatMessage
     ) {
-        userService.saveUserOnline(user);
-        return user;
+        return chatMessage;
     }
 
-    @MessageMapping("/user.disconnectUser")
-    @SendTo("/user/public")
-    public User disconnectUser(
-            @Payload User user
+    @MessageMapping("/chat.addUser")
+    @SendTo("/topic/public")
+    public ChatMessage addUser(
+            @Payload ChatMessage chatMessage,
+            SimpMessageHeaderAccessor headerAccessor
     ) {
-        userService.disconnect(user);
-        return user;
-    }
-
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> findConnectedUsers() {
-        return ResponseEntity.ok(userService.findConnectedUsers());
+        // Add username in web socket session
+        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+        return chatMessage;
     }
 }

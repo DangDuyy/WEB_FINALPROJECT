@@ -1,9 +1,6 @@
 package com.group8.alomilktea.controller.web;
 
-import com.group8.alomilktea.entity.Cart;
-import com.group8.alomilktea.entity.Category;
-import com.group8.alomilktea.entity.User;
-import com.group8.alomilktea.entity.Wishlist;
+import com.group8.alomilktea.entity.*;
 import com.group8.alomilktea.model.CategoryModel;
 import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.model.UserModel;
