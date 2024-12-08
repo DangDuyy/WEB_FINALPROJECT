@@ -131,4 +131,9 @@ public class OrderServiceImpl implements IOrderService {
 	    public int countByStatus(String status) {
 	        return orderRepository.countByStatus(status);
 	    }
+
+    @Override
+    public List<Order> findOrderByStatus(String status) {
+        return orderRepository.findOrderByStatus(status);
+    }
 }

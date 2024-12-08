@@ -86,7 +86,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Integer> getQuarterTotal();
     @Query("SELECT COUNT(o) FROM Order o WHERE o.status = :status")
     long countOrdersByStatus(@Param("status") String status);
-
-
     int countByStatus(String status);
+
+    @Query("SELECT o FROM Order o WHERE o.status = :status")
+    List<Order> findOrderByStatus(@Param("status") String status);
 }

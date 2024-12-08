@@ -3,6 +3,7 @@ package com.group8.alomilktea.service;
 import com.group8.alomilktea.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -35,4 +36,5 @@ public interface IOrderService {
     int getCompletedOrderRate();
 
     public int countByStatus(String status);
+    List<Order> findOrderByStatus(@Param("status") String status);
 }

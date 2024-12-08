@@ -6,6 +6,7 @@ import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.service.ICartService;
 import com.group8.alomilktea.service.IProductService;
 import com.group8.alomilktea.service.IUserService;
+import com.group8.alomilktea.service.IWishlistService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,8 @@ public class UserController {
 
     @Autowired(required=true)
     IUserService userService;
+    @Autowired(required=true)
+    IWishlistService wishlistService;
 
     @GetMapping()
     public String trangchu(Model model) {
@@ -145,6 +148,81 @@ public class UserController {
                 // Lưu giỏ hàng mới
                 cartService.save(newCart);
 
+                // Trả lại URL hiện tại
+                return ResponseEntity.status(HttpStatus.OK)
+                        .header("Location", request.getRequestURL().toString())
+                        .body(successMessage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Lỗi khi thêm sản phẩm vào giỏ hàng: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/addToWishlist")
+    public ResponseEntity<String> addToWishlist(
+            @RequestParam("productId") Integer proId,
+            @RequestParam("qty") Integer qty,
+            @RequestParam("size") String size,
+            @RequestParam("price") Double price,
+            HttpServletRequest request) {
+
+        try {
+            User userLogged = userService.getUserLogged();
+            if (userLogged == null) {
+                // Nếu chưa đăng nhập, chuyển hướng đến trang login
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .header("Location", "/auth/login") // Đường dẫn tới trang login
+                        .body("Vui lòng đăng nhập để tiếp tục.");
+            }
+            String successMessage = "Thêm vào giỏ hàng thành công";
+            ProductDetail product1 = productService.findPriceByProductIdAndSize(proId,ProductAttribute.getEnum(size));
+            // Tìm sản phẩm trong cơ sở dữ liệu
+            Optional<Product> optProduct = productService.findById0p(proId);
+            if (optProduct.isEmpty()) {
+                return new ResponseEntity<>("Sản phẩm không tồn tại", HttpStatus.NOT_FOUND);
+            }
+
+            Product product = optProduct.get();
+//            User userLogged = userService.getUserLogged();
+
+            // Lấy danh sách giỏ hàng của người dùng
+            List<Wishlist> wishList = wishlistService.findByUserId(userLogged.getUserId());
+
+            // Tìm sản phẩm trong giỏ hàng với cùng proId và size
+            Optional<Wishlist> existingCartItem = wishList.stream()
+                    .filter(cart -> cart.getProduct().getProId().equals(proId) && cart.getId().getSize().equals(size))
+                    .findFirst();
+
+            if (existingCartItem.isPresent()) {
+                // Nếu sản phẩm cùng proId và size đã tồn tại, cộng dồn số lượng
+                Wishlist wishlist = existingCartItem.get();
+                int updatedQuantity = wishlist.getQuantity() + qty;
+
+                // Kiểm tra tồn kho nếu cần
+
+                // Cập nhật số lượng trong giỏ hàng
+                wishlist.setQuantity(updatedQuantity);
+                wishlistService.save(wishlist);
+
+                // Trả lại URL hiện tại
+                return ResponseEntity.status(HttpStatus.OK)
+                        .header("Location", request.getRequestURL().toString())
+                        .body(successMessage);
+            } else {
+                // Nếu sản phẩm khác size hoặc không tồn tại trong giỏ hàng, thêm mục mới
+                CartKey cartKey = new CartKey(userLogged.getUserId(), proId, size);  // Sử dụng proId và size làm khóa hợp nhất
+                Wishlist newWishlist = new Wishlist();
+                newWishlist.setId(cartKey);
+                newWishlist.setProduct(product);
+                newWishlist.setUser(userLogged);
+                newWishlist.getId().setSize(size);
+                newWishlist.setQuantity(qty);
+                newWishlist.setPrice(product1.getPrice());
+
+                // Kiểm tra tồn kho nếu cần
+
+                // Lưu giỏ hàng mới
+                wishlistService.save(newWishlist);
                 // Trả lại URL hiện tại
                 return ResponseEntity.status(HttpStatus.OK)
                         .header("Location", request.getRequestURL().toString())

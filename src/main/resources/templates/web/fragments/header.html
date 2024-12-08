@@ -35,11 +35,10 @@
 								<li class="top-hover"><a th:href="@{/}">Setting  <i class="ion-chevron-down"></i></a>
 									<ul>
 										<li><a sec:authorize="isAuthenticated()" th:href="@{/admin}">Admin</a></li>
-										<li><a th:href="@{wishlist.html}">Wishlist</a></li>
 										<li><a th:href="@{/auth/login}">Login</a></li>
 										<li><a th:href="@{/auth/register}">Register</a></li>
+										<li><a th:href="@{/myoders}">My Orders</a></li>
 										<li><a th:href="@{/home/myaccount}">my account</a></li>
-										<li><a sec:authorize="isAuthenticated()" th:href="@{/manager}">My Store</a></li>
 										<li><a sec:authorize="isAuthenticated()" th:href="@{/manager}">My Store</a></li>
 									</ul>
 								</li>
@@ -94,7 +93,7 @@
 
 
 							<div class="header-wishlist">
-								<a th:href="@{/user-cart}">
+								<a th:href="@{/user-wishList}">
 									<div class="header-icon-style">
 										<i class="icon-heart icons"></i>
 									</div>

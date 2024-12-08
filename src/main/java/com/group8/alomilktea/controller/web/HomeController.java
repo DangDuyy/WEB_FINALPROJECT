@@ -6,10 +6,7 @@ import com.group8.alomilktea.entity.*;
 import com.group8.alomilktea.model.CategoryModel;
 import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.model.UserModel;
-import com.group8.alomilktea.service.ICartService;
-import com.group8.alomilktea.service.ICategoryService;
-import com.group8.alomilktea.service.IProductService;
-import com.group8.alomilktea.service.IUserService;
+import com.group8.alomilktea.service.*;
 import org.springframework.beans.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +37,10 @@ public class HomeController{
     IUserService userService;
     @Autowired
     ICartService cartService;
-  @Autowired
+    @Autowired
     ICategoryService categoryService;
+    @Autowired
+    IWishlistService wishlistService;
 
     @ModelAttribute
     public void addGlobalAttributes(Model model) {
@@ -160,4 +159,32 @@ public class HomeController{
                 .collect(Collectors.toList());
         return categoryDTOs;
     }
+    @GetMapping("/user-wishList")
+    public String viewWishlist(Model model) {
+        try {
+            User userLogged = userService.getUserLogged(); // Lấy thông tin người dùng đã đăng nhập
+
+            if (userLogged == null) {
+                return "redirect:auth/login"; // Nếu người dùng chưa đăng nhập, chuyển hướng tới trang đăng nhập
+            }
+
+            // Lấy danh sách sản phẩm trong giỏ hàng của người dùng
+            List<Wishlist> wishlistItems = wishlistService.findByUserId(userLogged.getUserId());
+
+            // Tính tổng giá trị của giỏ hàng
+            double totalAmount = wishlistItems.stream()
+                    .mapToDouble(cart -> cart.getQuantity() * cart.getPrice()) // Giá * Số lượng
+                    .sum();
+
+            // Đưa danh sách sản phẩm và tổng giá trị vào model
+            model.addAttribute("wishItems", wishlistItems); // Danh sách giỏ hàng
+
+            return "web/billy/wishlist";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "Không thể tải giỏ hàng. Vui lòng thử lại sau.");
+            return "error"; // Trả về trang lỗi
+        }
+    }
+
 }
