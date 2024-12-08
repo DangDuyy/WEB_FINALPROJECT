@@ -39,18 +39,18 @@ public class StatisticsController {
 
         // Lấy dữ liệu cho trạng thái Cancel
         List<Long> cancelCount = Arrays.asList(
-                orderRepository.getOrderCountByStatus("Cancel", 1),
-                orderRepository.getOrderCountByStatus("Cancel", 2),
-                orderRepository.getOrderCountByStatus("Cancel", 3),
-                orderRepository.getOrderCountByStatus("Cancel", 4),
-                orderRepository.getOrderCountByStatus("Cancel", 5),
-                orderRepository.getOrderCountByStatus("Cancel", 6),
-                orderRepository.getOrderCountByStatus("Cancel", 7),
-                orderRepository.getOrderCountByStatus("Cancel", 8),
-                orderRepository.getOrderCountByStatus("Cancel", 9),
-                orderRepository.getOrderCountByStatus("Cancel", 10),
-                orderRepository.getOrderCountByStatus("Cancel", 11),
-                orderRepository.getOrderCountByStatus("Cancel", 12)
+                orderRepository.getOrderCountByStatus("Cancelled", 1),
+                orderRepository.getOrderCountByStatus("Cancelled", 2),
+                orderRepository.getOrderCountByStatus("Cancelled", 3),
+                orderRepository.getOrderCountByStatus("Cancelled", 4),
+                orderRepository.getOrderCountByStatus("Cancelled", 5),
+                orderRepository.getOrderCountByStatus("Cancelled", 6),
+                orderRepository.getOrderCountByStatus("Cancelled", 7),
+                orderRepository.getOrderCountByStatus("Cancelled", 8),
+                orderRepository.getOrderCountByStatus("Cancelled", 9),
+                orderRepository.getOrderCountByStatus("Cancelled", 10),
+                orderRepository.getOrderCountByStatus("Cancelled", 11),
+                orderRepository.getOrderCountByStatus("Cancelled", 12)
         );
 
         // Đóng gói dữ liệu vào một Map

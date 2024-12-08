@@ -114,12 +114,12 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public long countDoneOrders() {
-        return orderRepository.countOrdersByStatus("Done");
+        return orderRepository.countOrdersByStatus("Delivered");
     }
 
     @Override
     public long countCancelOrders() {
-        return orderRepository.countOrdersByStatus("Cancel");
+        return orderRepository.countOrdersByStatus("Cancelled");
     }
 
     @Override

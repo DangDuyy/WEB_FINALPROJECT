@@ -141,7 +141,7 @@ fetch('/api/orders-count')  // URL của API mà bạn sẽ gọi để lấy d�
                 name: 'Pending',
                 data: pendingData // Dữ liệu Pending từ API
             }, {
-                name: 'Cancel',
+                name: 'Cancelled',
                 data: cancelData // Dữ liệu Cancel từ API
             }],
             chart: {

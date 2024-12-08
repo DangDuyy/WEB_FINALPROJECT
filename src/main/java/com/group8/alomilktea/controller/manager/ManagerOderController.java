@@ -2,15 +2,13 @@ package com.group8.alomilktea.controller.manager;
 
 import com.group8.alomilktea.entity.Order;
 import com.group8.alomilktea.service.IOrderService;
+import com.group8.alomilktea.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -20,25 +18,61 @@ import java.util.List;
 public class ManagerOderController {
     @Autowired(required = true)
     IOrderService orderSer;
-    @RequestMapping("")
+
+    @Autowired()
+    IUserService userService;
+    @RequestMapping("/list")
     public String listOrders(
             ModelMap model,
             @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+        long newod = orderSer.countByStatus("New");
+        long pendingod = orderSer.countByStatus("Pending");
+        long shipod = orderSer.countByStatus("Shipping");
+        long deleod = orderSer.countByStatus("Delivered");
+        long cancelod = orderSer.countByStatus("Cancelled");
+
+        //System.out.println(cancelod + 5);
+
         Page<Order> page = orderSer.getAll(pageNo);
         long totalOrders = orderSer.count();
         model.addAttribute("orders", page.getContent());
         model.addAttribute("totalPage", page.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalOrders", totalOrders);
-        return "manager/orders/list.html";
+        model.addAttribute("newod", newod);
+        model.addAttribute("pendingod", pendingod);
+        model.addAttribute("shipod", shipod);
+        model.addAttribute("deleod", deleod);
+        model.addAttribute("cancelod", cancelod);
+        return "manager/orders/apps-ecommerce-orders";
     }
 
 
-    @GetMapping("updateState/{orderId}/{newState}")
-    public String updateOrderState(@PathVariable("orderId") Integer orderId, @PathVariable("newState") String newState) {
-        orderSer.updateOrderState(orderId, newState);
-        return "redirect:/manager/orders";
+    @PostMapping("updateState/{orderId}")
+    public String updateOrderState(@PathVariable("orderId") Integer orderId, String newState, ModelMap modelMap) {
+        // Lấy đơn hàng từ cơ sở dữ liệu
+        Order order = orderSer.findById(orderId);
+
+        // Xử lý lỗi nếu trạng thái không phải là "Pending"
+        String error = "";
+        if (order.getStatus().equals("Shipping") && newState.equals("Delivered")) {
+            // Chuyển trạng thái của đơn hàng từ "Pending" sang "Shipping"
+            order.setStatus("Delivered");
+        } else if (!order.getStatus().equals("Shipping")) {
+            // Nếu trạng thái không phải "Pending", không thể thay đổi
+            error = "Bạn chỉ có thể duyệt đơn hàng đang vận chuyen";
+        }
+
+        // Lưu trạng thái mới của đơn hàng
+        orderSer.save(order);
+
+        // Trả về thông tin đơn hàng và thông báo lỗi (nếu có)
+        modelMap.addAttribute("order", order);
+        modelMap.addAttribute("error", error);
+
+        return "redirect:/manager/orders/list"; // Quay lại danh sách đơn hàng
     }
+
 
 
     @GetMapping("delete/{orderId}")
@@ -55,6 +89,7 @@ public class ManagerOderController {
     public List<Order> getOrdersByUserId(@PathVariable Integer userId) {
         return orderSer.findOder(userId);
     }
+
     @GetMapping("/search")
     public String searchOrder(@RequestParam("search") String search, Model model) {
         try {
@@ -68,32 +103,4 @@ public class ManagerOderController {
 
         return "manager/orders/list"; // Tên file Thymeleaf hiển thị kết quả
     }
-    @GetMapping("/thongke")
-    public String showStatistics(Model model) {
-        long totalOrders = orderSer.count();
-        long doneOrders = orderSer.countDoneOrders();
-        long pendingOrders = orderSer.countPendingOrders();
-        long cancelOrders = orderSer.countCancelOrders();
-        long shippingOrders = orderSer.countShippingOrders();
-
-        int revenueCurrentMonth = orderSer.reOnCurrentMonth();
-        int revenueCurrentYear = orderSer.reOnCurrentYear();
-        int revenueCurrentQuarter = orderSer.reOnCurrentQuarter();
-        int completedOrderRate = orderSer.getCompletedOrderRate();
-
-        // Thêm các giá trị thống kê vào model
-        model.addAttribute("totalOrders", totalOrders);
-        model.addAttribute("doneOrders", doneOrders);
-        model.addAttribute("pendingOrders", pendingOrders);
-        model.addAttribute("cancelOrders", cancelOrders);
-        model.addAttribute("shippingOrders", shippingOrders);
-        model.addAttribute("revenueCurrentMonth", revenueCurrentMonth);
-        model.addAttribute("revenueCurrentYear", revenueCurrentYear);
-        model.addAttribute("revenueCurrentQuarter", revenueCurrentQuarter);
-        model.addAttribute("completedOrderRate", completedOrderRate);
-
-        // Trả về view thống kê
-        return "manager/orders/thongke"; // Đảm bảo rằng bạn có file thongke.html trong thư mục admin/orders
-    }
-
 }
