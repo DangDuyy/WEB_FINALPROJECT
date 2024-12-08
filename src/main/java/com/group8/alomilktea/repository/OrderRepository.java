@@ -111,6 +111,11 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "AND status = 'Done';", nativeQuery = true)
     long getRevenueForMonth(@Param("month") int month);
 
+    @Query(value = "SELECT COUNT(*) FROM orders o WHERE o.status = :status " +
+            "AND MONTH(STR_TO_DATE(o.date, '%d/%m/%Y %H:%i:%s')) = :month " +
+            "AND YEAR(STR_TO_DATE(o.date, '%d/%m/%Y %H:%i:%s')) = YEAR(CURRENT_DATE())",
+            nativeQuery = true)
+    long getOrderCountByStatus(@Param("status") String status, @Param("month") int month);
 
 
 }
