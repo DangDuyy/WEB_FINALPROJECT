@@ -85,7 +85,7 @@ public class CheckoutController {
 
 
         shipCost = shippingMethods.get(0).getPrice(); //Lấy phí vận chuyển của phương thức đầu tiên
-
+        int shipid   = shippingMethods.get(0).getShipCid();
         System.out.println("Bị lôi shipcost" + shipCost);
 
 
@@ -98,13 +98,12 @@ public class CheckoutController {
         // Tính tổng cộng
         double grandTotal = totalAmount + shipCost - discount;
         System.out.println("Bị lôi shipcost" + grandTotal);
-
-
         model.addAttribute("user", user);
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("promotions", promoService.findAll());
         model.addAttribute("shipcost", shipCost);
+        model.addAttribute("shipid", shipid);
         model.addAttribute("discount", discount);
         model.addAttribute("grandTotal", grandTotal);
         model.addAttribute("shippingMethods", shippingMethods); //Thêm shippingMethods vào model
