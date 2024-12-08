@@ -4,8 +4,10 @@ import com.group8.alomilktea.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -118,5 +120,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             nativeQuery = true)
     long getOrderCountByStatus(@Param("status") String status, @Param("month") int month);
 
+    @Modifying  // Cần @Modifying để chỉ rõ đây là lệnh UPDATE/DELETE
+    @Transactional // Cần @Transactional để đảm bảo lệnh này nằm trong transaction
+    @Query("UPDATE Order o SET o.status = :status WHERE o.orderId = :orderId")
+    int updateStatus(@Param("orderId") Long orderId, @Param("status") String status);
 
 }

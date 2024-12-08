@@ -151,6 +151,10 @@ public class OrderServiceImpl implements IOrderService {
         return orderRepository.countOrders();
     }
 
+    @Override
+    public int updateStatus(Long orderId, String status) {
+        return orderRepository.updateStatus(orderId,status);
+    }
 
 
 }
