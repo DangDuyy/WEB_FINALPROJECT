@@ -69,8 +69,33 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- PHẦN PHÂN TRANG -->
+                                    <div class="pagination-wrapper d-flex justify-content-center mt-4">
+                                        <ul class="custom-pagination">
+                                            <!-- Nút Previous -->
+                                            <li class="page-item" th:if="${currentPage > 1}">
+                                                <a class="page-link" th:href="@{/web/category/{id}(id=${idcate}, pageNo=${currentPage - 1})}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+
+                                            <!-- Số Trang -->
+                                            <li class="page-item" th:each="pageNum : ${#numbers.sequence(1, totalPages)}" th:classappend="${pageNum == currentPage} ? 'active' : ''">
+                                                <a class="page-link" th:href="@{/web/category/{id}(id=${idcate}, pageNo=${pageNum})}" th:text="${pageNum}"></a>
+                                            </li>
+
+                                            <!-- Nút Next -->
+                                            <li class="page-item" th:if="${currentPage < totalPages}">
+                                                <a class="page-link" th:href="@{/web/category/{id}(id=${idcate}, pageNo=${currentPage + 1})}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- KẾT THÚC PHÂN TRANG -->
                             </div>
                         </div>
+
 
                         </div>
                     </div>
