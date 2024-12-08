@@ -4,6 +4,8 @@ import com.group8.alomilktea.common.enums.ProductAttribute;
 import com.group8.alomilktea.entity.Product;
 import com.group8.alomilktea.entity.ProductDetail;
 import com.group8.alomilktea.model.ProductDetailDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -52,4 +54,26 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "LEFT JOIN p.productDetails pd " +
             "WHERE pd.size = 'M' AND p.category.cateId = :catId")
     List<ProductDetailDTO> findProductInfoByCatID(@Param("catId") Integer catId);
+
+    @Query("SELECT new com.group8.alomilktea.model.ProductDetailDTO( " +
+            "p.proId, p.name, p.description, p.imageLink, p.category.cateId, " +
+            "pd.proDId, pd.size, pd.price) " +
+            "FROM Product p " +
+            "LEFT JOIN p.productDetails pd " +
+            "WHERE pd.size = 'M' AND p.category.cateId = :categoryId AND pd.price BETWEEN :minPrice AND :maxPrice ORDER BY pd.price ASC")
+    List<ProductDetailDTO> findByCategoryAndPriceRange(
+            @Param("categoryId") Integer categoryId,
+            @Param("minPrice") Double minPrice,
+            @Param("maxPrice") Double maxPrice);
+
+
+    @Query("SELECT new com.group8.alomilktea.model.ProductDetailDTO( " +
+            "p.proId, p.name, p.description, p.imageLink, p.category.cateId, " +
+            "pd.proDId, pd.size, pd.price) " +
+            "FROM Product p LEFT JOIN p.productDetails pd " +
+            "WHERE pd.size = 'M' AND p.category.cateId = :categoryId")
+    Page<ProductDetailDTO> findProductsByCategoryPaged(@Param("categoryId") Integer categoryId, Pageable pageable);
+
+
+
 }

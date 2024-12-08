@@ -8,6 +8,7 @@ import com.group8.alomilktea.repository.ProductRepository;
 import com.group8.alomilktea.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -81,6 +82,12 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Page<ProductDetailDTO> findProductInfoByCatIDPaged(Integer categoryId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return repo.findProductsByCategoryPaged(categoryId, pageable);
+    }
+
+    @Override
     public String getCategoryNameByProductId(Integer productId) {
         return repo.findCategoryNameByProductId(productId);
     }
@@ -89,12 +96,13 @@ public class ProductService implements IProductService {
     public String getPromotionNameByProductId(Integer productId) {
         return repo.findPromotionNameByProductId(productId);
     }
-	@Override
 
-
-    public List<ProductDetailDTO> findProductInfoByCatID(Integer CateId) {
-        return repo.findProductInfoByCatID(CateId);
+    @Override
+    public List<ProductDetailDTO> findProductsByCategoryAndPrice(Integer categoryId, Double minPrice, Double maxPrice) {
+        return repo.findByCategoryAndPriceRange(categoryId, minPrice, maxPrice);
     }
+
+
 }
 
 

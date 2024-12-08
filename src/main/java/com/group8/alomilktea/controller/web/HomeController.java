@@ -141,7 +141,16 @@ public class HomeController{
                     // If the address is null or empty, set homeaddress to a default value or handle it
                     model.addAttribute("homeaddress", "No address provided");
                 }
+                // Lấy danh sách sản phẩm trong giỏ hàng của người dùng
+                List<Wishlist> wishlistItems = wishlistService.findByUserId(userLogged.getUserId());
 
+                // Tính tổng giá trị của giỏ hàng
+                double totalAmount = wishlistItems.stream()
+                        .mapToDouble(cart -> cart.getQuantity() * cart.getPrice()) // Giá * Số lượng
+                        .sum();
+
+                // Đưa danh sách sản phẩm và tổng giá trị vào model
+                model.addAttribute("wishItems", wishlistItems); // Danh sách giỏ hàng
                 model.addAttribute("user", userModel);
                 return "web/users/my-account";
             }
@@ -178,7 +187,7 @@ public class HomeController{
 
             // Đưa danh sách sản phẩm và tổng giá trị vào model
             model.addAttribute("wishItems", wishlistItems); // Danh sách giỏ hàng
-
+            model.addAttribute("total",totalAmount);
             return "web/billy/wishlist";
         } catch (Exception e) {
             e.printStackTrace();

@@ -5626,3 +5626,46 @@ Style cho tiêu đề sự kiện giảm giá
         flex: 1 1 45%; /* Khi màn hình nhỏ, mỗi sản phẩm chiếm 45% */
     }
 }
+/* Phân trang */
+.custom-pagination a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: red; /* Chữ trắng */
+    background-color: #fff; /* Nền đỏ đậm */
+    border: 1px solid #8B0000; /* Viền đỏ đậm */
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-pagination li.active a,
+.custom-pagination a:hover {
+    background-color: firebrick; /* Nền đỏ nhạt khi active hoặc hover */
+    color: white; /* Chữ trắng khi hover hoặc active */
+    border-color: firebrick; /* Viền đỏ nhạt khi hover */
+}
+
+/* Viền, nền cho trang đã chọn */
+.custom-pagination li.active a {
+    background-color: #8B0000; /* Nền đỏ nhạt khi active */
+    color: #fff; /* Chữ đỏ đậm khi active */
+    border-color: #8B0000; /* Viền đỏ đậm khi active */
+}
+
+/* Căn giữa */
+.pagination-wrapper {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.custom-pagination {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Khoảng cách giữa các phần tử phân trang */
+.custom-pagination li {
+    margin: 0 5px;
+}

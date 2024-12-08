@@ -198,15 +198,15 @@
     $(function() {
         sliderrange.slider({
             range: true,
-            min: 0,
-            max: 1200,
-            values: [0, 800],
+            min: 30000,
+            max: 100000,
+            values: [30000, 100000],
             slide: function(event, ui) {
-                amountprice.val("$" + ui.values[0] + " - $" + ui.values[1]);
+                amountprice.val(  ui.values[0] + " VND" +" - " + ui.values[1] + " VND");
             }
         });
-        amountprice.val("$" + sliderrange.slider("values", 0) +
-            " - $" + sliderrange.slider("values", 1));
+        amountprice.val(sliderrange.slider("values", 0) +" VND" +" - "
+        + sliderrange.slider("values", 1) + " VND" );
     });
     
     /*---------------------

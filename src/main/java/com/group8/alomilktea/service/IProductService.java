@@ -37,5 +37,8 @@ public interface IProductService {
 
     List<Product> findByIds(List<Integer> ids);
 
- List<ProductDetailDTO> findProductInfoByCatID(Integer CateId);
+    Page<ProductDetailDTO> findProductInfoByCatIDPaged(Integer categoryId, int pageNo, int pageSize);
+
+    List<ProductDetailDTO> findProductsByCategoryAndPrice(Integer categoryId, Double minPrice, Double maxPrice);
+
 }
