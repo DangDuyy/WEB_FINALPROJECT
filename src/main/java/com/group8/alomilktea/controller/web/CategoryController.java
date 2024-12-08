@@ -5,11 +5,10 @@ import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.service.ICategoryService;
 import com.group8.alomilktea.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +28,20 @@ public class CategoryController {
         model.addAttribute("products", list);
         model.addAttribute("categories", listcat);
         model.addAttribute("name", namec);
+        model.addAttribute("idcate", id);
         return "web/billy/category"; // Tên file HTML
+    }
+
+    @GetMapping("/api/{id}")
+    @ResponseBody
+    public ResponseEntity<List<ProductDetailDTO>> getProductsByCategoryAndPrice(
+            @PathVariable("id") Integer id,
+            @RequestParam("minPrice") Double minPrice,
+            @RequestParam("maxPrice") Double maxPrice) {
+        List<ProductDetailDTO> products = productService.findProductsByCategoryAndPrice(id, minPrice, maxPrice);
+        // In ra kết quả trả về để kiểm tra
+        System.out.println("Returned Products: ");
+        products.forEach(product -> System.out.println("Product ID: " + product.getProId() + ", Name: " + product.getName() + ", Price: " + product.getPrice()));
+        return ResponseEntity.ok(products);
     }
 }

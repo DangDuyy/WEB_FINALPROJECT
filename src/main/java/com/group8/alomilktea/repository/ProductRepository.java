@@ -52,4 +52,15 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "LEFT JOIN p.productDetails pd " +
             "WHERE pd.size = 'M' AND p.category.cateId = :catId")
     List<ProductDetailDTO> findProductInfoByCatID(@Param("catId") Integer catId);
+
+    @Query("SELECT new com.group8.alomilktea.model.ProductDetailDTO( " +
+            "p.proId, p.name, p.description, p.imageLink, p.category.cateId, " +
+            "pd.proDId, pd.size, pd.price) " +
+            "FROM Product p " +
+            "LEFT JOIN p.productDetails pd " +
+            "WHERE pd.size = 'M' AND p.category.cateId = :categoryId AND pd.price BETWEEN :minPrice AND :maxPrice")
+    List<ProductDetailDTO> findByCategoryAndPriceRange(
+            @Param("categoryId") Integer categoryId,
+            @Param("minPrice") Double minPrice,
+            @Param("maxPrice") Double maxPrice);
 }

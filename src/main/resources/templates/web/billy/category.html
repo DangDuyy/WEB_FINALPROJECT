@@ -81,24 +81,85 @@
                                 <div class="shop-catigory">
                                     <ul id="shop-catigory-1" class="panel-collapse collapse show">
                                         <li th:each="category : ${categories}">
-                                            <a th:href="@{/web/category/{id}(id=${category.cateId})}" th:text="${category.name}">Category Name</a>
+                                            <a th:href="@{/web/category/{id}(id=${category.cateId})}" th:text="${category.name} ">Category Name</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="shop-price-filter mt-40 shop-sidebar-border pt-35">
                                 <h4 class="shop-sidebar-title">Price Filter</h4>
-                                <div class="price_filter mt-25">
-                                    <span>Range:  $100.00 - 1.300.00 </span>
+                                <div class="price_filter mt-10">
+                                    <span>Giá Khoảng:  </span>
                                     <div id="slider-range"></div>
                                     <div class="price_slider_amount">
                                         <div class="label-input">
                                             <input type="text" id="amount" name="price"  placeholder="Add Your Price" />
                                         </div>
-                                        <button type="button">Filter</button> 
                                     </div>
                                 </div>
                             </div>
+                            <div id="categoryId" th:data-id="${idcate}"></div>
+                            <script>
+                                $(document).ready(function() {
+                                    $("#slider-range").on("slidestop", function() {
+                                        var minPrice = $("#slider-range").slider("values", 0);
+                                        var maxPrice = $("#slider-range").slider("values", 1);
+                                        var categoryId = $("#categoryId").data("id") || '0';// ID danh mục hiện tại (ví dụ cố định là 1)
+                                        console.log("Min Price: " + minPrice);
+                                        console.log("Max Price: " + maxPrice);
+                                        console.log("Category ID: " + categoryId);
+
+                                        // Gửi request AJAX
+                                        $.ajax({
+                                            url: "/web/category/api/" + categoryId,
+                                            type: "GET",
+                                            data: {
+                                                minPrice: minPrice,
+                                                maxPrice: maxPrice
+                                            },
+                                            success: function(data) {  console.log("Response Data: ", data);
+                                                // Xóa sản phẩm cũ
+                                                $(".product-view .row").empty();
+
+                                                // Lặp qua danh sách sản phẩm trả về và thêm vào giao diện
+                                                data.forEach(function(product) {
+                                                    var productHtml = `
+                        <div class="product-width pro-list-none col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mb-30">
+                            <div class="product-wrapper mb-25">
+                                <div class="product-img">
+                                    <a href="/web/product/detail/${product.proId}">
+                                        <img src="${product.imageLink}" alt="Product Image">
+                                    </a>
+                                    <div class="product-action">
+                                        <div class="pro-action-left">
+                                            <a title="Add to Cart" href="/web/product/detail/${product.proId}">
+                                                <i class="ion-android-cart"></i> Buy Item
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-content">
+                                    <h4>
+                                        <a href="/web/product/detail/${product.proId}">${product.name}</a>
+                                    </h4>
+                                    <div class="product-price-wrapper">
+                                        <span>${product.price} VND</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                                                    // Thêm sản phẩm vào danh sách
+                                                    $(".product-view .row").append(productHtml);
+                                                });
+                                            },
+                                            error: function() {
+                                                alert("Lọc giá thất bại. Vui lòng thử lại!");
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
 
                             </div>
                         </div>

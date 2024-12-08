@@ -95,6 +95,13 @@ public class ProductService implements IProductService {
     public List<ProductDetailDTO> findProductInfoByCatID(Integer CateId) {
         return repo.findProductInfoByCatID(CateId);
     }
+
+    @Override
+    public List<ProductDetailDTO> findProductsByCategoryAndPrice(Integer categoryId, Double minPrice, Double maxPrice) {
+        return repo.findByCategoryAndPriceRange(categoryId, minPrice, maxPrice);
+    }
+
+
 }
 
 
