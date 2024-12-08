@@ -204,33 +204,43 @@
         <div class="container">
             <div class="description-review-wrapper">
                 <div class="description-review-topbar nav text-center">
-                    <a class="active" data-bs-toggle="tab" href="#des-details1">Description</a>
-                    <a data-bs-toggle="tab" href="#des-details2">Tags</a>
+                    <a class="active" data-bs-toggle="tab" href="#des-details2">Related Products</a>
                     <a data-bs-toggle="tab" href="#des-details3" id="review-tab">Review</a>
                 </div>
                 <div class="tab-content description-review-bottom">
-                    <div id="des-details1" class="tab-pane active">
-                        <div class="product-description-wrapper">
-                            <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam est usus legentis in iis qui facit eorum claritatem. </p>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. </p>
-                            <ul>
-                                <li>-  Typi non habent claritatem insitam</li>
-                                <li>-  Est usus legentis in iis qui facit eorum claritatem. </li>
-                                <li>-  Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.</li>
-                                <li>-  Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div id="des-details2" class="tab-pane">
+                    <div id="des-details2" class="tab-pane active">
                         <div class="product-anotherinfo-wrapper">
                             <ul>
-                                <li><span>Tags:</span></li>
-                                <li><a href="#"> All,</a></li>
-                                <li><a href="#"> Cheesy,</a></li>
-                                <li><a href="#"> Fast Food,</a></li>
-                                <li><a href="#"> French Fries,</a></li>
-                                <li><a href="#"> Hamburger,</a></li>
-                                <li><a href="#"> Pizza</a></li>
+                                <div class="product-area pb-95">
+                                    <div class="container">
+                                        <div class="product-top-bar section-border mb-25">
+                                            <div class="section-title-wrap">
+                                                <h3 class="section-title section-bg-white">Related Products</h3>
+                                            </div>
+                                        </div>
+                                        <div class="related-product-active owl-carousel product-nav">
+                                            <div class="product-wrapper" th:each="product : ${relatedProducts}">
+                                                <div class="product-img">
+                                                    <a th:href="@{/web/product/detail/{id}(id=${product.proId})}">
+                                                        <img th:src="@{${product.imageLink}}" alt="Product Image">
+                                                    </a>
+                                                    <div class="product-action">
+                                                        <div class="pro-action-left">
+                                                            <a title="Add to Cart" th:href="@{/web/product/detail/{id}(id=${product.proId})}">
+                                                                <i class="ion-android-cart"></i> Buy Item
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content">
+                                                    <h4 th:text="${product.name}"></h4>
+                                                    <span th:text="${product.price} + ' $'"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </ul>
                         </div>
                     </div>
@@ -243,35 +253,13 @@
                         <div class="rattings-wrapper" id="ratings-list">
                             <!-- Các đánh giá sẽ được render từ JavaScript -->
                         </div>
-<!--                        <script>-->
-<!--                            fetch("/api/ratings/product/${prd[0].proId}") // Thay productId bằng ID sản phẩm-->
-<!--                                .then(response => response.json())-->
-<!--                                .then(data => {-->
-<!--                                    const ratingsContainer = document.querySelector(".rattings-wrapper");-->
-<!--                                    ratingsContainer.innerHTML = ""; // Xóa nội dung cũ-->
-<!--                                    data.forEach(rating => {-->
-<!--                                        ratingsContainer          .innerHTML += `-->
-<!--                                        <div class="sin-rattings">-->
-<!--                                            <div class="star-author-all">-->
-<!--                                                <div class="ratting-star f-left">-->
-<!--                                                    ${"★".repeat(rating.rate)}${"☆".repeat(5 - rating.rate)}-->
-<!--                                                    <span>(${rating.rate})</span>-->
-<!--                                                </div>-->
-<!--                                                <div class="ratting-author f-right">-->
-<!--                                                    <h3>${rating.user.username}</h3>-->
-<!--                                                    <span>${rating.date}</span>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <p>${rating.content}</p>-->
-<!--                                        </div>-->
-<!--                                    `;-->
-<!--                                    });-->
-<!--                                });-->
-<!--                        </script>-->
+
                         <script>
+                            // Lắng nghe sự kiện khi nhấn vào tab Review
                             document.getElementById("review-tab").addEventListener("click", function() {
-                                var productId = /*[[${prd[0].proId}]]*/
-                                // Khi người dùng nhấn vào tab Review, gọi API để lấy danh sách đánh giá
+                                var productId = document.getElementById("productId2").value;
+
+                                // Gọi API để lấy danh sách đánh giá của sản phẩm
                                 fetch("/api/ratings/product/" + productId) // Đảm bảo prd[0].proId chứa ID sản phẩm đúng
                                     .then(response => response.json())
                                     .then(data => {
@@ -282,23 +270,26 @@
                                         if (data.length === 0) {
                                             ratingsContainer.innerHTML = "<p>No ratings available for this product.</p>";
                                         } else {
+                                            ratingsContainer.innerHTML = `<h3 class="soluong" >Số lượng đánh giá: ${data.length}</h3>`;
                                             // Duyệt qua các đánh giá và chèn vào trong phần tử
                                             data.forEach(rating => {
                                                 ratingsContainer.innerHTML += `
-                        <div class="sin-rattings">
-                            <div class="star-author-all">
-                                <div class="ratting-star f-left">
-                                    ${"★".repeat(rating.rate)}${"☆".repeat(5 - rating.rate)}
-                                    <span>(${rating.rate})</span>
-                                </div>
-                                <div class="ratting-author f-right">
-                                    <h3>${rating.user.username}</h3>
-                                    <span>${rating.date}</span>
-                                </div>
-                            </div>
-                            <p>${rating.content}</p>
-                        </div>
-                    `;
+                                              <div class="ratting-one">
+                                                <div class="star-author-all">
+                                                    <div class="ratting-user">
+                                                        <h3>${rating.userName}</h3> <!-- Tên người đánh giá -->
+                                                    </div>
+                                                    <div class="ratting-star f-left">
+                                                        ${"★".repeat(rating.rate)}${"☆".repeat(5 - rating.rate)} <!-- Số sao -->
+                                                        <span>(${rating.rate} sao)</span>
+                                                    </div>
+                                                </div>
+                                                <p class="ratting-noidung">Nội dung: ${rating.content}</p> <!-- Nội dung đánh giá -->
+                                                <div class="ratting-date">
+                                                    <span>Ngày đăng:  ${rating.date}</span> <!-- Ngày giờ đăng -->
+                                                </div>
+                                            </div>
+                            `;
                                             });
                                         }
                                     })
@@ -383,7 +374,7 @@
                                     location.reload(); // Tải lại trang để hiển thị đánh giá mới
                                 }).catch(error => {
                                 console.error("Error:", error);
-                                alert("Đã xảy ra lỗi. Vui lòng thử lại.");
+                                alert("Để đánh giá sản phẩm, bạn cần phải đăng nhập!");
                             });
                         });
                     </script>
@@ -392,141 +383,9 @@
             </div>
         </div>
     </div>
-    <div class="product-area pb-95">
-        <div class="container">
-            <div class="product-top-bar section-border mb-25">
-                <div class="section-title-wrap">
-                    <h3 class="section-title section-bg-white">Related Products</h3>
-                </div>
-            </div>
-            <div class="related-product-active owl-carousel product-nav">
-                <div class="product-wrapper">
-                    <div class="product-img">
-                        <a href="product-details.html">
-                            <img th:src="@{/assets/img/product/product-1.jpg}" alt="">
-                        </a>
-                        <div class="product-action">
-                            <div class="pro-action-left">
-                                <a title="Add Tto Cart" href="#"><i class="ion-android-cart"></i> Add Tto Cart</a>
-                            </div>
-                            <div class="pro-action-right">
-                                <a title="Wishlist" href="wishlist.html"><i class="ion-ios-heart-outline"></i></a>
-                                <a title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="ion-android-open"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <h4>
-                            <a href="product-details.html">PRODUCTS NAME HERE </a>
-                        </h4>
-                        <div class="product-price-wrapper">
-                            <span>$100.00</span>
-                            <span class="product-price-old">$120.00 </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-wrapper">
-                    <div class="product-img">
-                        <a href="product-details.html">
-                            <img th:src="@{/assets/img/product/product-2.jpg}" alt="">
-                        </a>
-                        <div class="product-action">
-                            <div class="pro-action-left">
-                                <a title="Add Tto Cart" href="#"><i class="ion-android-cart"></i> Add Tto Cart</a>
-                            </div>
-                            <div class="pro-action-right">
-                                <a title="Wishlist" href="wishlist.html"><i class="ion-ios-heart-outline"></i></a>
-                                <a title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="ion-android-open"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <h4>
-                            <a href="product-details.html">PRODUCTS NAME HERE </a>
-                        </h4>
-                        <div class="product-price-wrapper">
-                            <span>$200.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-wrapper">
-                    <div class="product-img">
-                        <a href="product-details.html">
-                            <img th:src="@{/assets/img/product/product-3.jpg}" alt="">
-                        </a>
-                        <div class="product-action">
-                            <div class="pro-action-left">
-                                <a title="Add Tto Cart" href="#"><i class="ion-android-cart"></i> Add Tto Cart</a>
-                            </div>
-                            <div class="pro-action-right">
-                                <a title="Wishlist" href="wishlist.html"><i class="ion-ios-heart-outline"></i></a>
-                                <a title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="ion-android-open"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <h4>
-                            <a href="product-details.html">PRODUCTS NAME HERE </a>
-                        </h4>
-                        <div class="product-price-wrapper">
-                            <span>$90.00</span>
-                            <span class="product-price-old">$100.00 </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-wrapper">
-                    <div class="product-img">
-                        <a href="product-details.html">
-                            <img th:src="@{/assets/img/product/product-4.jpg}" alt="">
-                        </a>
-                        <div class="product-action">
-                            <div class="pro-action-left">
-                                <a title="Add Tto Cart" href="#"><i class="ion-android-cart"></i> Add Tto Cart</a>
-                            </div>
-                            <div class="pro-action-right">
-                                <a title="Wishlist" href="wishlist.html"><i class="ion-ios-heart-outline"></i></a>
-                                <a title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="ion-android-open"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <h4>
-                            <a href="product-details.html">PRODUCTS NAME HERE </a>
-                        </h4>
-                        <div class="product-price-wrapper">
-                            <span>$50.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-wrapper">
-                    <div class="product-img">
-                        <a href="product-details.html">
-                            <img th:src="@{/assets/img/product/product-7.jpg}" alt="">
 
-                        </a>
-                        <div class="product-action">
-                            <div class="pro-action-left">
-                                <a title="Add Tto Cart" href="#"><i class="ion-android-cart"></i> Add Tto Cart</a>
-                            </div>
-                            <div class="pro-action-right">
-                                <a title="Wishlist" href="wishlist.html"><i class="ion-ios-heart-outline"></i></a>
-                                <a title="Quick View" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#"><i class="ion-android-open"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-content">
-                        <h4>
-                            <a href="product-details.html">PRODUCTS NAME HERE </a>
-                        </h4>
-                        <div class="product-price-wrapper">
-                            <span>$100.00</span>
-                            <span class="product-price-old">$120.00 </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
 
 </div>
     <!-- Additional product info, description, and related products would go here -->

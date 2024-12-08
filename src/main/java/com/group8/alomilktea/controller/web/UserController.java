@@ -9,6 +9,7 @@ import com.group8.alomilktea.service.IUserService;
 import com.group8.alomilktea.service.IWishlistService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -51,6 +52,11 @@ public class UserController {
 
     @GetMapping("detail/{id}")
     public String product(@PathVariable("id") Integer id, Model model) {
+        Product currentProduct = productService.findById(id);
+        Integer categoryId = currentProduct.getCategory().getCateId();
+        Page<ProductDetailDTO> relatedProducts = productService.findProductInfoByCatIDPaged(categoryId,1,5);
+        model.addAttribute("relatedProducts",  relatedProducts.getContent());
+        System.out.println("Related Products: " + relatedProducts.getContent());
         List<ProductDetailDTO> product = productService.findProductInfoByID(id);
         model.addAttribute("prd", product);  // Sửa lại là "prd" thay vì "product"
         System.out.println("Product found: " + product);

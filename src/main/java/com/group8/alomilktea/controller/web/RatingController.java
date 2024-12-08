@@ -10,9 +10,12 @@ import com.group8.alomilktea.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RequestMapping("/api/ratings")
 @RestController
@@ -24,50 +27,43 @@ public class RatingController {
     IUserService userService;
     @Autowired
     IProductService productService ;
-//    @GetMapping("/product/{productId}")
-//    public List<Rating> getRatingsByProduct(@PathVariable Integer productId) {
-//        return ratingService.getRatingsByProductId(productId);
-//    }
-//
-//    // Thêm đánh giá mới
-//    @PostMapping("/add")
-//    public Rating addRating(@RequestBody Rating rating) {
-//        User userLogged = userService.getUserLogged();
-//        rating.getUser().setUserId(userLogged.getUserId());
-//        return ratingService.addRating(rating);
-//    }
-
-
-//    @GetMapping("/product/{productId}")
-//    public List<Rating> getRatingsByProduct(@PathVariable Integer productId) {
-//        System.out.println("Fetching ratings for product ID: " + productId); // Log productId
-//        List<Rating> ratings = ratingService.getRatingsByProductId(productId);
-//        System.out.println("Ratings retrieved: " + ratings); // Log danh sách đánh giá
-//        return ratings;
-//    }
 
 
     @GetMapping("/product/{productId}")
-    public List<Rating> getRatingsByProduct(@PathVariable Integer productId) {
-        // Log sản phẩm được truy vấn
+    public List<Map<String, Object>> getRatingsByProduct(@PathVariable Integer productId) {
+
         System.out.println("Fetching ratings for product ID: " + productId); // Log productId
         List<Rating> ratings = ratingService.getRatingsByProductId(productId);
-
-        // Kiểm tra xem danh sách đánh giá đã lấy có dữ liệu hay không
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
+        List<Map<String, Object>> ratingResponses = new ArrayList<>();
         if (ratings != null && !ratings.isEmpty()) {
-            System.out.println("Ratings retrieved: ");
             for (Rating rating : ratings) {
-                System.out.println("Rating ID: " + rating.getUser().getUserId() + ", Rate: " + rating.getRate() + ", Content: " + rating.getContent());
+                Map<String, Object> ratingInfo = new HashMap<>();
+                ratingInfo.put("userName", rating.getUser().getFullName());
+                ratingInfo.put("rate", rating.getRate());
+                ratingInfo.put("content", rating.getContent());
+                String dateStr = rating.getDate();
+                if (dateStr != null && !dateStr.isEmpty()) {
+                    try {
+                        Date date = inputFormat.parse(dateStr);
+                        String formattedDate = outputFormat.format(date);
+                        ratingInfo.put("date", formattedDate);
+                    } catch (ParseException e) {
+                        System.err.println("Error parsing date: " + dateStr);
+                        e.printStackTrace();
+                        ratingInfo.put("date", dateStr); // Nếu lỗi, trả về ngày gốc
+                    }
+                }
+                ratingResponses.add(ratingInfo);
             }
         } else {
             System.out.println("No ratings found for product ID: " + productId);
         }
-
-        // Trả về danh sách đánh giá
-        return ratings;
+        return ratingResponses;
     }
-
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public Rating addRating(
             @RequestParam Integer productId,
             @RequestParam String content,
