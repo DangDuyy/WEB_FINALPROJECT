@@ -88,9 +88,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Integer> getQuarterTotal();
     @Query("SELECT COUNT(o) FROM Order o WHERE o.status = :status")
     long countOrdersByStatus(@Param("status") String status);
-
-
     int countByStatus(String status);
+
+    @Query("SELECT o FROM Order o WHERE o.status = :status")
+    List<Order> findOrderByStatus(@Param("status") String status);
 
     @Query("SELECT COUNT(o) FROM Order o WHERE o.status = :status and o.shipmentCompany.shipCid = :shipId")
     int countByStatusAndShip(@Param("status") String status,@Param("shipId") Long shipId);
@@ -111,6 +112,11 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             "AND status = 'Done';", nativeQuery = true)
     long getRevenueForMonth(@Param("month") int month);
 
+    @Query(value = "SELECT COUNT(*) FROM orders o WHERE o.status = :status " +
+            "AND MONTH(STR_TO_DATE(o.date, '%d/%m/%Y %H:%i:%s')) = :month " +
+            "AND YEAR(STR_TO_DATE(o.date, '%d/%m/%Y %H:%i:%s')) = YEAR(CURRENT_DATE())",
+            nativeQuery = true)
+    long getOrderCountByStatus(@Param("status") String status, @Param("month") int month);
 
 
 }

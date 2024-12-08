@@ -128,45 +128,58 @@ fetch('/api/revenue')
 
 
 //Order Statistics
-var options = {
-    series: [{
-        name: 'Pending',
-        data: [10, 16, 19, 22, 24, 29, 25, 20, 25, 31, 28, 35,]
-    },{
-        name: 'Cancel',
-        data: [30, 24, 32, 27, 16, 22, 32, 21, 24, 20, 38, 28]
-    }],
-    chart: {
-        type: 'line',
-        height: 310,
-        toolbar: {
-            show: false,
-        },
-    },
-    stroke: {
-        curve: 'smooth',
-        width: 2,
-    },
-    colors: getChartColorsArray("orderStatisticsChart"),
-    dataLabels: {
-        enabled: false
-    },
-    grid: {
-        show: true,
-        padding: {
-            top: -20,
-            right: 0,
-        }
-    },
-    markers: {
-        hover: {
-            sizeOffset: 4
-        }
-    }
-};
+fetch('/api/orders-count')  // URL của API mà bạn sẽ gọi để lấy dữ liệu
+    .then(response => response.json())  // Chuyển đổi phản hồi từ JSON
+    .then(data => {
+        // Giả sử API trả về một object như { pending: [...], cancel: [...] }
+        var pendingData = data.pending;  // Dữ liệu cho Pending
+        var cancelData = data.cancel;    // Dữ liệu cho Cancel
 
-var chart = new ApexCharts(document.querySelector("#orderStatisticsChart"), options);
-chart.render();
+        // Cập nhật biểu đồ với dữ liệu từ API
+        var options = {
+            series: [{
+                name: 'Pending',
+                data: pendingData // Dữ liệu Pending từ API
+            }, {
+                name: 'Cancel',
+                data: cancelData // Dữ liệu Cancel từ API
+            }],
+            chart: {
+                type: 'line',
+                height: 310,
+                toolbar: {
+                    show: false,
+                },
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2,
+            },
+            colors: getChartColorsArray("orderStatisticsChart"),
+            dataLabels: {
+                enabled: false
+            },
+            grid: {
+                show: true,
+                padding: {
+                    top: -20,
+                    right: 0,
+                }
+            },
+            markers: {
+                hover: {
+                    sizeOffset: 4
+                }
+            }
+        };
+
+        // Tạo hoặc cập nhật biểu đồ với dữ liệu mới
+        var chart = new ApexCharts(document.querySelector("#orderStatisticsChart"), options);
+        chart.render();  // Render biểu đồ
+    })
+    .catch(error => console.log('Error fetching data:', error));  // Xử lý lỗi nếu có
+
+
 
 //Traffic Resources Chart
 var options = {
