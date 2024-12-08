@@ -43,7 +43,5 @@ public interface IProductService {
 
     List<ProductDetailDTO> findProductsByCategoryAndPrice(Integer categoryId, Double minPrice, Double maxPrice);
 
-
-
-    List<Product> getTopSellingProducts();
+    List<Product> getTop5BestSellingProducts();
 }

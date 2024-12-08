@@ -19,5 +19,8 @@ public class ProductControllerTop {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/top-selling-products") public String getTopSellingProducts(Model model) { List<Product> topSellingProducts = productService.getTopSellingProducts(); model.addAttribute("topSellingProducts", topSellingProducts); return "topSellingProducts"; }
+    @GetMapping("/api/top-selling-products")
+    public List<Product> getTopSellingProducts() {
+        return productService.getTop5BestSellingProducts();
+    }
 }

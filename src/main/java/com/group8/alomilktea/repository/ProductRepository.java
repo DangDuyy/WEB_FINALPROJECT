@@ -74,7 +74,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "WHERE pd.size = 'M' AND p.category.cateId = :categoryId")
     Page<ProductDetailDTO> findProductsByCategoryPaged(@Param("categoryId") Integer categoryId, Pageable pageable);
 
-    @Query("SELECT p FROM Product p JOIN p.orderDetails od GROUP BY p.proId ORDER BY SUM(od.quantity) DESC") List<Product> findTop5BestSellingProducts();
-
-
+    @Query("SELECT p FROM Product p JOIN OrderDetail od ON p.proId = od.product.proId " +
+            "GROUP BY p.proId ORDER BY SUM(od.quantity) DESC")
+    List<Product> findTop5BestSellingProducts();
 }

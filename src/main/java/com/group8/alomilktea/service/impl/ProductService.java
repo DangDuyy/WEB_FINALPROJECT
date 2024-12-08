@@ -108,9 +108,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> getTopSellingProducts() {
+    public List<Product> getTop5BestSellingProducts() {
         return repo.findTop5BestSellingProducts();
     }
+
+
 }
 
 
