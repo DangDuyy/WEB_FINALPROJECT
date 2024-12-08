@@ -22,6 +22,7 @@
 
     import java.io.File;
     import java.io.IOException;
+    import java.util.Arrays;
     import java.util.List;
     import java.util.Map;
     import java.util.stream.Collectors;
@@ -254,10 +255,5 @@
     model.addAttribute("message", "Delete success");
     return "redirect:/manager/product/list";
     }
-        @GetMapping("/top-selling")
-        public String getTopSellingProducts(Model model) {
-            List<BestSellingProductDTO> topProducts = productService.getTop6BestSellingProducts();
-            model.addAttribute("topProducts", topProducts);
-            return "top-selling-products";
-        }
+
     }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface IProductService {
@@ -42,5 +43,7 @@ public interface IProductService {
 
     List<ProductDetailDTO> findProductsByCategoryAndPrice(Integer categoryId, Double minPrice, Double maxPrice);
 
-    List<BestSellingProductDTO> getTop6BestSellingProducts();
+
+
+    List<Product> getTopSellingProducts();
 }

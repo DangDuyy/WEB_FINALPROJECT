@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -107,11 +108,14 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<BestSellingProductDTO> getTop6BestSellingProducts() {
-        return orderDetailRepository.findTop6BestSellingProducts();
+    public List<Product> getTopSellingProducts() {
+        return repo.findTop5BestSellingProducts();
     }
-
-
 }
+
+
+
+
+
 
 
