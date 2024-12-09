@@ -78,6 +78,7 @@ public class SecurityConfiguration {
         .authorizeHttpRequests(
                 auth -> auth
                         .requestMatchers(antMatcher("/admin/**")).hasAnyAuthority(UserRole.ADMIN.getRoleName())
+                        .requestMatchers(antMatcher("/manager/**")).hasAnyAuthority(UserRole.MANAGER.getRoleName())
                         .requestMatchers(antMatcher("/api/**")).permitAll()
                         .requestMatchers(antMatcher("/auth/**")).permitAll()
                         .requestMatchers(antMatcher("/cart/**")).hasAnyAuthority(UserRole.USER.getRoleName(), UserRole.ADMIN.getRoleName())
