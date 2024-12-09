@@ -41,4 +41,6 @@ public interface IOrderService {
     long countbyShipID(Long ShipId);
     long countOrder();
 
+    int updateStatus( Long orderId,  String status);
+
 }

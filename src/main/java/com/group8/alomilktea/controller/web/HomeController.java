@@ -1,24 +1,20 @@
 package com.group8.alomilktea.controller.web;
 
-import com.group8.alomilktea.config.security.AuthUser;
-import com.group8.alomilktea.common.enums.ProductAttribute;
 import com.group8.alomilktea.entity.*;
 import com.group8.alomilktea.model.CategoryModel;
 import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.model.UserModel;
 import com.group8.alomilktea.service.*;
-import org.springframework.beans.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
@@ -41,6 +37,8 @@ public class HomeController{
     ICategoryService categoryService;
     @Autowired
     IWishlistService wishlistService;
+    @Autowired
+    ISessionService sessionService;
 
     @ModelAttribute
     public void addGlobalAttributes(Model model) {
@@ -142,15 +140,8 @@ public class HomeController{
                     model.addAttribute("homeaddress", "No address provided");
                 }
                 // Lấy danh sách sản phẩm trong giỏ hàng của người dùng
-                List<Wishlist> wishlistItems = wishlistService.findByUserId(userLogged.getUserId());
-
-                // Tính tổng giá trị của giỏ hàng
-                double totalAmount = wishlistItems.stream()
-                        .mapToDouble(cart -> cart.getQuantity() * cart.getPrice()) // Giá * Số lượng
-                        .sum();
-
-                // Đưa danh sách sản phẩm và tổng giá trị vào model
-                model.addAttribute("wishItems", wishlistItems); // Danh sách giỏ hàng
+                List<Session> sessions = sessionService.findAllSortedByDate();
+                model.addAttribute("viewedItems", sessions);
                 model.addAttribute("user", userModel);
                 return "web/users/my-account";
             }
@@ -196,4 +187,8 @@ public class HomeController{
         }
     }
 
+    @GetMapping("/about")
+    private String showAboutPage(){
+        return "web/billy/about-us";
+    }
 }
