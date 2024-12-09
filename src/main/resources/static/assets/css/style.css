@@ -5709,3 +5709,87 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #e09e00;
 }
+
+
+
+
+/* Rating container */
+.ratting-one {
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 5px;
+}
+
+/* User info (name) */
+.ratting-user h3{
+    font-size: 15px;
+    font-weight: bold ;
+    color: #bb2d3b;
+    margin-bottom: 8px;
+}
+
+
+/* Rating stars */
+.ratting-star {
+    color: #f39c12; /* Vàng cho sao */
+    font-size: 22px;
+    margin-right: 10px;
+}
+
+.ratting-star span {
+    font-size: 14px;
+    color: #777;
+    margin-left: 8px;
+}
+
+/* Review content */
+.ratting-noidung p{
+    font-size: 13px;
+    line-height: 1.6;
+    color: #555;
+    margin-top: 12px;
+}
+
+/* Date display */
+.ratting-date {
+    font-size: 12px;
+    color: #888;
+    margin-top: 10px;
+}
+/* Định dạng số lượng đánh giá */
+.soluong {
+    font-size: 17px;            /* Kích thước chữ */
+    font-weight: bold;          /* In đậm chữ */
+    color: #333;                /* Màu sắc chữ */
+    margin-bottom: 5px;        /* Khoảng cách phía dưới */
+    padding: 10px;              /* Khoảng cách bên trong */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .ratting-one {
+        padding: 15px;
+    }
+
+    .ratting-star {
+        font-size: 18px;
+    }
+
+    .ratting-noidung {
+        font-size: 14px;
+    }
+
+    .ratting-user {
+        font-size: 14px;
+    }
+
+    .ratting-date {
+        font-size: 12px;
+    }
+}
+
+
+
+

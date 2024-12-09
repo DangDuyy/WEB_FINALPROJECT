@@ -6,6 +6,7 @@ import com.group8.alomilktea.model.ProductDetailDTO;
 import com.group8.alomilktea.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -51,7 +52,10 @@ public class UserController {
     @GetMapping("detail/{id}")
     public String product(@PathVariable("id") Integer id, Model model) {
         Product product1 = productService.findById(id);
-
+		Integer categoryId = product1.getCategory().getCateId();
+        Page<ProductDetailDTO> relatedProducts = productService.findProductInfoByCatIDPaged(categoryId,1,5);
+        model.addAttribute("relatedProducts",  relatedProducts.getContent());
+        System.out.println("Related Products: " + relatedProducts.getContent());
         // Lấy thông tin người dùng đã đăng nhập
         User user = userService.getUserLogged();
         if (user != null) {
