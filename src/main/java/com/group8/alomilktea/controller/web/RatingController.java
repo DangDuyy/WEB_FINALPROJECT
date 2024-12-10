@@ -63,8 +63,7 @@ public class RatingController {
         return ratingResponses;
     }
     @PostMapping("/add")
-    @PreAuthorize("isAuthenticated()")
-    public Rating addRating(
+    public String addRating(
             @RequestParam Integer productId,
             @RequestParam String content,
             @RequestParam Integer rate,
@@ -82,6 +81,6 @@ public class RatingController {
         rating.setDate(date);
         Rating newRating = ratingService.addRating(rating); // Lưu đánh giá vào database
         System.out.println("Rating added: " + newRating); // Log thông tin đánh giá mới đã được thêm
-        return newRating; // Trả về đánh giá mới
+        return "Lưu thành công";
     }
 }
